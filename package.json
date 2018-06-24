@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack"
+    "start": "node server.js",
+    "build": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,8 @@
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.7.0",
-    "webpack": "^4.12.1"
+    "express": "^4.16.3",
+    "webpack": "^4.12.1",
+    "webpack-dev-middleware": "^3.1.3"
   }
 }
