@@ -1,0 +1,25 @@
+.currencies {
+
+    &-wrapper {
+        background-color: $white;
+        padding: 14px;
+    }
+
+    .currency {
+        border-bottom: 1px solid $azalea;
+        text-transform: uppercase;
+        padding: 8px 16px;
+        list-style: none;
+
+        &-name {
+            color: $radical-red;
+            font-size: 14px;
+            padding-right: 4px;
+        }
+
+        &-code {
+            color: $azalea;
+            font-size: 10px;
+        }
+    }
+}

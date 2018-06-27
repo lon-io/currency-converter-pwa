@@ -1,0 +1,10 @@
+<div class="currencies-wrapper">
+    <ul class="currencies">
+        {{#each currencies as |currency|}}
+            <li class="currency">
+                <span class="currency-name">{{currency.currencyName}}</span>
+                <span class="currency-code">{{currency.id}}</span>
+            </li>
+        {{/each}}
+    </ul>
+</div>
