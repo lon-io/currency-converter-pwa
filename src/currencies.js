@@ -5,23 +5,7 @@ import './assets/scss/styles.scss';
 import {
     compile,
 } from 'handlebars';
-import currencyTemplate from './views/partials/currencies.hbs';
-import axios from 'axios';
-import currencies from
-
-const baseUrl = 'https://free.currencyconverterapi.com/api/v5';
-
-const getCurrencies = () => {
-    return axios.get(`${baseUrl}/currencies`)
-        .then(response => {
-            const results = response.data && response.data.results;
-            return Object.values(results);
-        })
-        .catch(error => {
-            console.log(error);
-            return [];
-        });
-};
+import template from './views/partials/currencies.hbs';
 
 window.onload = async () => {
     console.log('Hello World!');
