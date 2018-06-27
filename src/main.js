@@ -2,26 +2,41 @@ require('babel-core/register');
 require('babel-polyfill');
 
 import './assets/scss/styles.scss';
-import { compile, } from 'handlebars';
-import template from './views/partials/loader.hbs';
+import {
+    compile,
+} from 'handlebars';
+import currencyTemplate from './views/partials/currencies.hbs';
 import axios from 'axios';
 
 const baseUrl = 'https://free.currencyconverterapi.com/api/v5';
 
-const getCurrencies = async () => {
-    try {
-        const response = await axios.get(`${baseUrl}/currencies`);
-        console.log(response.data);
-    } catch(error) {
-        console.log(error);
-    }
+const getCurrencies = () => {
+    return axios.get(`${baseUrl}/currencies`)
+        .then(response => {
+            const results = response.data && response.data.results;
+            return Object.values(results);
+        })
+        .catch(error => {
+            console.log(error);
+            return [];
+        });
 };
 
-window.onload = () => {
+window.onload = async () => {
     console.log('Hello World!');
-    getCurrencies();
-    const renderedData = compile(template)({});
-
     const app = document.getElementById('app');
-    app.innerHTML = renderedData;
+
+    try {
+        const currencies = await getCurrencies();
+        console.log(currencies);
+
+        const renderedData = compile(currencyTemplate)({
+            currencies,
+        });
+
+        app.innerHTML = renderedData;
+    } catch (error) {
+        console.log(error);
+        app.innerHTML = 'An error occurred';
+    }
 };

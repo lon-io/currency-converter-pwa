@@ -6,24 +6,28 @@ const Visualizer = require('webpack-visualizer-plugin');
 const devMode = process.env.NODE_ENV !== 'production';
 
 module.exports = {
-  // Include source maps in development files
-    devtool: devMode ?  '#cheap-module-source-map' : false,
+    // Include source maps in development files
+    devtool: devMode ? '#cheap-module-source-map' : false,
 
     context: path.join(__dirname, 'src'),
 
     plugins: [
         new MiniCssExtractPlugin({
-          filename: 'main.[hash].css',
-          chunkFilename: '[id].[hash]',
-      }),
+            filename: 'main.[hash].css',
+            chunkFilename: '[id].[hash]',
+        }),
         new CopyWebpackPlugin([{
-          from: './assets/fonts',
-          to: 'fonts',
-      }, ]),
+            from: './assets/fonts',
+            to: 'fonts',
+        }, ]),
+        new CopyWebpackPlugin([{
+            from: './assets/images',
+            to: 'images',
+        }, ]),
         new HtmlWebpackPlugin({
-          title: 'PWA Example',
-          template: path.resolve(__dirname, 'src/views/index.ejs'),
-      }),
+            title: 'PWA Example',
+            template: path.resolve(__dirname, 'src/views/index.ejs'),
+        }),
         new Visualizer(),
     ],
 
@@ -33,13 +37,13 @@ module.exports = {
     ],
 
     resolve: {
-        extensions: ['*', '.js',],
+        extensions: ['*', '.js', ],
         modules: [
-          path.resolve(__dirname, 'node_modules'),
-      ],
+            path.resolve(__dirname, 'node_modules'),
+        ],
         alias: {
-          handlebars: 'handlebars/dist/handlebars.min.js',
-      },
+            handlebars: 'handlebars/dist/handlebars.min.js',
+        },
     },
 
     output: {
@@ -49,42 +53,41 @@ module.exports = {
     },
 
     module: {
-        rules: [
-          {
-              test: /\.js$/,
-              exclude: /node_modules/,
-              use: [
-                'babel-loader',
-            ],
-          },
-          {
-              test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-              loader: 'url-loader',
-              options: {
-                limit: 1000,
-                name: 'fonts/[name].[hash:7].[ext]',
-            },
-          },
-          {
-              test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-              loader: 'url-loader',
-              query: {
-                limit: 10000,
-                name: 'images/[name].[ext].[hash:7]',
-            },
-          },
-          {
-              test: /\.(sa|sc|c)ss$/,
-              use: [
-                MiniCssExtractPlugin.loader,
-                'css-loader',
-                'sass-loader',
-            ],
-          },
-          {
-              test: /\.hbs$/,
-              loader: 'text-loader',
-          },
-      ],
+        rules: [{
+            test: /\.js$/,
+            exclude: /node_modules/,
+            use: [
+                    'babel-loader',
+                ],
+        },
+        {
+            test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+            loader: 'url-loader',
+            options: {
+                    limit: 1000,
+                    name: 'fonts/[name].[hash:7].[ext]',
+                },
+        },
+        {
+            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+            loader: 'url-loader',
+            query: {
+                    limit: 10000,
+                    name: 'images/[name].[ext].[hash:7]',
+                },
+        },
+        {
+            test: /\.(sa|sc|c)ss$/,
+            use: [
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    'sass-loader',
+                ],
+        },
+        {
+            test: /\.hbs$/,
+            loader: 'text-loader',
+        },
+        ],
     },
 };
