@@ -8,7 +8,7 @@ export const renderTemplate = (template, data = {}) => {
     return compile(template)(data);
 };
 
-export const compileTemplate = (template) => {
+export const getTemplateRenderer = (template) => {
     return compile(template);
 };
 

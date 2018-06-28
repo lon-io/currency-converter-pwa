@@ -1,8 +1,6 @@
 import template from '../views/partials/converter.hbs';
 import {
-    renderLoader,
-    renderTemplate,
-    compileTemplate,
+    getTemplateRenderer,
 } from '../libs/renderer';
 import {
     dispatchEvent,
@@ -13,7 +11,6 @@ import {
 } from '../libs/api-service';
 import constants from '../config/constants';
 
-const loader = renderLoader();
 const {
     currency: {
         types,
@@ -31,7 +28,7 @@ export default class ConverterScreen {
         };
 
         this.appRoot = appRoot;
-        this.compiledTemplate = compileTemplate(template);
+        this.renderTemplate = getTemplateRenderer(template);
     }
 
     setCurrencies(selectedCurrencies) {
@@ -72,7 +69,7 @@ export default class ConverterScreen {
         }
     }
 
-    registerSendHandler(appRoot) {
+    registerSendHandler() {
         const sendButton = document.getElementById('send');
         const resultSpan = document.getElementById('result');
 
@@ -81,33 +78,32 @@ export default class ConverterScreen {
                 event.preventDefault();
 
                 this.setLoading(true);
-                dispatchEvent(events.SEND).then((result) => {
+                this.convertCurrencies().then((result) => {
                     this.setLoading(false);
                     resultSpan.innerHTML = result;
                 });
             };
 
-            handleEvent('onclick', appRoot, sendButton, handler);
+            handleEvent('onclick', this.appRoot, sendButton, handler);
         }
     }
 
-    registerCurrencySelectHandlers(appRoot) {
+    registerSelectCurrencyHandlers() {
         const currencyFromEl = document.getElementById('currencyFrom');
         const currencyToEl = document.getElementById('currencyTo');
 
-        const handler = (async (event, type) => {
-            event.preventDefault();
-            dispatchEvent(events.SELECT_CURRENCY, {
+        const handler = (async (type) => {
+            dispatchEvent(this.appRoot, events.SELECT_CURRENCY, {
                 type,
             });
         });
 
-        if (currencyFromEl) handleEvent('onclick', appRoot, currencyFromEl, handler);
-        if (currencyToEl) handleEvent('onclick', appRoot, currencyToEl, handler);
+        if (currencyFromEl) handleEvent('onclick', this.appRoot, currencyFromEl, () => handler(types.FROM));
+        if (currencyToEl) handleEvent('onclick', this.appRoot, currencyToEl, () => handler(types.TO));
     }
 
-    registerCurrencySelectedHandler(appRoot) {
-        handleEvent(events.CURRENCY_SELECTED, appRoot, (event) => {
+    registerCurrencySelectedHandler() {
+        handleEvent(events.CURRENCY_SELECTED, this.appRoot, (event) => {
             const data = event && event.data && event.data;
 
             if (data) {
@@ -116,10 +112,10 @@ export default class ConverterScreen {
         });
     }
 
-    listen(appRoot) {
-        this.registerSendHandler(appRoot);
+    listen() {
+        this.registerSendHandler();
         this.registerCurrencySelectHandlers();
-        this.registerCurrencySelectedHandler(appRoot);
+        this.registerCurrencySelectedHandler();
     }
 
     updateCurrency(type, currency) {
@@ -133,14 +129,14 @@ export default class ConverterScreen {
         }
 
         const renderedData = this.render();
-        dispatchEvent(events.CURRENCY_SELECTED, renderedData);
+        dispatchEvent(this.appRoot, events.CURRENCY_SELECTED, renderedData);
     }
 
     render() {
         console.log('State is: =>>', this.state);
 
         try {
-            return this.compiledTemplate({
+            return this.renderTemplate({
                 currency_from: this.state.currencyFrom,
                 currency_to: this.state.currencyTo,
                 amount: this.state.amount,
