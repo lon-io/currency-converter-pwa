@@ -61,11 +61,11 @@ export default class ConverterScreen {
         const sendLoader = document.getElementById('send-loader');
 
         if (loading) {
-            sendArrow.style.display = 'none';
-            sendLoader.style.display = 'block';
+            sendArrow.style.opacity = 0;
+            sendLoader.style.opacity = 1;
         } else {
-            sendArrow.style.display = 'block';
-            sendLoader.style.display = 'none';
+            sendArrow.style.opacity = 1;
+            sendLoader.style.opacity = 0;
         }
     }
 
@@ -114,7 +114,7 @@ export default class ConverterScreen {
 
     listen() {
         this.registerSendHandler();
-        this.registerCurrencySelectHandlers();
+        this.registerSelectCurrencyHandlers();
         this.registerCurrencySelectedHandler();
     }
 

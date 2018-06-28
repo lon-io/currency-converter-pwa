@@ -1,8 +1,5 @@
 import template from '../views/partials/currencies.hbs';
 import {
-    getCurrencies,
-} from '../libs/api-service';
-import {
     getTemplateRenderer,
 } from '../libs/renderer';
 import { handleEvent, dispatchEvent, getEventTarget, } from '../libs/events';

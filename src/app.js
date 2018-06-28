@@ -2,6 +2,8 @@
 import Currencies from './screens/currencies';
 import ConverterScreen from './screens/converter';
 
+import Loader from './components/loader';
+
 import constants from './config/constants';
 import {
     getCurrencies,
@@ -10,7 +12,6 @@ import {
     getTemplateRenderer,
 } from './libs/renderer';
 import template from './views/partials/app.hbs';
-import loaderTemplate from './views/partials/loader.hbs';
 
 const {
     events,
@@ -31,7 +32,7 @@ export default class App {
 
         try {
             // Set loader
-            this.appRoot.innerHTML = getTemplateRenderer(loaderTemplate)({});
+            this.appRoot.innerHTML = Loader();
 
             const currenciesObj = await getCurrencies();
             const currencies = Object.values(currenciesObj);
@@ -54,7 +55,7 @@ export default class App {
             converterRoot.innerHTML = converterContent;
             currenciesRoot.innerHTML = currenciesContent;
 
-            // this.listen();
+            this.listen();
         } catch(error) {
             console.log('{{App.start}}', error);
         }

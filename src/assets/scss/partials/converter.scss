@@ -49,37 +49,74 @@
         left: 50%;
         margin-top: rem(-140px);
         margin-left: rem(-140px);
+        cursor: pointer;
+
+        > * {
+            position: absolute;
+            opacity: 1;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: opacity 0.3s ease-in-out;
+        }
 
         > img {
             height: rem(120px);
             width: rem(120px);
-            position: relative;
-            top: 50%;
-            transform: translateY(-50%);
         }
 
-        &:focus {
+        > div {
+            opacity: 0;
+            text-align: center;
+
+            svg {
+                width: 120px;
+                height: 120px;
+
+                circle {
+                    stroke: $radical-red;
+                }
+            }
+        }
+
+        &:hover,
+        &:focus,
+        &:active, {
             background-color: $wewak;
+            outline: none;
         }
     }
 
     &-currency {
         &-name {
+            cursor: pointer;
             font-size: rem(80px);
             font-weight: 500;
+
+            &:hover,
+            &:focus,
+            &:active, {
+                color: $wewak;
+                outline: none;
+            }
         }
 
         &-value {
+            position: relative;
+
             span {
                 &:first-child {
                     font-size: rem(200px);
-                    line-height: rem(200px);
+                    line-height: rem(150px);
                     font-weight: 600;
                     display: inline-block;
                     white-space: nowrap;
                 }
 
                 &:last-child {
+                    position: absolute;
+                    right: rem(-80px);
+                    bottom: 0;
                     color: $azalea;
                     font-size: rem(48px);
                     font-weight: 600;

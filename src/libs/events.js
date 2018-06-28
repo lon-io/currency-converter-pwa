@@ -13,11 +13,13 @@ export const dispatchEvent = (appRoot, name, data = {}) => {
 };
 
 export const handleEvent = (eventName, appRoot, handler, target) => {
-    event.preventDefault();
-    event.stopPropagation();
-
     if (appRoot && typeof appRoot.addEventListener === 'function') {
         appRoot.addEventListener(eventName, (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+
+            console.debug('{{Events.handleEvent}}: New event', eventName, appRoot, handler, target);
+
             if (target) {
                 if (getEventTarget(event) === target) handler(event);
             } else handler(event);
