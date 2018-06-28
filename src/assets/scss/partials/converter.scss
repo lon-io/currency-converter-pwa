@@ -12,14 +12,14 @@
         flex-direction: column;
         justify-content: space-between;
         align-items: center;
-        padding: 80px 0;
+        padding: rem-value(80 0);
 
         &:first-child {
-            padding-bottom: 180px;
+            padding-bottom: rem-value(180);
         }
 
         &:last-child {
-            padding-top: 180px;
+            padding-top: rem-value(180);
         }
     }
 
@@ -39,20 +39,20 @@
 
     &-send {
         background-color: $white;
-        border: 24px solid $radical-red;
-        border-radius: 500px;
-        height: 280px;
-        width: 280px;
+        border: rem-value(24) solid $radical-red;
+        border-radius: rem-value(500);
+        height: rem-value(280);
+        width: rem-value(280);
         margin: auto;
         position: absolute;
         top: 50%;
         left: 50%;
-        margin-top: -140px;
-        margin-left: -140px;
+        margin-top: rem-value(-140);
+        margin-left: rem-value(-140);
 
         > img {
-            height: 120px;
-            width: 120px;
+            height: rem-value(120);
+            width: rem-value(120);
             position: relative;
             top: 50%;
             transform: translateY(-50%);
@@ -61,14 +61,14 @@
 
     &-currency {
         &-name {
-            font-size: 80px;
+            font-size: rem-value(80);
             font-weight: 500;
         }
 
         &-value {
             span {
                 &:first-child {
-                    font-size: 80px;
+                    font-size: rem-value(80);
                     font-weight: 600;
                     display: inline-block;
                     white-space: nowrap;
@@ -76,7 +76,7 @@
 
                 &:last-child {
                     color: $azalea;
-                    font-size: 14px;
+                    font-size: rem-value(14);
                     font-weight: 500;
                 }
 
@@ -88,7 +88,7 @@
 
         &-id {
             color: $azalea;
-            font-size: 14px;
+            font-size: rem-value(14);
             font-weight: 500;
         }
     }
