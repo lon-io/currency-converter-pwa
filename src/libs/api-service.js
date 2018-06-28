@@ -13,7 +13,7 @@ export const getCurrencies = () => {
     return axios.get(`${baseUrl}/${endpoints.getAllCurrencies}`)
         .then(response => {
             const results = response.data && response.data.results;
-            return Object.values(results);
+            return results;
         })
         .catch(error => {
             console.log('{{ApiService.getCurrencies}}', error);

@@ -1,25 +1,33 @@
 .currencies {
-
     &-wrapper {
         background-color: $white;
-        padding: 14px;
+        padding: 10px 70px;
     }
 
     .currency {
+        @extend %clearfix;
         border-bottom: 1px solid $azalea;
-        text-transform: uppercase;
-        padding: 8px 16px;
+        padding: 32px 0;
         list-style: none;
 
         &-name {
             color: $radical-red;
-            font-size: 14px;
+            font-size: 32px;
+            font-weight: 600;
             padding-right: 4px;
         }
 
         &-code {
             color: $azalea;
-            font-size: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        &-tick {
+            width: 48px;
+            height: 48px;
+            float: right;
         }
     }
 }

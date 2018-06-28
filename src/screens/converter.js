@@ -1,21 +1,40 @@
-import template from './views/partials/converter.hbs';
-import { getCurrencies, } from '../libs/api-service';
-import { renderTemplate, } from '../libs/renderer';
+import template from '../views/partials/converter.hbs';
+import {
+    renderTemplate,
+} from '../libs/renderer';
 
-export default async () => {
-    console.log('Hello World!');
-
-    try {
-        const currencies = await getCurrencies();
-        console.log(currencies);
-
-        return renderTemplate(template, {
-            currencies,
-        });
-    } catch (error) {
-        console.log('{{CurrenciesScreen}}', error);
-
-        // Re-throw the error (to be handled in the main script)
-        throw error;
+export default class ConverterScreen {
+    constructor() {
+        this.state = {
+            currencyFrom: null,
+            currencyTo: null,
+            amount: 0,
+            result: 0,
+            loading: false,
+        };
     }
-};
+
+    setCurrencies(selectedCurrencies) {
+        this.state.currencyFrom = selectedCurrencies.currencyFrom;
+        this.state.currencyTo = selectedCurrencies.currencyTo;
+    }
+
+    render() {
+        console.log('State is: =>>', this.state);
+
+        try {
+            return renderTemplate(template, {
+                currency_from: this.state.currencyFrom,
+                currency_to: this.state.currencyTo,
+                amount: this.state.amount,
+                result: this.state.result,
+                loading: this.state.loading,
+            });
+        } catch (error) {
+            console.log('{{ConverterScreen}}', error);
+
+            // Re-throw the error (to be handled in the main script)
+            throw error;
+        }
+    }
+}

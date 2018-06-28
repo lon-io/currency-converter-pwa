@@ -1,23 +1,25 @@
-<form class="converter card">
-    <div class="form-group">
-        <label>From</label>
-        <select>
-            {{!-- Todo: Loop through currencies --}}
-            <options></options>
-        </select>
+<form class="converter">
+    <div class="converter-box converter-from">
+        <a class="converter-currency-name">{{currency_from.currencyName}}</a>
+        <div class="converter-currency-value">
+            <span id="#amount" contenteditable="true">{{amount}}</span>
+            <span>{{currency_from.currencySymbol}}</span>
+        </div>
+        <p class="converter-currency-id">{{currency_from.id}}</p>
     </div>
-    <div>
-        <label>Value</label>
-        <input />
+    <a class="converter-send">
+        {{#if loading}}
+            <img src="/images/loader.svg">
+        {{else}}
+            <img src="/images/arrow-down.svg">
+        {{/if}}
+    </a>
+    <div class="converter-box converter-to">
+        <a class="converter-currency-name">{{currency_to.currencyName}}</a>
+        <div class="converter-currency-value">
+            <span id="#result" >{{result}}</span>
+            <span>{{currency_to.currencySymbol}}</span>
+        </div>
+        <p class="converter-currency-id">{{currency_to.id}}</p>
     </div>
-    <div>
-        <label>To</label>
-        <select>
-            <options></options>
-        </select>
-    </div>
-    <button type="submit">GO</button>
 </form>
-<div>
-    {{!-- Todo: Display Results --}}
-</div>

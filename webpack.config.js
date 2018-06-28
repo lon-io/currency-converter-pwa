@@ -57,32 +57,32 @@ module.exports = {
             test: /\.js$/,
             exclude: /node_modules/,
             use: [
-                    'babel-loader',
-                ],
+                'babel-loader',
+            ],
         },
         {
             test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
             loader: 'url-loader',
             options: {
-                    limit: 1000,
-                    name: 'fonts/[name].[hash:7].[ext]',
-                },
+                limit: 1000,
+                name: 'fonts/[name].[hash:7].[ext]',
+            },
         },
         {
             test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
             loader: 'url-loader',
             query: {
-                    limit: 10000,
-                    name: 'images/[name].[ext].[hash:7]',
-                },
+                limit: 10000,
+                name: 'images/[name].[ext].[hash:7]',
+            },
         },
         {
             test: /\.(sa|sc|c)ss$/,
             use: [
-                    MiniCssExtractPlugin.loader,
-                    'css-loader',
-                    'sass-loader',
-                ],
+                MiniCssExtractPlugin.loader,
+                'css-loader',
+                'sass-loader',
+            ],
         },
         {
             test: /\.hbs$/,
