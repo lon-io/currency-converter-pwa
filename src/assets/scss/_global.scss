@@ -1,16 +1,10 @@
-// Global styling for this template
-html {
-    position: relative;
-    min-height: 100%;
-}
 
 body {
     overflow-x: hidden;
     font-family: $global-font-family;
-    font-size: 50px;
     margin: 0;
     padding: 0;
-    height: 100%;
+    min-height: 100vh;
     position: relative;
 }
 

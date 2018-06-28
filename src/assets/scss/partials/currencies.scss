@@ -8,7 +8,8 @@
         @extend %clearfix;
         border-bottom: rem(1px) solid $azalea;
         padding: rem(32px) 0;
-        list-style: none;
+        text-indent: 0;
+        list-style-type: 0;
 
         &-name {
             color: $radical-red;

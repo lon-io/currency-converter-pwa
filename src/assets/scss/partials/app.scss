@@ -7,14 +7,15 @@
         position: absolute;
         top: 50%;
         left: 50%;
-        width: 100px;
-        height: 100px;
-        margin-top: -50px;
-        margin-left: -50px;
+        margin-top: -100px;
+        margin-left: -100px;
 
-        > img {
-            > svg {
+        > svg {
+            width: 200px;
+            height: 200px;
 
+            circle {
+                stroke: $radical-red;
             }
         }
     }
@@ -26,13 +27,21 @@
     }
 
     #currencies-root {
-        width: 0;
-        position: absolute;
-        top: 0;
-        bottom: 0;
+        // width: 0;
+        // position: absolute;
+        // top: 0;
+        // bottom: 0;
+        // right: 0;
+        // height: 100vh;
+        // z-index: 9;
+        height: 100%; /* 100% Full-height */
+        width: 0; /* 0 width - change this with JavaScript */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Stay on top */
+        top: 0; /* Stay at the top */
         right: 0;
-        height: 100vh;
-        z-index: 9;
+        background-color: #111; /* Black*/
+        overflow-x: hidden; /* Disable horizontal scroll */
 
         transition: width 0.3 ease-in-out;
     }

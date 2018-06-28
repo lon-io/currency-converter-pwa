@@ -33,6 +33,10 @@ export default class Currencies {
         this.registerCurrencyClickHandler();
     }
 
+    setCurrencies(currencies) {
+        this.state.currencies = currencies;
+    }
+
     registerShowEventHandler() {
         handleEvent(events.SELECT_CURRENCY, this.appRoot,  (event = {}) => {
             const {

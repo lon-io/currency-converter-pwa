@@ -33,26 +33,26 @@ export default class App {
             // Set loader
             this.appRoot.innerHTML = getTemplateRenderer(loaderTemplate)({});
 
-            // const currenciesObj = await getCurrencies();
-            // const currencies = Object.values(currenciesObj);
+            const currenciesObj = await getCurrencies();
+            const currencies = Object.values(currenciesObj);
 
-            // this.currencies = currencies;
-            // this.currenciesScreen.setCurrencies(currencies);
+            this.currencies = currencies;
+            this.currenciesScreen.setCurrencies(currencies);
 
-            // const selectedCurrencies = this.currenciesScreen.getInitialSelectedCurrencies();
-            // this.converterScreen.setCurrencies(selectedCurrencies);
+            const selectedCurrencies = this.getInitialSelectedCurrencies();
+            this.converterScreen.setCurrencies(selectedCurrencies);
 
-            // const converterContent = this.converterScreen.render();
-            // const currenciesContent = this.currenciesScreen.render();
+            const converterContent = this.converterScreen.render();
+            const currenciesContent = this.currenciesScreen.render();
 
-            // const appContent = this.renderTemplate({});
-            // this.appRoot.innerHTML = appContent;
+            const appContent = this.renderTemplate({});
+            this.appRoot.innerHTML = appContent;
 
-            // const converterRoot = document.getElementById('converter-root');
-            // const currenciesRoot = document.getElementById('currencies-root');
+            const converterRoot = document.getElementById('converter-root');
+            const currenciesRoot = document.getElementById('currencies-root');
 
-            // converterRoot.innerHTML = converterContent;
-            // currenciesRoot.innerHTML = currenciesContent;
+            converterRoot.innerHTML = converterContent;
+            currenciesRoot.innerHTML = currenciesContent;
 
             // this.listen();
         } catch(error) {
