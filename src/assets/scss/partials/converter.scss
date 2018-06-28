@@ -12,14 +12,14 @@
         flex-direction: column;
         justify-content: space-between;
         align-items: center;
-        padding: rem-value(80 0);
+        padding: rem(80px 0);
 
         &:first-child {
-            padding-bottom: rem-value(180);
+            padding-bottom: rem(180px);
         }
 
         &:last-child {
-            padding-top: rem-value(180);
+            padding-top: rem(180px);
         }
     }
 
@@ -39,36 +39,41 @@
 
     &-send {
         background-color: $white;
-        border: rem-value(24) solid $radical-red;
-        border-radius: rem-value(500);
-        height: rem-value(280);
-        width: rem-value(280);
+        border: rem(24px) solid $radical-red;
+        border-radius: rem(500px);
+        height: rem(280px);
+        width: rem(280px);
         margin: auto;
         position: absolute;
         top: 50%;
         left: 50%;
-        margin-top: rem-value(-140);
-        margin-left: rem-value(-140);
+        margin-top: rem(-140px);
+        margin-left: rem(-140px);
 
         > img {
-            height: rem-value(120);
-            width: rem-value(120);
+            height: rem(120px);
+            width: rem(120px);
             position: relative;
             top: 50%;
             transform: translateY(-50%);
+        }
+
+        &:focus {
+            background-color: $wewak;
         }
     }
 
     &-currency {
         &-name {
-            font-size: rem-value(80);
+            font-size: rem(80px);
             font-weight: 500;
         }
 
         &-value {
             span {
                 &:first-child {
-                    font-size: rem-value(80);
+                    font-size: rem(200px);
+                    line-height: rem(200px);
                     font-weight: 600;
                     display: inline-block;
                     white-space: nowrap;
@@ -76,8 +81,8 @@
 
                 &:last-child {
                     color: $azalea;
-                    font-size: rem-value(14);
-                    font-weight: 500;
+                    font-size: rem(48px);
+                    font-weight: 600;
                 }
 
                 &:focus {
@@ -88,7 +93,7 @@
 
         &-id {
             color: $azalea;
-            font-size: rem-value(14);
+            font-size: rem(48px);
             font-weight: 500;
         }
     }

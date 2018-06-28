@@ -6,6 +6,12 @@ import {
     renderTemplate,
 } from '../libs/renderer';
 
+import constants from '../config/constants';
+
+const {
+    events,
+} = constants;
+
 export default class Currencies {
     constructor() {
         this.selected = null;
@@ -20,6 +26,17 @@ export default class Currencies {
                 currencyTo: this.currencies[1],
             };
         } return {};
+    }
+
+    listen(appRoot) {
+        this.handleShowEvent(appRoot);
+    }
+
+    handleShowEvent(appRoot) {
+        const wrapper = document.getElementById('currencies-wrapper');
+        appRoot.addEventListener(events.SELECT_CURRENCY, () => {
+            wrapper.style.width = 0;
+        });
     }
 
     async render() {

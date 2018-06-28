@@ -1,25 +1,22 @@
 <form class="converter">
     <div class="converter-box converter-from">
-        <a class="converter-currency-name">{{currency_from.currencyName}}</a>
+        <a id="currencyFrom" class="converter-currency-name">{{currency_from.currencyName}}</a>
         <div class="converter-currency-value">
             <span id="#amount" contenteditable="true">{{amount}}</span>
             <span>{{currency_from.currencySymbol}}</span>
         </div>
         <p class="converter-currency-id">{{currency_from.id}}</p>
     </div>
-    <a class="converter-send">
-        {{#if loading}}
-            <img src="/images/loader.svg">
-        {{else}}
-            <img src="/images/arrow-down.svg">
-        {{/if}}
+    <a id="send" class="converter-send">
+        <img id="send-loader" src="/images/loader.svg">
+        <img id="send-arrow" src="/images/arrow-down.svg">
     </a>
     <div class="converter-box converter-to">
-        <a class="converter-currency-name">{{currency_to.currencyName}}</a>
+        <p class="converter-currency-id">{{currency_to.id}}</p>
         <div class="converter-currency-value">
             <span id="#result" >{{result}}</span>
             <span>{{currency_to.currencySymbol}}</span>
         </div>
-        <p class="converter-currency-id">{{currency_to.id}}</p>
+        <a id="currencyTo" class="converter-currency-name">{{currency_to.currencyName}}</a>
     </div>
 </form>

@@ -1,32 +1,32 @@
 .currencies {
     &-wrapper {
         background-color: $white;
-        padding: rem-value(10 70);
+        padding: rem(10px 70px);
     }
 
     .currency {
         @extend %clearfix;
-        border-bottom: rem-value(1) solid $azalea;
-        padding: rem-value(32) 0;
+        border-bottom: rem(1px) solid $azalea;
+        padding: rem(32px) 0;
         list-style: none;
 
         &-name {
             color: $radical-red;
-            font-size: rem-value(32);
+            font-size: rem(32px);
             font-weight: 600;
-            padding-right: rem-value(4);
+            padding-right: rem(4px);
         }
 
         &-code {
             color: $azalea;
-            font-size: rem-value(14);
+            font-size: rem(14px);
             font-weight: 500;
             text-transform: uppercase;
         }
 
         &-tick {
-            width: rem-value(48);
-            height: rem-value(48);
+            width: rem(48px);
+            height: rem(48px);
             float: right;
         }
     }
