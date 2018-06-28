@@ -1,0 +1,39 @@
+#app {
+    display: block;
+    width: 100%;
+    height: 100%;
+
+    #loader {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100px;
+        height: 100px;
+        margin-top: -50px;
+        margin-left: -50px;
+
+        > img {
+            > svg {
+
+            }
+        }
+    }
+
+    #converter-root {
+        display: block;
+        height: 100vh;
+        background-color: $white;
+    }
+
+    #currencies-root {
+        width: 0;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        height: 100vh;
+        z-index: 9;
+
+        transition: width 0.3 ease-in-out;
+    }
+}
