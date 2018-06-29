@@ -107,16 +107,19 @@
             span {
                 &:first-child {
                     font-size: rem(200px);
-                    line-height: rem(150px);
+                    line-height: rem(160px);
                     font-weight: 600;
                     display: inline-block;
                     white-space: nowrap;
+                    max-width: 60vw;
+                    overflow-x: scroll;
+                    overflow-y: visible;
                 }
 
                 &:last-child {
                     position: absolute;
                     right: rem(-80px);
-                    bottom: 0;
+                    bottom: rem(10px);
                     color: $azalea;
                     font-size: rem(48px);
                     font-weight: 600;

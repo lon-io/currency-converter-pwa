@@ -77,11 +77,22 @@ export default class ConverterScreen {
 
     registerSendHandler() {
         const sendButton = document.getElementById('send');
+        const amountSpan = document.getElementById('amount');
         const resultSpan = document.getElementById('result');
 
-        if (sendButton && resultSpan) {
+        if (sendButton && resultSpan && amountSpan) {
             const handler = (event) => {
                 event.preventDefault();
+
+                const amount = parseInt(amountSpan.textContent || amountSpan.innerText) || null;
+
+                if (amount === null) {
+                    // Todo: Flash error
+                    console.log('{{Converter.sendAction}} amount is invalid', amount, amountSpan.innerHTML);
+                    return;
+                }
+
+                this.state.amount = amount;
 
                 this.setLoading(true);
                 this.convertCurrencies().then((result) => {
