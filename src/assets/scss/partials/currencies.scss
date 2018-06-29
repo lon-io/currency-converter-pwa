@@ -4,6 +4,15 @@
         padding: rem(10px 70px);
     }
 
+    &-header {
+        color: $azalea;
+        padding: rem(20px) 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: rem(16px);
+    }
+
     .currency {
         @extend %clearfix;
         border-bottom: rem(1px) solid $azalea;
