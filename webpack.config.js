@@ -27,10 +27,6 @@ module.exports = {
             from: './assets/images',
             to: 'images',
         }, ]),
-        new CopyWebpackPlugin([{
-            from: './sw.js',
-            to: './sw.js',
-        }, ]),
         new HtmlWebpackPlugin({
             title: 'PWA Example',
             template: path.resolve(__dirname, 'src/views/index.ejs'),
@@ -46,10 +42,13 @@ module.exports = {
         }),
     ],
 
-    entry: [
-        'babel-polyfill',
-        './main.js',
-    ],
+    entry: {
+        main: [
+            'babel-polyfill',
+            './main.js',
+        ],
+        sw: './sw.js',
+    },
 
     resolve: {
         extensions: ['*', '.js', ],
