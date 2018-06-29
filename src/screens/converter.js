@@ -90,7 +90,7 @@ export default class ConverterScreen {
                 });
             };
 
-            handleEvent('click', sendButton, handler);
+            handleEvent('click', this.appRoot, handler, '#send');
         } console.log('{{ConverterScreen.registerSendHandler}}: Elements missing', sendButton, resultSpan);
     }
 
