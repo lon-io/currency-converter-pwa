@@ -12,8 +12,12 @@
     "type": "git",
     "url": "git+https://github.com/lon-io/pwa-example.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "pwa",
+    "DOM",
+    "service-worker",
+  ],
+  "author": "Lon Ilesanmi <lonilesanmi@gmail.com>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/lon-io/pwa-example/issues"
