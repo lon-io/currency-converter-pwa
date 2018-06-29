@@ -13,16 +13,22 @@ const {
     },
 } = constants;
 
-export default class Currencies {
-    constructor() {
+export default class CurrenciesScreen {
+    constructor(appRoot) {
         this.state = {
             selectedCurrency: null,
             currencies: [],
             currencyType: types.FROM,
         };
 
+        this.appRoot = appRoot;
+        this.root = null;
         this.renderTemplate = getTemplateRenderer(template);
-        this.wrapper = document.getElementById('currencies-root');
+    }
+
+    init() {
+        this.root = document.getElementById('currencies-root');
+        this.render();
     }
 
     listen() {
@@ -40,26 +46,45 @@ export default class Currencies {
                 type,
             } = event;
             this.state.currencyType = type;
-
-            if (this.wrapper) {
-                this.wrapper.style.width = 0;
-            }
+            this.setVisible(true);
         });
     }
 
+    setVisible(visible) {
+        const wrapper = document.getElementById('currencies-root');
+
+        if (wrapper) {
+            if (visible) {
+                wrapper.style.width = '100%';
+            } else wrapper.style.width = '0';
+        } else console.log('{{ConverterScreen.registerShowEventHandler}}: Invalid wrapper', wrapper);
+    }
+
     registerCurrencyClickHandler() {
-        const currencyList = document.getElementById('currencies');
+        // const currencyList = document.getElementById('currencies');
 
-        handleEvent('onclick', this.appRoot, (event) => {
+        handleEvent('click', this.appRoot, (event) => {
+            console.log(this.state);
             const target = getEventTarget(event);
+            const { currencies, } = this.state;
 
-            const element = target.querySelector('.currency-code');
-            const currencyID = element.innerHTML;
-            const currency = Array.isArray(this.currencies) && this.currencies.find(({ id, }) => id === currencyID);
-            this.state.selectedCurrency = currency;
+            if (target) {
+                const parentLi = target.nodeName === 'LI' ? target : target.parentNode;
+                const codeElement = parentLi.querySelector('.currency-code');
 
-            this.handleCurrencySelect();
-        }, currencyList);
+                if (codeElement) {
+                    const currencyID = codeElement.innerHTML;
+                    const currency = (Array.isArray(currencies) &&
+                        currencies.find(({ id, }) => id === currencyID)) || null;
+
+                    console.log(currencies.length, currencyID, currency);
+
+                    this.state.selectedCurrency = currency;
+                }
+
+                this.handleCurrencySelect();
+            }
+        }, '#currencies');
     }
 
     handleCurrencySelect() {
@@ -69,15 +94,19 @@ export default class Currencies {
             currency,
             type,
         });
+
+        this.setVisible(false);
     }
 
     render() {
         console.log('State is: =>>', this.state);
 
         try {
-            return this.renderTemplate({
-                currencies: this.state.currencies,
-            });
+            if (this.root) {
+                this.root.innerHTML = this.renderTemplate({
+                    currencies: this.state.currencies,
+                });
+            } else console.log('{{CurrenciesScreen.init}}: Root is invalid', this.root);
         } catch (error) {
             console.log('{{ConverterScreen}}', error);
 
@@ -85,30 +114,4 @@ export default class Currencies {
             throw error;
         }
     }
-
-    // async render() {
-    //     try {
-    //         const currenciesObj = await getCurrencies();
-
-    //         const currencies = Object.values(currenciesObj).map((currency, index) => {
-    //             if (!this.selected && index === 0) currency.isSelected = true;
-    //             if (this.selected === currency.id) currency.isSelected = true;
-
-    //             return currency;
-    //         });
-
-    //         this.currencies = currencies;
-
-    //         console.log('A1', this.currencies);
-
-    //         return renderTemplate(template, {
-    //             currencies,
-    //         });
-    //     } catch (error) {
-    //         console.log('{{CurrenciesScreen}}', error);
-
-    //         // Re-throw the error (to be handled in the main script)
-    //         throw error;
-    //     }
-    // }
 }

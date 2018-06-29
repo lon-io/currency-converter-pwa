@@ -43,17 +43,11 @@ export default class App {
             const selectedCurrencies = this.getInitialSelectedCurrencies();
             this.converterScreen.setCurrencies(selectedCurrencies);
 
-            const converterContent = this.converterScreen.render();
-            const currenciesContent = this.currenciesScreen.render();
-
             const appContent = this.renderTemplate({});
             this.appRoot.innerHTML = appContent;
 
-            const converterRoot = document.getElementById('converter-root');
-            const currenciesRoot = document.getElementById('currencies-root');
-
-            converterRoot.innerHTML = converterContent;
-            currenciesRoot.innerHTML = currenciesContent;
+            this.converterScreen.init();
+            this.currenciesScreen.init();
 
             this.listen();
         } catch(error) {
@@ -62,16 +56,8 @@ export default class App {
     }
 
     async listen() {
-        this.handleCurrencySelect();
         this.converterScreen.listen(this.appRoot);
         this.currenciesScreen.listen(this.appRoot);
-    }
-
-    handleCurrencySelect() {
-        handleEvent(events.CURRENCY_SELECTED, this.appRoot, (event) => {
-            const { data, } = event;
-            this.appRoot.innerHTML = data;
-        });
     }
 
     getInitialSelectedCurrencies() {

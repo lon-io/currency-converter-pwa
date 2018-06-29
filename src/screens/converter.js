@@ -28,7 +28,13 @@ export default class ConverterScreen {
         };
 
         this.appRoot = appRoot;
+        this.root = null;
         this.renderTemplate = getTemplateRenderer(template);
+    }
+
+    init() {
+        this.root = document.getElementById('converter-root');
+        this.render();
     }
 
     setCurrencies(selectedCurrencies) {
@@ -84,27 +90,30 @@ export default class ConverterScreen {
                 });
             };
 
-            handleEvent('onclick', this.appRoot, sendButton, handler);
-        }
+            handleEvent('click', sendButton, handler);
+        } console.log('{{ConverterScreen.registerSendHandler}}: Elements missing', sendButton, resultSpan);
     }
 
     registerSelectCurrencyHandlers() {
         const currencyFromEl = document.getElementById('currencyFrom');
         const currencyToEl = document.getElementById('currencyTo');
 
-        const handler = (async (type) => {
+        const handler = (type) => {
+            console.log('{{ConverterScreen.registerSelectCurrencyHandlers}}: Selected type is:', type);
+
             dispatchEvent(this.appRoot, events.SELECT_CURRENCY, {
                 type,
             });
-        });
+        };
 
-        if (currencyFromEl) handleEvent('onclick', this.appRoot, currencyFromEl, () => handler(types.FROM));
-        if (currencyToEl) handleEvent('onclick', this.appRoot, currencyToEl, () => handler(types.TO));
+        if (currencyFromEl) handleEvent('click', this.appRoot, () => handler(types.FROM), '#currencyFrom');
+        if (currencyToEl) handleEvent('click', this.appRoot, () => handler(types.TO), '#currencyTo');
     }
 
     registerCurrencySelectedHandler() {
         handleEvent(events.CURRENCY_SELECTED, this.appRoot, (event) => {
-            const data = event && event.data && event.data;
+            const data = event && event.detail;
+            console.log(data);
 
             if (data) {
                 this.updateCurrency(data.type, data.currency);
@@ -128,21 +137,22 @@ export default class ConverterScreen {
                 break;
         }
 
-        const renderedData = this.render();
-        dispatchEvent(this.appRoot, events.CURRENCY_SELECTED, renderedData);
+        this.render();
     }
 
     render() {
         console.log('State is: =>>', this.state);
 
         try {
-            return this.renderTemplate({
-                currency_from: this.state.currencyFrom,
-                currency_to: this.state.currencyTo,
-                amount: this.state.amount,
-                result: this.state.result,
-                loading: this.state.loading,
-            });
+            if (this.root) {
+                this.root.innerHTML = this.renderTemplate({
+                    currency_from: this.state.currencyFrom,
+                    currency_to: this.state.currencyTo,
+                    amount: this.state.amount,
+                    result: this.state.result,
+                    loading: this.state.loading,
+                });
+            } else console.log('{{ConverterScreen.init}}: Root is invalid', this.root);
         } catch (error) {
             console.log('{{ConverterScreen}}', error);
 
