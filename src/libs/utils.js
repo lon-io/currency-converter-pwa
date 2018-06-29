@@ -16,3 +16,18 @@ export const isDescendant = (target, parentSelector) => {
         return parent.contains(target);
     } else return false;
 };
+
+export const formatMoney = (amount) => {
+    if (!amount || isNaN(amount)) {
+        return '';
+    }
+
+    return amount.toLocaleString();
+};
+
+export const parseMoney = (amountString) => {
+    const amount = amountString && typeof(amountString.replace === 'function') ?
+        amountString.replace(',', '') : NaN;
+
+    return parseFloat(amount) || null;
+};

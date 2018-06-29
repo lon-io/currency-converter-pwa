@@ -16,11 +16,21 @@ export const dispatchEvent = (appRoot, name, detail = {}) => {
     } else console.log('{{Events.dispatchEvent}}: App root is invalid', appRoot);
 };
 
-export const handleEvent = (eventName, appRoot, handler, targetSelector) => {
+/**
+ *  To: Pass options object since args list is growing
+ * @param {*} eventName
+ * @param {*} appRoot
+ * @param {*} handler
+ * @param {*} targetSelector
+ * @param {*} skipPrevents
+ */
+export const handleEvent = (eventName, appRoot, handler, targetSelector, skipPrevents) => {
     if (appRoot && typeof appRoot.addEventListener === 'function') {
         appRoot.addEventListener(eventName, (event) => {
-            event.preventDefault();
-            event.stopPropagation();
+            if (!skipPrevents) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
 
             if (targetSelector) {
                 const target = getEventTarget(event);

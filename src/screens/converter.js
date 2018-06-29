@@ -9,6 +9,10 @@ import {
 import {
     getConversionFactor,
 } from '../libs/api-service';
+import {
+    parseMoney,
+    formatMoney,
+} from '../libs/utils';
 import constants from '../config/constants';
 
 const {
@@ -75,34 +79,57 @@ export default class ConverterScreen {
         }
     }
 
-    registerSendHandler() {
-        const sendButton = document.getElementById('send');
+    validateAmountAndUpdateState() {
         const amountSpan = document.getElementById('amount');
-        const resultSpan = document.getElementById('result');
+        const inputValue = amountSpan.textContent || amountSpan.innerText;
 
-        if (sendButton && resultSpan && amountSpan) {
-            const handler = (event) => {
-                event.preventDefault();
+        const parsedAmount = parseMoney(inputValue);
+        if (parsedAmount !== 0 && !parsedAmount) {
+            // Todo: Flash error
+            console.error('{{Converter.validateAmountAndUpdateState}} amount is invalid', inputValue, parsedAmount);
 
-                const amount = parseInt(amountSpan.textContent || amountSpan.innerText) || null;
+            // Reset the amount
+            amountSpan.innerHTML = formatMoney(this.state.amount) || 0;
+            return false;
+        }
 
-                if (amount === null) {
-                    // Todo: Flash error
-                    console.log('{{Converter.sendAction}} amount is invalid', amount, amountSpan.innerHTML);
-                    return;
+        this.state.amount = parsedAmount;
+        return true;
+    }
+
+    registerInputValidationHandler() {
+        handleEvent('input', this.appRoot, () => this.validateAmountAndUpdateState(),
+            '#amount');
+    }
+
+    registerSendHandler() {
+        const handler = () => {
+            const sendButton = document.getElementById('send');
+            const amountSpan = document.getElementById('amount');
+            const resultSpan = document.getElementById('result');
+
+            if (sendButton && resultSpan && amountSpan) {
+                const isValid = this.validateAmountAndUpdateState();
+
+                if (isValid) {
+                    // Re-format the input
+                    amountSpan.innerHTML = formatMoney(this.state.amount);
+
+                    this.setLoading(true);
+                    this.convertCurrencies().then((result) => {
+                        this.setLoading(false);
+                        resultSpan.innerHTML = formatMoney(result);
+                    });
+                } else {
+                    console.error('{{ConverterScreen.sendHandler}}: Invalid amount');
                 }
 
-                this.state.amount = amount;
+            } else {
+                console.error('{{ConverterScreen.sendHandler}}: Elements missing', sendButton, resultSpan);
+            }
+        };
 
-                this.setLoading(true);
-                this.convertCurrencies().then((result) => {
-                    this.setLoading(false);
-                    resultSpan.innerHTML = result;
-                });
-            };
-
-            handleEvent('click', this.appRoot, handler, '#send');
-        } console.log('{{ConverterScreen.registerSendHandler}}: Elements missing', sendButton, resultSpan);
+        handleEvent('click', this.appRoot, handler, '#send');
     }
 
     registerSelectCurrencyHandlers() {
@@ -128,11 +155,12 @@ export default class ConverterScreen {
 
             if (data) {
                 this.updateCurrency(data.type, data.currency);
-            } console.log('{{ConverterScreen.currencySelectedHandler}}: Invalid event data', event);
+            } console.error('{{ConverterScreen.currencySelectedHandler}}: Invalid event data', event);
         });
     }
 
     listen() {
+        this.registerInputValidationHandler();
         this.registerSendHandler();
         this.registerSelectCurrencyHandlers();
         this.registerCurrencySelectedHandler();
