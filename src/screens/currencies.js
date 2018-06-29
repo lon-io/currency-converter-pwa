@@ -42,10 +42,9 @@ export default class CurrenciesScreen {
 
     registerShowEventHandler() {
         handleEvent(events.SELECT_CURRENCY, this.appRoot,  (event = {}) => {
-            const {
-                type,
-            } = event;
-            this.state.currencyType = type;
+            const data = event.detail;
+
+            if (data && data.type) this.state.currencyType = data.type;
             this.setVisible(true);
         });
     }
@@ -88,7 +87,7 @@ export default class CurrenciesScreen {
     }
 
     handleCurrencySelect() {
-        const { currency, currencyType: type, } = this.state;
+        const { selectedCurrency: currency, currencyType: type, } = this.state;
 
         dispatchEvent(this.appRoot, events.CURRENCY_SELECTED, {
             currency,
