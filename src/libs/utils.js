@@ -19,15 +19,15 @@ export const isDescendant = (target, parentSelector) => {
 
 export const formatMoney = (amount) => {
     if (!amount || isNaN(amount)) {
-        return '';
+        return 0;
     }
 
     return amount.toLocaleString();
 };
 
 export const parseMoney = (amountString) => {
-    const amount = amountString && typeof(amountString.replace === 'function') ?
+    const amount = amountString && typeof amountString.replace === 'function' ?
         amountString.replace(',', '') : NaN;
 
-    return parseFloat(amount) || null;
+    return parseFloat(amount) === 0 ? 0 : (parseFloat(amount) || null);
 };

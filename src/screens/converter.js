@@ -53,6 +53,8 @@ export default class ConverterScreen {
             currencyTo,
         } = this.state;
 
+        if(amount === 0) return Promise.resolve(0);
+
         try {
             const factor = await getConversionFactor(currencyFrom.id, currencyTo.id);
 
@@ -84,6 +86,7 @@ export default class ConverterScreen {
         const inputValue = amountSpan.textContent || amountSpan.innerText;
 
         const parsedAmount = parseMoney(inputValue);
+
         if (parsedAmount !== 0 && !parsedAmount) {
             // Todo: Flash error
             console.error('{{Converter.validateAmountAndUpdateState}} amount is invalid', inputValue, parsedAmount);

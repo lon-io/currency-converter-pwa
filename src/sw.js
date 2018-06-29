@@ -2,7 +2,7 @@
 // But in production (since this is a static app)
 // we want to change the hash on every new build
 // const swFingerPrint = Date.now();
-const swFingerPrint = 'v3';
+const swFingerPrint = 'v6';
 const APP_CACHE_NAME = `currency-converter-cache-${swFingerPrint}`;
 const routesToCache = [
     '/',
