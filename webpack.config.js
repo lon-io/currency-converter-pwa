@@ -2,8 +2,10 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ManifestPlugin = require('webpack-manifest-plugin');
 const Visualizer = require('webpack-visualizer-plugin');
 const devMode = process.env.NODE_ENV !== 'production';
+const assetsExcludedFromManifest = ['sw.js',];
 
 module.exports = {
     // Include source maps in development files
@@ -13,7 +15,8 @@ module.exports = {
 
     plugins: [
         new MiniCssExtractPlugin({
-            filename: 'main.[hash].css',
+            // filename: 'main.[hash].css',
+            filename: 'main.css',
             chunkFilename: '[id].[hash]',
         }),
         new CopyWebpackPlugin([{
@@ -24,11 +27,23 @@ module.exports = {
             from: './assets/images',
             to: 'images',
         }, ]),
+        new CopyWebpackPlugin([{
+            from: './sw.js',
+            to: './sw.js',
+        }, ]),
         new HtmlWebpackPlugin({
             title: 'PWA Example',
             template: path.resolve(__dirname, 'src/views/index.ejs'),
         }),
         new Visualizer(),
+        new ManifestPlugin({
+            fileName: 'asset-manifest.json',
+            filter: (file) => {
+                if (file.chunk && assetsExcludedFromManifest.indexOf(file.chunk.name) === -1) {
+                    return true;
+                }
+            },
+        }),
     ],
 
     entry: [
@@ -47,7 +62,8 @@ module.exports = {
     },
 
     output: {
-        filename: '[name].[hash].js',
+        // filename: '[name].[hash].js',
+        filename: '[name].js',
         chunkFilename: '[id].[hash]',
         path: path.resolve(__dirname, 'dist'),
     },
