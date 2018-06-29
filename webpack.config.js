@@ -65,6 +65,7 @@ module.exports = {
         filename: '[name].js',
         chunkFilename: '[id].[hash]',
         path: path.resolve(__dirname, 'dist'),
+        globalObject: 'this',
     },
 
     module: {

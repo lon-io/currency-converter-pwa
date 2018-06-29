@@ -2,12 +2,12 @@
 // But in production (since this is a static app)
 // we want to change the hash on every new build
 // const swFingerPrint = Date.now();
-const swFingerPrint = 'v1';
+const swFingerPrint = 'v3';
 const APP_CACHE_NAME = `currency-converter-cache-${swFingerPrint}`;
 const routesToCache = [
     '/',
     '/main.js',
-    '/main.scss',
+    '/main.css',
 ];
 
 // Handle the install event
@@ -28,10 +28,10 @@ self.addEventListener('activate', function (event) {
     event.waitUntil(
         caches.keys().then((cacheNames) => {
             return Promise.all(
-                cacheNames.forEach((cacheName) => {
-                    if (cacheName !== APP_CACHE_NAME) {
-                        return caches.delete(cacheName);
-                    }
+                cacheNames
+                .filter((cacheName) => cacheName !== APP_CACHE_NAME)
+                .map((cacheName) => {
+                    return caches.delete(cacheName);
                 })
             );
         })

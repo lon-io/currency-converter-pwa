@@ -32,6 +32,7 @@ export default class App {
 
         try {
             // Set loader
+            this.registerServiceWorker();
             this.appRoot.innerHTML = Loader();
 
             const currenciesObj = await getCurrencies();
