@@ -16,4 +16,7 @@ export default {
         CURRENCY_SELECTED: 'CURRENCY_SELECTED',
         SELECT_CURRENCY: 'SELECT_CURRENCY',
     },
+    db: {
+        name: 'currency-converter',
+    },
 };
