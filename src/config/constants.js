@@ -13,7 +13,7 @@ export default {
         },
     },
     converter: {
-        maxStoredFactors: 2,
+        maxStoredFactors: 100,
     },
     events: {
         CURRENCY_SELECTED: 'CURRENCY_SELECTED',
