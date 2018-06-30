@@ -2,10 +2,8 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const ManifestPlugin = require('webpack-manifest-plugin');
 const Visualizer = require('webpack-visualizer-plugin');
 const devMode = process.env.NODE_ENV !== 'production';
-const assetsExcludedFromManifest = ['sw.js',];
 
 module.exports = {
     // Include source maps in development files
@@ -15,8 +13,7 @@ module.exports = {
 
     plugins: [
         new MiniCssExtractPlugin({
-            // filename: 'main.[hash].css',
-            filename: 'main.css',
+            filename: 'css/main.css',
             chunkFilename: '[id].[hash]',
         }),
         new CopyWebpackPlugin([{
@@ -32,18 +29,10 @@ module.exports = {
             template: path.resolve(__dirname, 'src/views/index.ejs'),
         }),
         new Visualizer(),
-        new ManifestPlugin({
-            fileName: 'asset-manifest.json',
-            filter: (file) => {
-                if (file.chunk && assetsExcludedFromManifest.indexOf(file.chunk.name) === -1) {
-                    return true;
-                }
-            },
-        }),
     ],
 
     entry: {
-        main: [
+        'js/main': [
             'babel-polyfill',
             './main.js',
         ],
@@ -61,11 +50,10 @@ module.exports = {
     },
 
     output: {
-        // filename: '[name].[hash].js',
         filename: '[name].js',
         chunkFilename: '[id].[hash]',
         path: path.resolve(__dirname, 'dist'),
-        globalObject: 'this', //https://github.com/webpack/webpack/issues/6642#issuecomment-371087342
+        globalObject: 'this', // https://github.com/webpack/webpack/issues/6642#issuecomment-371087342
     },
 
     module: {
@@ -81,7 +69,7 @@ module.exports = {
             loader: 'url-loader',
             options: {
                 limit: 1000,
-                name: 'fonts/[name].[hash:7].[ext]',
+                name: '../fonts/[name].[ext]',
             },
         },
         {
@@ -89,7 +77,7 @@ module.exports = {
             loader: 'url-loader',
             query: {
                 limit: 10000,
-                name: 'images/[name].[ext].[hash:7]',
+                name: 'images/[name].[ext]',
             },
         },
         {
