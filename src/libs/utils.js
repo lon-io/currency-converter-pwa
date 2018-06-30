@@ -31,3 +31,11 @@ export const parseMoney = (amountString) => {
 
     return parseFloat(amount) === 0 ? 0 : (parseFloat(amount) || null);
 };
+
+export const hideElement = (element) => {
+    if (element && element.style) {
+        element.style.height = 0;
+        element.style.padding = 0;
+        element.style.overflow = 'hidden';
+    }
+};

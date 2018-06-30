@@ -1,16 +1,22 @@
 <div class="currencies-wrapper">
-    <div class="currencies-header">
-        <a><img id="currency-back" src="images/arrow-left.svg"></a>
-        <a><img id="currency-search" src="images/search.svg"></a>
+    <div id="currencies-search-wrapper" class="currencies-search-wrapper">
+        <input id="currencies-search" class="currencies-search"/>
+        <a><img id="currency-search-close-icon" src="images/close.svg"></a>
+    </div>
+    <div id="currencies-header" class="currencies-header">
+        <a><img id="currency-back-icon" src="images/arrow-left.svg"></a>
+        <a><img id="currency-search-icon" src="images/search.svg"></a>
     </div>
     <ul id="currencies" class="currencies">
         {{#each currencies as |currency|}}
             <li class="currency">
-                <span class="currency-name">{{currency.currencyName}}</span>
-                <span class="currency-code">{{currency.id}}</span>
-                {{#if currency.isSelected }}
-                    <img class="currency-tick" src="images/tick.svg">
-                {{/if}}
+                <a>
+                    <span class="currency-name">{{currency.currencyName}}</span>
+                    <span class="currency-code">{{currency.id}}</span>
+                    {{#if currency.isSelected }}
+                        <img class="currency-tick" src="images/tick.svg">
+                    {{/if}}
+                </a>
             </li>
         {{/each}}
     </ul>

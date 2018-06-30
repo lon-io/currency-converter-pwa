@@ -1,7 +1,17 @@
 .currencies {
+    padding: rem(0 30px);
+
     &-wrapper {
         background-color: $white;
-        padding: rem(10px 30px);
+
+        img {
+            width: rem(24px);
+            height: rem(24px);
+        }
+
+        a {
+            cursor: pointer;
+        }
     }
 
     &-header {
@@ -11,10 +21,34 @@
         justify-content: space-between;
         align-items: center;
         font-size: rem(16px);
+        padding: rem(16px 30px);
+        transition: height 0.3s ease-in-out;
+    }
 
-        img {
-            width: rem(24px);
-            height: rem(24px);
+    &-search {
+        &-wrapper {
+            color: $azalea;
+            // padding: rem(10px) 0;
+            background-color: $lavender-blush;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: rem(16px);
+            padding: rem(16px 30px);
+            transition: height 0.3s ease-in-out;
+        }
+
+        color: $radical-red;
+        border: none;
+        background: transparent;
+        flex: 1;
+        line-height: rem(24px);
+        font-size: rem(24px);
+        font-weight: 300;
+
+        &:focus,
+        &:active {
+            outline: none;
         }
     }
 
@@ -40,8 +74,6 @@
         }
 
         &-tick {
-            width: rem(24px);
-            height: rem(24px);
             float: right;
         }
     }

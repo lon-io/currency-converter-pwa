@@ -3,6 +3,7 @@ import {
     getTemplateRenderer,
 } from '../libs/renderer';
 import { handleEvent, dispatchEvent, getEventTarget, } from '../libs/events';
+import { hideElement, } from '../libs/utils';
 
 import constants from '../config/constants';
 
@@ -12,6 +13,9 @@ const {
         types,
     },
 } = constants;
+
+const searchWrapperID = 'currencies-search-wrapper';
+const headerWrapperID = 'currencies-header';
 
 export default class CurrenciesScreen {
     constructor(appRoot, idbHelper) {
@@ -25,6 +29,8 @@ export default class CurrenciesScreen {
         this.idbHelper = idbHelper;
         this.root = null;
         this.renderTemplate = getTemplateRenderer(template);
+        this.searchWrapperInitialStyle = null;
+        this.headerInitialStyle = null;
     }
 
     init() {
@@ -35,23 +41,12 @@ export default class CurrenciesScreen {
     listen() {
         this.registerShowEventHandler();
         this.registerCurrencyClickHandler();
+        this.registerSearchClickHandler();
+        this.registerSearchCloseClickHandler();
     }
 
     setCurrencies(currencies) {
         this.state.currencies = currencies;
-    }
-
-    registerSearchClickHandler() {
-        // handleEvent()
-    }
-
-    registerShowEventHandler() {
-        handleEvent(events.SELECT_CURRENCY, this.appRoot,  (event = {}) => {
-            const data = event.detail;
-
-            if (data && data.type) this.state.currencyType = data.type;
-            this.setVisible(true);
-        });
     }
 
     setVisible(visible) {
@@ -62,6 +57,65 @@ export default class CurrenciesScreen {
                 wrapper.style.width = '100%';
             } else wrapper.style.width = '0';
         } else console.log('{{ConverterScreen.registerShowEventHandler}}: Invalid wrapper', wrapper);
+    }
+
+    setSearchVibility(showSearch) {
+        console.log('Here ->', showSearch);
+        const searchWrapper = document.getElementById(searchWrapperID);
+        const headerWrapper = document.getElementById(headerWrapperID);
+        // const
+
+        if (searchWrapper && headerWrapper
+            && this.searchWrapperInitialStyle && this.headerInitialStyle) {
+            if (showSearch) {
+                hideElement(headerWrapper);
+                searchWrapper.style = this.searchWrapperInitialStyle;
+            } else {
+                hideElement(searchWrapper);
+                headerWrapper.style = this.headerInitialStyle;
+            }
+        } else console.log('{{CurrenciesScreen.setSearchVibility}} Invalid wrappers', searchWrapper, headerWrapper);
+    }
+
+    registerSearchClickHandler() {
+        const searchIconID = 'currency-search-icon';
+
+        const searchWrapper = document.getElementById(searchWrapperID);
+        const headerWrapper = document.getElementById(headerWrapperID);
+
+        hideElement(searchWrapper);
+
+        if (searchWrapper && headerWrapper) {
+            this.searchWrapperInitialStyle = searchWrapper.style;
+            this.headerInitialStyle = headerWrapper.style;
+        }
+
+        const handler = () => {
+            this.setSearchVibility(true);
+
+            // Todo: Render partial update;
+        };
+
+        handleEvent('click', this.appRoot, handler, `#${searchIconID}`);
+    }
+
+    registerSearchCloseClickHandler() {
+        const searchCloseIconID = 'currency-search-close-icon';
+
+        const handler = () => {
+            this.setSearchVibility(false);
+        };
+
+        handleEvent('click', this.appRoot, handler, `#${searchCloseIconID}`);
+    }
+
+    registerShowEventHandler() {
+        handleEvent(events.SELECT_CURRENCY, this.appRoot,  (event = {}) => {
+            const data = event.detail;
+
+            if (data && data.type) this.state.currencyType = data.type;
+            this.setVisible(true);
+        });
     }
 
     registerCurrencyClickHandler() {
