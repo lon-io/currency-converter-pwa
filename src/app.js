@@ -11,7 +11,7 @@ import {
 import {
     getTemplateRenderer,
 } from './libs/renderer';
-import template from './views/partials/app.hbs';
+import template from './views/app.hbs';
 import constants from './config/constants';
 
 const {

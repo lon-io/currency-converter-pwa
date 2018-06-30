@@ -1,4 +1,4 @@
-import template from '../views/partials/currencies.hbs';
+import template from '../views/screens/currencies.hbs';
 import {
     getTemplateRenderer,
 } from '../libs/renderer';

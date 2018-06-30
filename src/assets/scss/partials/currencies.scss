@@ -1,42 +1,47 @@
 .currencies {
     &-wrapper {
         background-color: $white;
-        padding: rem(10px 70px);
+        padding: rem(10px 30px);
     }
 
     &-header {
         color: $azalea;
-        padding: rem(20px) 0;
+        padding: rem(10px) 0;
         display: flex;
         justify-content: space-between;
         align-items: center;
         font-size: rem(16px);
+
+        img {
+            width: rem(24px);
+            height: rem(24px);
+        }
     }
 
     .currency {
         @extend %clearfix;
-        border-bottom: rem(1px) solid $azalea;
-        padding: rem(32px) 0;
+        border-bottom: rem(1px) solid $we-peep;
+        padding: rem(16px) 0;
         text-indent: 0;
-        list-style-type: 0;
 
         &-name {
             color: $radical-red;
-            font-size: rem(32px);
-            font-weight: 600;
+            font-size: rem(20px);
+            font-weight: 500;
             padding-right: rem(4px);
         }
 
         &-code {
             color: $azalea;
             font-size: rem(14px);
-            font-weight: 500;
+            font-weight: 600;
             text-transform: uppercase;
+            letter-spacing: rem(2px)
         }
 
         &-tick {
-            width: rem(48px);
-            height: rem(48px);
+            width: rem(24px);
+            height: rem(24px);
             float: right;
         }
     }

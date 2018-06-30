@@ -1,4 +1,4 @@
-import template from '../views/partials/converter.hbs';
+import template from '../views/screens/converter.hbs';
 import {
     getTemplateRenderer,
 } from '../libs/renderer';
