@@ -3,23 +3,36 @@ import constants from '../config/constants';
 
 const {
     name: dbName,
-    storeKey,
+    stores,
+    version,
 } = constants.db;
 
 // https://github.com/jakearchibald/idb
 export default class IDBHelper {
     constructor() {
-        this.store = null;
         this.dbPromise = this.openDB();
     }
 
     openDB() {
-        return navigator.serviceWorker ? idb.open(dbName, 1, (upgradeDB) => {
-            this.store = upgradeDB.createObjectStore(storeKey);
+        return navigator.serviceWorker ? idb.open(dbName, version, (upgradeDB) => {
+            Object.values(stores).forEach((storeKey) => {
+                const store = upgradeDB.createObjectStore(storeKey);
+
+                switch (storeKey) {
+                    case stores.CONVERSION_FACTORS:
+                        store.createIndex('by-created-date', 'timestamp');
+                        break;
+                    default:
+                        break;
+                }
+            });
+
+            return upgradeDB;
         }) : Promise.resolve(null);
     }
 
-    get(key) {
+    get(key, storeKey = stores.GENERAL) {
+        console.log('GET =>', storeKey);
         return this.dbPromise.then(db => {
             if (!db) return null;
 
@@ -28,7 +41,8 @@ export default class IDBHelper {
         });
     }
 
-    set(key, val) {
+    set(key, val, storeKey = stores.GENERAL) {
+        console.log('SET =>', storeKey);
         return this.dbPromise.then(db => {
             if (!db) return null;
 
@@ -38,7 +52,8 @@ export default class IDBHelper {
         });
     };
 
-    delete(key) {
+    delete(key, storeKey = stores.GENERAL) {
+        console.log('DEL =>', storeKey);
         return this.dbPromise.then(db => {
             if (!db) return null;
 
@@ -48,7 +63,8 @@ export default class IDBHelper {
         });
     };
 
-    clear() {
+    clear(storeKey = stores.GENERAL) {
+        console.log('CLEAR =>', storeKey);
         return this.dbPromise.then(db => {
             if (!db) return null;
 
@@ -58,7 +74,8 @@ export default class IDBHelper {
         });
     };
 
-    keys() {
+    keys(storeKey = stores.GENERAL) {
+        console.log('KEYS =>', storeKey);
         return this.dbPromise.then(db => {
             if (!db) return [];
 
@@ -77,4 +94,20 @@ export default class IDBHelper {
             return tx.complete.then(() => keys);
         });
     }
+
+    getStoreCursorByIndex(storeKey = stores.GENERAL, index, forward) {
+        return this.dbPromise.then(db => {
+            if (!db) return [];
+
+            const tx = db.transaction(storeKey);
+            const store = tx.objectStore(storeKey);
+
+            // limit store to 30 items
+            store.index(index).openCursor(null, forward ? 'next': 'prev').then(function deleteRest(cursor) {
+                if (!cursor) return;
+                cursor.delete();
+                return cursor.continue().then(deleteRest);
+            });
+        });
+    };
 }

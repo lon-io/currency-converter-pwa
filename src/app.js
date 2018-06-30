@@ -5,7 +5,6 @@ import ConverterScreen from './screens/converter';
 import IDBHelper from './libs/idb-helper';
 import Loader from './components/loader';
 
-import constants from './config/constants';
 import {
     getCurrencies,
 } from './libs/api-service';
@@ -13,6 +12,7 @@ import {
     getTemplateRenderer,
 } from './libs/renderer';
 import template from './views/partials/app.hbs';
+import constants from './config/constants';
 
 const {
     keys,
@@ -28,6 +28,7 @@ export default class App {
         this.currenciesScreen = new Currencies(appRoot, idbHelper);
         this.converterScreen = new ConverterScreen(appRoot, idbHelper);
         this.renderTemplate = getTemplateRenderer(template);
+        this.currencies = [];
     }
 
     async start() {
@@ -41,7 +42,7 @@ export default class App {
             this.currencies = currencies;
             this.currenciesScreen.setCurrencies(currencies);
 
-            const selectedCurrencies = this.getInitialSelectedCurrencies();
+            const selectedCurrencies = await this.getInitialSelectedCurrencies();
             this.converterScreen.setCurrencies(selectedCurrencies);
 
             const appContent = this.renderTemplate({});
@@ -90,12 +91,34 @@ export default class App {
     }
 
     getInitialSelectedCurrencies() {
-        console.log('A2', this.currencies);
-        if (Array.isArray(this.currencies)) {
+        const currencies = this.currencies;
+
+        // Unlikely edge-case
+        if (!Array.isArray(this.currencies) || this.currencies.length < 2) return {};
+
+        return Promise.all([
+            this.idbHelper.get(keys.LAST_CURRENCY_FROM_ID),
+            this.idbHelper.get(keys.LAST_CURRENCY_TO_ID),
+        ]).then(([selectedFromID, selectedToID,]) => {
+            // Find matches
+            let currencyFrom = currencies.find(({ id, }) => id === selectedFromID);
+            let currencyTo = currencies.find(({ id, }) => id === selectedToID);
+
+            // Else the first and second currencies && set them in idb
+            if (!currencyFrom) {
+                currencyFrom = currencies[0];
+                this.idbHelper.set(keys.LAST_CURRENCY_FROM_ID, currencyFrom.id);
+            }
+
+            if (!currencyTo) {
+                currencyTo = currencies[1];
+                this.idbHelper.set(keys.LAST_CURRENCY_TO_ID, currencyTo.id);
+            }
+
             return {
-                currencyFrom: this.currencies[0],
-                currencyTo: this.currencies[1],
+                currencyFrom,
+                currencyTo,
             };
-        } return {};
+        });
     }
 }

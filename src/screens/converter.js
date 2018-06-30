@@ -19,6 +19,13 @@ const {
     currency: {
         types,
     },
+    converter: {
+        maxStoredFactors,
+    },
+    db: {
+        stores,
+        keys,
+    },
     events,
 } = constants;
 
@@ -57,7 +64,27 @@ export default class ConverterScreen {
         if(amount === 0) return Promise.resolve(0);
 
         try {
-            const factor = await getConversionFactor(currencyFrom.id, currencyTo.id);
+            const factorKey = `${currencyFrom.id}_${currencyTo.id}`;
+            const inverseFactorKey = `${currencyTo.id}_${currencyFrom.id}`;
+
+            // Check cache
+            const factorObj = await this.idbHelper.get(factorKey, stores.CONVERSION_FACTORS);
+            let factor = factorObj && factorObj.factor;
+            console.log(factorObj);
+
+            // Try the inverse
+            if (!factor) {
+                await this.idbHelper.get(inverseFactorKey, stores.CONVERSION_FACTORS);
+                factor = factorObj && factorObj.factor ? 1/parseFloat(factorObj.factor) : null;
+            }
+
+            // Cache miss: Fetch the factor && cache it
+            if (!factor) {
+                console.log('{{ConverterScreen.convertCurrencies}} Cache MISS for factor', factorKey);
+
+                factor = await getConversionFactor(currencyFrom.id, currencyTo.id);
+                this.setFactorInDB(factorKey, factor);
+            }
 
             const result = factor * amount;
             console.log('Conversion result: %s From %s to %s => %s', amount, currencyFrom.id, currencyTo.id, result);
@@ -67,6 +94,16 @@ export default class ConverterScreen {
             console.log('{{Converter.convertCurrencies}}', error);
         }
 
+    }
+
+    setFactorInDB(factorKey, factor) {
+        this.idbHelper.set(factorKey, {
+            factor,
+            timestamp: Date.now(),
+        }, stores.CONVERSION_FACTORS);
+
+        // Limit the number of stored values to the config value
+        // maxStoredFactors
     }
 
     setLoading(loading) {
@@ -155,11 +192,10 @@ export default class ConverterScreen {
     registerCurrencySelectedHandler() {
         handleEvent(events.CURRENCY_SELECTED, this.appRoot, (event) => {
             const data = event && event.detail;
-            console.log(data);
 
             if (data) {
                 this.updateCurrency(data.type, data.currency);
-            } console.error('{{ConverterScreen.currencySelectedHandler}}: Invalid event data', event);
+            } else console.error('{{ConverterScreen.currencySelectedHandler}}: Invalid event data', event);
         });
     }
 
@@ -174,9 +210,11 @@ export default class ConverterScreen {
         switch (type) {
             case types.FROM:
                 this.state.currencyFrom = currency;
+                this.idbHelper.set(keys.LAST_CURRENCY_FROM_ID, currency.id);
                 break;
             default:
                 this.state.currencyTo = currency;
+                this.idbHelper.set(keys.LAST_CURRENCY_TO_ID, currency.id);
                 break;
         }
 
