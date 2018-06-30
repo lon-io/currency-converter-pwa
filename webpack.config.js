@@ -65,7 +65,7 @@ module.exports = {
         filename: '[name].js',
         chunkFilename: '[id].[hash]',
         path: path.resolve(__dirname, 'dist'),
-        globalObject: 'this',
+        globalObject: 'this', //https://github.com/webpack/webpack/issues/6642#issuecomment-371087342
     },
 
     module: {
