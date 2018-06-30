@@ -2,6 +2,7 @@
 import Currencies from './screens/currencies';
 import ConverterScreen from './screens/converter';
 
+import IDBHelper from './libs/idb-helper';
 import Loader from './components/loader';
 
 import constants from './config/constants';
@@ -14,16 +15,18 @@ import {
 import template from './views/partials/app.hbs';
 
 const {
-    events,
-} = constants;
-import { handleEvent, } from './libs/events';
+    keys,
+} = constants.db;
 
 export default class App {
     constructor() {
         const appRoot = document.getElementById('app');
+        const idbHelper = new IDBHelper();
+
         this.appRoot = appRoot;
-        this.currenciesScreen = new Currencies(appRoot);
-        this.converterScreen = new ConverterScreen(appRoot);
+        this.idbHelper = new IDBHelper();
+        this.currenciesScreen = new Currencies(appRoot, idbHelper);
+        this.converterScreen = new ConverterScreen(appRoot, idbHelper);
         this.renderTemplate = getTemplateRenderer(template);
     }
 
@@ -35,8 +38,7 @@ export default class App {
             this.registerServiceWorker();
             this.appRoot.innerHTML = Loader();
 
-            const currenciesObj = await getCurrencies();
-            const currencies = Object.values(currenciesObj);
+            const currencies = await this.getAllCurrencies();
 
             this.currencies = currencies;
             this.currenciesScreen.setCurrencies(currencies);
@@ -71,6 +73,22 @@ export default class App {
     async listen() {
         this.converterScreen.listen(this.appRoot);
         this.currenciesScreen.listen(this.appRoot);
+    }
+
+    async getAllCurrencies() {
+        let currenciesObj = await this.idbHelper.get(keys.CURRENCIES);
+
+        // Cache miss - make request;
+        if (!currenciesObj) {
+            currenciesObj = await getCurrencies();
+
+            // Cache the response
+            this.idbHelper.set(keys.CURRENCIES, currenciesObj);
+        }
+
+        // Map to array
+        const currencies = Object.values(currenciesObj);
+        return currencies;
     }
 
     getInitialSelectedCurrencies() {

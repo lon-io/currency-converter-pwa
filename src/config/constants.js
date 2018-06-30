@@ -17,6 +17,10 @@ export default {
         SELECT_CURRENCY: 'SELECT_CURRENCY',
     },
     db: {
-        name: 'currency-converter',
+        name: 'currency-converter-db',
+        storeKey: 'currency-converter-store',
+        keys: {
+            CURRENCIES: 'CURRENCIES',
+        },
     },
 };

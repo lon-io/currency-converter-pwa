@@ -15,7 +15,7 @@
   "keywords": [
     "pwa",
     "DOM",
-    "service-worker",
+    "service-worker"
   ],
   "author": "Lon Ilesanmi <lonilesanmi@gmail.com>",
   "license": "ISC",
