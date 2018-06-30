@@ -7,6 +7,13 @@ body {
     min-height: 100vh;
     position: relative;
     font-size: 100%;
+
+    // Center the app
+    @include media-tablet-up {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+    }
 }
 
 * {

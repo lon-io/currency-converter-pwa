@@ -1,10 +1,12 @@
-@import "utils/variables.scss";
-@import "utils/colors.scss";
-@import "utils/fonts.scss";
+@import "utils/variables";
+@import "utils/colors";
+@import "utils/fonts";
+@import "utils/media";
 
-@import "global.scss";
+@import "global";
 
 @import "components/loader";
-@import "partials/app";
-@import "partials/currencies";
-@import "partials/converter";
+@import "components/card";
+@import "app";
+@import "screens/currencies";
+@import "screens/converter";

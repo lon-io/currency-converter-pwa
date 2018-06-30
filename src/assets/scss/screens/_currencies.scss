@@ -15,6 +15,7 @@
     }
 
     &-header {
+        @include card;
         color: $azalea;
         padding: rem(10px) 0;
         display: flex;
@@ -27,8 +28,8 @@
 
     &-search {
         &-wrapper {
+            @include card;
             color: $azalea;
-            // padding: rem(10px) 0;
             background-color: $lavender-blush;
             display: flex;
             justify-content: space-between;

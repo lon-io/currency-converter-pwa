@@ -1,7 +1,13 @@
 #app {
     display: block;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+
+    @include media-tablet-up {
+        width: rem(500px);
+        height: 90vh;
+    }
 
     #loader-wrapper {
         position: absolute;
@@ -23,19 +29,20 @@
 
     #converter-root {
         display: block;
-        height: 100vh;
+        width: 100%;
+        height: 100%;
         background-color: $white;
     }
 
     #currencies-root {
-        height: 100%; /* 100% Full-height */
-        width: 0; /* 0 width - change this with JavaScript */
-        position: fixed; /* Stay in place */
-        z-index: 1; /* Stay on top */
-        top: 0; /* Stay at the top */
+        height: 100%;
+        width: 0;
+        position: absolute;
+        z-index: 1;
+        top: 0;
         right: 0;
-        background-color: $white; /* Black*/
-        overflow-x: hidden; /* Disable horizontal scroll */
+        background-color: $white;
+        overflow-x: hidden;
 
         transition: width 0.3s ease-in-out;
     }
