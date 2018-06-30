@@ -7,12 +7,12 @@
         position: absolute;
         top: 50%;
         left: 50%;
-        margin-top: -100px;
-        margin-left: -100px;
+        margin-top: -75px;
+        margin-left: -75px;
 
         > svg {
-            width: 200px;
-            height: 200px;
+            width: 150px;
+            height: 150px;
 
             circle {
                 stroke: $radical-red;

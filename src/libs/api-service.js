@@ -38,7 +38,7 @@ export const getConversionFactor = (currencyFromID, currencyToID) => {
             return result;
         })
         .catch(error => {
-            console.log('{{ApiService.getCurrencies}}', error);
+            console.log('{{ApiService.getConversionFactor}}', error);
             throw new Error(`Bad response returned from call to get currencies: ${error.message}`);
         });
 };
