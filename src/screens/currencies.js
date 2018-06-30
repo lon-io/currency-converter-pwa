@@ -16,6 +16,7 @@ const {
 
 const searchWrapperID = 'currencies-search-wrapper';
 const headerWrapperID = 'currencies-header';
+const searchInputID = 'currencies-search';
 
 export default class CurrenciesScreen {
     constructor(appRoot, idbHelper) {
@@ -63,13 +64,14 @@ export default class CurrenciesScreen {
         console.log('Here ->', showSearch);
         const searchWrapper = document.getElementById(searchWrapperID);
         const headerWrapper = document.getElementById(headerWrapperID);
-        // const
+        const searchInput = document.getElementById(searchInputID);
 
         if (searchWrapper && headerWrapper
             && this.searchWrapperInitialStyle && this.headerInitialStyle) {
             if (showSearch) {
                 hideElement(headerWrapper);
                 searchWrapper.style = this.searchWrapperInitialStyle;
+                if (searchInput && typeof searchInput.focus === 'function') searchInput.focus();
             } else {
                 hideElement(searchWrapper);
                 headerWrapper.style = this.headerInitialStyle;
