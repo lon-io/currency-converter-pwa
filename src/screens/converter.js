@@ -23,7 +23,7 @@ const {
 } = constants;
 
 export default class ConverterScreen {
-    constructor(appRoot) {
+    constructor(appRoot, idbHelper) {
         this.state = {
             currencyFrom: null,
             currencyTo: null,
@@ -32,6 +32,7 @@ export default class ConverterScreen {
         };
 
         this.appRoot = appRoot;
+        this.idbHelper = idbHelper;
         this.root = null;
         this.renderTemplate = getTemplateRenderer(template);
     }

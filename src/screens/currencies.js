@@ -14,7 +14,7 @@ const {
 } = constants;
 
 export default class CurrenciesScreen {
-    constructor(appRoot) {
+    constructor(appRoot, idbHelper) {
         this.state = {
             selectedCurrency: null,
             currencies: [],
@@ -22,6 +22,7 @@ export default class CurrenciesScreen {
         };
 
         this.appRoot = appRoot;
+        this.idbHelper = idbHelper;
         this.root = null;
         this.renderTemplate = getTemplateRenderer(template);
     }

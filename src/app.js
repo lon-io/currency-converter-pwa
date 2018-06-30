@@ -31,8 +31,6 @@ export default class App {
     }
 
     async start() {
-        console.log('Hello World!');
-
         try {
             // Set loader
             this.registerServiceWorker();
