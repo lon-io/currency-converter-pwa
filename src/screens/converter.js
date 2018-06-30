@@ -12,6 +12,7 @@ import {
 import {
     parseMoney,
     formatMoney,
+    getElementTextContent,
 } from '../libs/utils';
 import constants from '../config/constants';
 
@@ -141,7 +142,7 @@ export default class ConverterScreen {
 
     validateAmountAndUpdateState() {
         const amountSpan = document.getElementById('amount');
-        const inputValue = amountSpan.textContent || amountSpan.innerText;
+        const inputValue = getElementTextContent(amountSpan);
 
         const parsedAmount = parseMoney(inputValue);
 

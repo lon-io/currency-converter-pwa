@@ -39,3 +39,7 @@ export const hideElement = (element) => {
         element.style.overflow = 'hidden';
     }
 };
+
+export const getElementTextContent = (element) => {
+    return element ? element.textContent || element.innerText : '';
+};

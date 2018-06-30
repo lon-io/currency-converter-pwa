@@ -1,4 +1,4 @@
-import {
+import Handlebars, {
     compile,
 } from 'handlebars';
 
@@ -18,4 +18,9 @@ export const renderPage = (app, content) => {
 
 export const renderLoader = () => {
     return compile(loaderTemplate)({});
+};
+
+export const getRenderedPartial = (template, context) => {
+    const partialRenderer = Handlebars.partials[template];
+    return typeof partialRenderer === 'function' ? partialRenderer(context) : '';
 };
