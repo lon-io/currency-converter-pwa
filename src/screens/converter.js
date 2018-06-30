@@ -15,6 +15,8 @@ import {
 } from '../libs/utils';
 import constants from '../config/constants';
 
+const amountInputID = 'amount';
+
 const {
     currency: {
         types,
@@ -47,6 +49,7 @@ export default class ConverterScreen {
     init() {
         this.root = document.getElementById('converter-root');
         this.render();
+        this.setFocus();
     }
 
     setCurrencies(selectedCurrencies) {
@@ -236,6 +239,15 @@ export default class ConverterScreen {
         }
 
         this.render();
+        this.setFocus();
+    }
+
+    setFocus() {
+        const amountElement = document.getElementById(amountInputID);
+
+        if (amountElement && typeof amountElement.focus === 'function') {
+            amountElement.focus();
+        }
     }
 
     render() {
