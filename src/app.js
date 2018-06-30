@@ -3,7 +3,6 @@ import Currencies from './screens/currencies';
 import ConverterScreen from './screens/converter';
 
 import IDBHelper from './libs/idb-helper';
-import Loader from './components/loader';
 
 import {
     getCurrencies,
@@ -13,6 +12,7 @@ import {
 } from './libs/renderer';
 import template from './views/app.hbs';
 import constants from './config/constants';
+import { initializeHbs, } from './libs/hbs-helpers';
 
 const {
     keys,
@@ -29,13 +29,17 @@ export default class App {
         this.converterScreen = new ConverterScreen(appRoot, idbHelper);
         this.renderTemplate = getTemplateRenderer(template);
         this.currencies = [];
+
+        initializeHbs();
     }
 
     async start() {
         try {
-            // Set loader
             this.registerServiceWorker();
-            this.appRoot.innerHTML = Loader();
+
+            const appContent = this.renderTemplate({});
+            this.appRoot.innerHTML = appContent;
+            // this.appRoot.innerHTML = Loader();
 
             const currencies = await this.getAllCurrencies();
 
@@ -45,11 +49,9 @@ export default class App {
             const selectedCurrencies = await this.getInitialSelectedCurrencies();
             this.converterScreen.setCurrencies(selectedCurrencies);
 
-            const appContent = this.renderTemplate({});
-            this.appRoot.innerHTML = appContent;
-
             this.converterScreen.init();
             this.currenciesScreen.init();
+            this.hideLoader();
 
             this.listen();
         } catch(error) {
@@ -120,5 +122,15 @@ export default class App {
                 currencyTo,
             };
         });
+    }
+
+    hideLoader() {
+        const loaderWrapper = document.getElementById('loader-wrapper');
+        if (loaderWrapper) loaderWrapper.style.display = 'none';
+    }
+
+    showErrorView() {
+        const errorWrapper = document.getElementById('error-wrapper');
+        if (errorWrapper) errorWrapper.style.block = 'none';
     }
 }

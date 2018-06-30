@@ -41,6 +41,10 @@ export default class CurrenciesScreen {
         this.state.currencies = currencies;
     }
 
+    registerSearchClickHandler() {
+        // handleEvent()
+    }
+
     registerShowEventHandler() {
         handleEvent(events.SELECT_CURRENCY, this.appRoot,  (event = {}) => {
             const data = event.detail;
