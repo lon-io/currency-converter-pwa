@@ -19,6 +19,9 @@ const searchWrapperID = 'currencies-search-wrapper';
 const headerWrapperID = 'currencies-header';
 const searchInputID = 'currencies-search';
 const listWrapperID = 'currencies-list-wrapper';
+const backIconID = 'currency-back-icon';
+const searchCloseIconID = 'currency-search-close-icon';
+const currenciesContainerID = 'currencies';
 
 export default class CurrenciesScreen {
     constructor(appRoot, idbHelper) {
@@ -46,6 +49,7 @@ export default class CurrenciesScreen {
         this.registerShowEventHandler();
         this.registerCurrencyClickHandler();
         this.registerSearchClickHandler();
+        this.registerBackClickHandler();
         this.registerSearchCloseClickHandler();
         this.registerSearchChangeHandler();
     }
@@ -65,7 +69,6 @@ export default class CurrenciesScreen {
     }
 
     setSearchVisibility(showSearch) {
-        console.log('Here ->', showSearch);
         const searchWrapper = document.getElementById(searchWrapperID);
         const headerWrapper = document.getElementById(headerWrapperID);
         const searchInput = document.getElementById(searchInputID);
@@ -107,23 +110,27 @@ export default class CurrenciesScreen {
     }
 
     registerSearchCloseClickHandler() {
-        const searchCloseIconID = 'currency-search-close-icon';
-
         const handler = () => {
-            this.setSearchVisibility(false);
+            const searchValue = this.getCurrentSearchValue();
+
+            if (searchValue) this.clearSearchInput();
+            else this.setSearchVisibility(false);
         };
 
         handleEvent('click', this.appRoot, handler, `#${searchCloseIconID}`);
     }
 
+    registerBackClickHandler() {
+        const handler = () => {
+            this.setVisible(false);
+        };
+
+        handleEvent('click', this.appRoot, handler, `#${backIconID}`);
+    }
+
     registerSearchChangeHandler() {
         const handler = () => {
-            let searchValue = '';
-            const searchInputEl = document.getElementById(searchInputID);
-
-            if (searchInputEl) {
-                searchValue = searchInputEl.value;
-            }
+            const searchValue = this.getCurrentSearchValue();
 
             if (searchValue) {
                 console.log('{{CurrenciesScreen.SearchChangeHandler}} search value', searchValue);
@@ -145,10 +152,7 @@ export default class CurrenciesScreen {
     }
 
     registerCurrencyClickHandler() {
-        // const currencyList = document.getElementById('currencies');
-
         handleEvent('click', this.appRoot, (event) => {
-            console.log(this.state);
             const target = getEventTarget(event);
             const { currencies, } = this.state;
 
@@ -168,7 +172,7 @@ export default class CurrenciesScreen {
 
                 this.handleCurrencySelect();
             }
-        }, '#currencies');
+        }, `#${currenciesContainerID}`);
     }
 
     handleCurrencySelect() {
@@ -180,6 +184,25 @@ export default class CurrenciesScreen {
         });
 
         this.setVisible(false);
+    }
+
+    getCurrentSearchValue() {
+        let searchValue = '';
+        const searchInputEl = document.getElementById(searchInputID);
+
+        if (searchInputEl) {
+            searchValue = searchInputEl.value;
+        }
+
+        return searchValue;
+    }
+
+    clearSearchInput() {
+        const searchInputEl = document.getElementById(searchInputID);
+
+        if (searchInputEl) {
+            searchInputEl.value = '';
+        }
     }
 
     getSearchMatches(inputValue = '') {
@@ -205,13 +228,11 @@ export default class CurrenciesScreen {
 
     updateCurrenciesList(matchingCurrencies) {
         const listWrapper = document.getElementById(listWrapperID);
-        console.log(matchingCurrencies);
 
         if (listWrapper && Array.isArray(matchingCurrencies)) {
             const currenciesContent = getRenderedPartial('currencies', {
                 currencies: matchingCurrencies,
             });
-            console.log(currenciesContent);
 
             if (currenciesContent) listWrapper.innerHTML = currenciesContent;
         }
