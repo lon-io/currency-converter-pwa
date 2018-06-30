@@ -13,7 +13,7 @@ export default {
         },
     },
     converter: {
-        maxStoredFactors: 100,
+        maxStoredFactors: 2,
     },
     events: {
         CURRENCY_SELECTED: 'CURRENCY_SELECTED',
@@ -22,8 +22,19 @@ export default {
     db: {
         name: 'currency-converter-db',
         stores: {
-            GENERAL: 'currency-converter-store',
-            CONVERSION_FACTORS: 'currency-converter-factors-store',
+            GENERAL: {
+                key: 'currency-converter-store',
+                indices: {},
+            },
+            CONVERSION_FACTORS: {
+                key: 'currency-converter-factors-store',
+                indices: {
+                    by_created_date: {
+                        name: 'by-created-date',
+                        field: 'timestamp',
+                    },
+                },
+            },
         },
         keys: {
             CURRENCIES: 'CURRENCIES',

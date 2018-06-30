@@ -15,24 +15,26 @@ export default class IDBHelper {
 
     openDB() {
         return navigator.serviceWorker ? idb.open(dbName, version, (upgradeDB) => {
-            Object.values(stores).forEach((storeKey) => {
+            // Create stores
+            Object.values(stores).forEach((storeObj) => {
+                const storeKey = storeObj.key;
                 const store = upgradeDB.createObjectStore(storeKey);
 
-                switch (storeKey) {
-                    case stores.CONVERSION_FACTORS:
-                        store.createIndex('by-created-date', 'timestamp');
-                        break;
-                    default:
-                        break;
-                }
+                // Create indices
+                Object.values(storeObj.indices).forEach((index) => {
+                    if (index.name && index.field) {
+                        store.createIndex(index.name, index.field);
+                    }
+                });
             });
 
             return upgradeDB;
         }) : Promise.resolve(null);
     }
 
-    get(key, storeKey = stores.GENERAL) {
-        console.log('GET =>', storeKey);
+    get(key, storeConfig = stores.GENERAL) {
+        const storeKey = storeConfig.key;
+
         return this.dbPromise.then(db => {
             if (!db) return null;
 
@@ -41,8 +43,9 @@ export default class IDBHelper {
         });
     }
 
-    set(key, val, storeKey = stores.GENERAL) {
-        console.log('SET =>', storeKey);
+    set(key, val, storeConfig = stores.GENERAL) {
+        const storeKey = storeConfig.key;
+
         return this.dbPromise.then(db => {
             if (!db) return null;
 
@@ -52,8 +55,9 @@ export default class IDBHelper {
         });
     };
 
-    delete(key, storeKey = stores.GENERAL) {
-        console.log('DEL =>', storeKey);
+    delete(key, storeConfig = stores.GENERAL) {
+        const storeKey = storeConfig.key;
+
         return this.dbPromise.then(db => {
             if (!db) return null;
 
@@ -63,8 +67,9 @@ export default class IDBHelper {
         });
     };
 
-    clear(storeKey = stores.GENERAL) {
-        console.log('CLEAR =>', storeKey);
+    clear(storeConfig = stores.GENERAL) {
+        const storeKey = storeConfig.key;
+
         return this.dbPromise.then(db => {
             if (!db) return null;
 
@@ -74,8 +79,9 @@ export default class IDBHelper {
         });
     };
 
-    keys(storeKey = stores.GENERAL) {
-        console.log('KEYS =>', storeKey);
+    keys(storeConfig = stores.GENERAL) {
+        const storeKey = storeConfig.key;
+
         return this.dbPromise.then(db => {
             if (!db) return [];
 
@@ -95,19 +101,18 @@ export default class IDBHelper {
         });
     }
 
-    getStoreCursorByIndex(storeKey = stores.GENERAL, index, forward) {
-        return this.dbPromise.then(db => {
-            if (!db) return [];
+    getStoreCursorByIndex(storeConfig = stores.GENERAL, index, forward) {
+        const storeKey = storeConfig.key;
 
-            const tx = db.transaction(storeKey);
+        return this.dbPromise.then(db => {
+            if (!db) return null;
+
+            const tx = db.transaction(storeKey, 'readwrite');
             const store = tx.objectStore(storeKey);
 
             // limit store to 30 items
-            store.index(index).openCursor(null, forward ? 'next': 'prev').then(function deleteRest(cursor) {
-                if (!cursor) return;
-                cursor.delete();
-                return cursor.continue().then(deleteRest);
-            });
+            console.log('ƒ©', storeKey, index, forward);
+            return store.index(index).openCursor(null, forward ? 'next': 'prev');
         });
     };
 }

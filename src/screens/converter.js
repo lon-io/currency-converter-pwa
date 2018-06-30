@@ -61,7 +61,7 @@ export default class ConverterScreen {
             currencyTo,
         } = this.state;
 
-        if(amount === 0) return Promise.resolve(0);
+        if (amount === 0) return Promise.resolve(0);
 
         try {
             const factorKey = `${currencyFrom.id}_${currencyTo.id}`;
@@ -75,7 +75,7 @@ export default class ConverterScreen {
             // Try the inverse
             if (!factor) {
                 await this.idbHelper.get(inverseFactorKey, stores.CONVERSION_FACTORS);
-                factor = factorObj && factorObj.factor ? 1/parseFloat(factorObj.factor) : null;
+                factor = factorObj && factorObj.factor ? 1 / parseFloat(factorObj.factor) : null;
             }
 
             // Cache miss: Fetch the factor && cache it
@@ -90,20 +90,37 @@ export default class ConverterScreen {
             console.log('Conversion result: %s From %s to %s => %s', amount, currencyFrom.id, currencyTo.id, result);
 
             return result;
-        } catch(error) {
+        } catch (error) {
             console.log('{{Converter.convertCurrencies}}', error);
         }
 
     }
 
-    setFactorInDB(factorKey, factor) {
-        this.idbHelper.set(factorKey, {
+    async setFactorInDB(factorKey, factor) {
+        const storeConfig = stores.CONVERSION_FACTORS;
+        await this.idbHelper.set(factorKey, {
             factor,
             timestamp: Date.now(),
-        }, stores.CONVERSION_FACTORS);
+        }, storeConfig);
 
         // Limit the number of stored values to the config value
         // maxStoredFactors
+        const index = storeConfig.indices
+            && storeConfig.indices.by_created_date && storeConfig.indices.by_created_date.name;
+        const factorsCursor = await this.idbHelper.getStoreCursorByIndex(storeConfig, index, false);
+
+        console.log(storeConfig.indices, index);
+        if (factorsCursor) {
+            const deleteCursorItem = (cursor) => {
+                if (!cursor) return;
+                cursor.delete();
+                return cursor.continue().then((_cursor) => deleteCursorItem(_cursor));
+            };
+
+            factorsCursor.advance(maxStoredFactors).then((_cursor) => deleteCursorItem(_cursor));
+        } else {
+            console.log('{{Converter.setFactorInDB}} Invalid cursor', index, factorsCursor);
+        }
     }
 
     setLoading(loading) {
