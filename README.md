@@ -1,5 +1,16 @@
-# pwa-example
+# pwa-currency-converter
 ---
+Currency Converter App
+(Built as a Project for the ALC Udacity Program)
+
+Features:
+---
+- Works Offline
+- IndexDB
+- Cache API
+- Service Worker
+- DOM API
+- Mobile-first Responsive UI
 
 Usage
 ---
@@ -7,7 +18,7 @@ Usage
 Start the development server with this command:
 
 ```
-npm start
+npm run start
 ```
 
 Setup
@@ -23,3 +34,20 @@ Compile
 ```
 npm run build
 ```
+
+Deploy (Github Pages)
+---
+
+```
+npm run deploy
+```
+
+Author
+---
+<a href="https://github.com/lon-io">Lon Ilesanmi</a>
+
+Credits
+---
+- API courtesy: <a href="https://free.currencyconverterapi.com/">Currency Converter API</a>
+
+- Icons made by: <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
