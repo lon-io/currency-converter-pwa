@@ -27,6 +27,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: 'PWA Example',
             template: path.resolve(__dirname, 'src/views/index.ejs'),
+            excludeChunks: [ 'sw.js', ],
         }),
         new Visualizer(),
     ],
