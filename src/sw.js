@@ -1,13 +1,18 @@
 // This is not the best approach in dev mode
 // But in production (since this is a static app)
 // we want to change the hash on every new build
-// const swFingerPrint = Date.now();
-const swFingerPrint = 'v6';
+const swFingerPrint = Date.now();
 const APP_CACHE_NAME = `currency-converter-cache-${swFingerPrint}`;
+
+// Gh-Pages parameters
+const ghPagesPagesHostname = 'lon-io.github.io';
+const ghPagesPagesBasePathname = '/currency-converter-pwa';
+
+// Base Assets and Homepage Routes
 const routesToCache = [
     '/',
-    '/main.js',
-    '/main.css',
+    '/js/main.js',
+    '/css/main.css',
 ];
 
 // Handle the install event
@@ -16,8 +21,14 @@ self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(APP_CACHE_NAME)
         .then((cache) => {
-            console.log('Opened cache');
-            return cache.addAll(routesToCache);
+            console.log(`{{sw.js}}: Cache ${APP_CACHE_NAME} Opened`);
+
+            return cache.addAll(
+                // Todo: Find a better implementation than tight-coupling to GH-Pages
+                location.hostname === ghPagesPagesHostname
+                    ? routesToCache.map(route => `${ghPagesPagesBasePathname}${route}`)
+                    : routesToCache
+            );
         })
     );
 });
