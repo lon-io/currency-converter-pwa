@@ -9,7 +9,8 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
-  position: relative; }
+  position: relative;
+  font-size: 100%; }
 
 * {
   box-sizing: border-box; }
@@ -36,16 +37,17 @@ ul {
   display: block;
   width: 100%;
   height: 100%; }
-  #app #loader {
+  #app #loader-wrapper {
     position: absolute;
     top: 50%;
     left: 50%;
-    margin-top: -100px;
-    margin-left: -100px; }
-    #app #loader > svg {
-      width: 200px;
-      height: 200px; }
-      #app #loader > svg circle {
+    margin-top: -50px;
+    margin-left: -50px;
+    background-color: #fff; }
+    #app #loader-wrapper > svg {
+      width: 100px;
+      height: 100px; }
+      #app #loader-wrapper > svg circle {
         stroke: #FF5354; }
   #app #converter-root {
     display: block;
@@ -63,43 +65,66 @@ ul {
     top: 0;
     /* Stay at the top */
     right: 0;
-    background-color: #111;
+    background-color: #fff;
     /* Black*/
     overflow-x: hidden;
     /* Disable horizontal scroll */
     transition: width 0.3s ease-in-out; }
 
-.currencies-wrapper {
-  background-color: #fff;
-  padding: 0.625rem 4.375rem; }
-
-.currencies-header {
-  color: #FFBBBC;
-  padding: 1.25rem 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 1rem; }
-
-.currencies .currency {
-  border-bottom: 0.0625rem solid #FFBBBC;
-  padding: 2rem 0;
-  text-indent: 0;
-  list-style-type: 0; }
-  .currencies .currency-name {
-    color: #FF5354;
-    font-size: 2rem;
-    font-weight: 600;
-    padding-right: 0.25rem; }
-  .currencies .currency-code {
+.currencies {
+  padding: 0 1.875rem; }
+  .currencies-wrapper {
+    background-color: #fff; }
+    .currencies-wrapper img {
+      width: 1.5rem;
+      height: 1.5rem; }
+    .currencies-wrapper a {
+      cursor: pointer; }
+  .currencies-header {
     color: #FFBBBC;
-    font-size: 0.875rem;
-    font-weight: 500;
-    text-transform: uppercase; }
-  .currencies .currency-tick {
-    width: 3rem;
-    height: 3rem;
-    float: right; }
+    padding: 0.625rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+    padding: 1rem 1.875rem;
+    transition: height 0.3s ease-in-out; }
+  .currencies-search {
+    color: #FF5354;
+    border: none;
+    background: transparent;
+    flex: 1;
+    line-height: 1.5rem;
+    font-size: 1.5rem;
+    font-weight: 300; }
+    .currencies-search-wrapper {
+      color: #FFBBBC;
+      background-color: #FCF9FA;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1rem;
+      padding: 1rem 1.875rem;
+      transition: height 0.3s ease-in-out; }
+    .currencies-search:focus, .currencies-search:active {
+      outline: none; }
+  .currencies .currency {
+    border-bottom: 0.0625rem solid #FED2D3;
+    padding: 1rem 0;
+    text-indent: 0; }
+    .currencies .currency-name {
+      color: #FF5354;
+      font-size: 1.25rem;
+      font-weight: 500;
+      padding-right: 0.25rem; }
+    .currencies .currency-code {
+      color: #FFBBBC;
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.125rem; }
+    .currencies .currency-tick {
+      float: right; }
 
 .converter {
   height: 100%;
@@ -114,11 +139,11 @@ ul {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 5rem 0; }
+    padding: 1.25rem 0; }
     .converter-box:first-child {
-      padding-bottom: 11.25rem; }
+      padding-bottom: 3.125rem; }
     .converter-box:last-child {
-      padding-top: 11.25rem; }
+      padding-top: 3.125rem; }
   .converter-from {
     background-color: #FF5354;
     color: #fff;
@@ -131,41 +156,44 @@ ul {
     width: 100%; }
   .converter-send {
     background-color: #fff;
-    border: 1.5rem solid #FF5354;
+    border: 0.5rem solid #FF5354;
     border-radius: 31.25rem;
-    height: 17.5rem;
-    width: 17.5rem;
+    height: 6.25rem;
+    width: 6.25rem;
     margin: auto;
     position: absolute;
     top: 50%;
     left: 50%;
-    margin-top: -8.75rem;
-    margin-left: -8.75rem;
+    margin-top: -3.125rem;
+    margin-left: -3.125rem;
     cursor: pointer; }
-    .converter-send > * {
-      position: absolute;
-      opacity: 1;
-      position: relative;
-      top: 50%;
-      transform: translateY(-50%);
-      transition: opacity 0.3s ease-in-out; }
-    .converter-send > img {
-      height: 7.5rem;
-      width: 7.5rem; }
     .converter-send > div {
-      opacity: 0;
-      text-align: center; }
-      .converter-send > div svg {
-        width: 120px;
-        height: 120px; }
-        .converter-send > div svg circle {
-          stroke: #FF5354; }
+      position: relative;
+      height: 100%;
+      width: 100%; }
+      .converter-send > div > * {
+        opacity: 1;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        transition: opacity 0.3s ease-in-out;
+        height: 3.125rem;
+        width: 3.125rem; }
+      .converter-send > div > div {
+        opacity: 0;
+        text-align: center; }
+        .converter-send > div > div svg {
+          width: 3.125rem;
+          height: 3.125rem; }
+          .converter-send > div > div svg circle {
+            stroke: #FF5354; }
     .converter-send:hover, .converter-send:focus, .converter-send:active {
       background-color: #FFA5A6;
       outline: none; }
   .converter-currency-name {
     cursor: pointer;
-    font-size: 5rem;
+    font-size: 1.875rem;
     font-weight: 500; }
     .converter-currency-name:hover, .converter-currency-name:focus, .converter-currency-name:active {
       color: #FFA5A6;
@@ -173,9 +201,9 @@ ul {
   .converter-currency-value {
     position: relative; }
     .converter-currency-value span:first-child {
-      font-size: 12.5rem;
-      line-height: 12.5rem;
-      font-weight: 600;
+      font-size: 5rem;
+      line-height: 5rem;
+      font-weight: 500;
       display: inline-block;
       white-space: nowrap;
       max-width: 75vw;
@@ -183,16 +211,17 @@ ul {
       overflow-y: visible; }
     .converter-currency-value span:last-child {
       position: absolute;
-      right: -2.5rem;
-      bottom: 1.875rem;
+      right: -1.25rem;
+      bottom: 0.9375rem;
       color: #FFBBBC;
-      font-size: 3rem;
-      font-weight: 600;
+      font-size: 1.5rem;
+      font-weight: 400;
       max-width: 1.25rem; }
     .converter-currency-value span:focus {
       outline: none; }
   .converter-currency-id {
     color: #FFBBBC;
-    font-size: 3rem;
-    font-weight: 500; }
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: 0.125rem; }
 
