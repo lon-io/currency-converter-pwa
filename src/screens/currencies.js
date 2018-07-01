@@ -14,6 +14,7 @@ const {
     },
 } = constants;
 
+const maxSearchQueries = 3;
 const searchHeaderWrapperID = 'currencies-header-search';
 const defaultHeaderWrapperID = 'currencies-header-default';
 
@@ -222,8 +223,8 @@ export default class CurrenciesScreen {
         };
 
         console.log(queries);
-        // We want to search on a maximum of 2 whitespace separated queries
-        const filteredQueries = queries.filter((q) => !!q).slice(2);
+        // We want to search on a maximum number of whitespace separated queries
+        const filteredQueries = queries.filter((q) => !!q).slice(0, maxSearchQueries);
         console.log(filteredQueries);
 
         // Use the result of the first search in the second
