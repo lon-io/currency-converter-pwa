@@ -88,8 +88,13 @@ export default class ConverterScreen {
             const factorKey = `${currencyFrom.id}_${currencyTo.id}`;
             const inverseFactorKey = `${currencyTo.id}_${currencyFrom.id}`;
 
-            let factor = currencyFrom.id === currencyTo.id ? 1 : null;
+            let factor;
             let factorObj;
+
+            if (currencyFrom.id === currencyTo.id) {
+                factor = 1;
+                this.appUtils.showFlashMessage('You are comparing the same currency :)');
+            }
 
             // Check cache
             if (!factor) {
