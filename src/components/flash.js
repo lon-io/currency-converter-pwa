@@ -1,6 +1,7 @@
 import { handleEvent, } from '../libs/events';
 import { getRenderedPartial, } from '../libs/renderer';
 import { setTranslation, resetTranslation, } from '../libs/utils';
+import AppUtils from '../libs/appUtils';
 import constants from '../config/constants';
 
 const {
@@ -19,6 +20,7 @@ export default class Flash {
     constructor(appRoot) {
         this.appRoot = appRoot;
         this.wrapper = null;
+        this.appUtils = new AppUtils(appRoot);
     }
 
     registerMessageHandler() {
@@ -62,6 +64,7 @@ export default class Flash {
     hide() {
         if (this.wrapper && this.wrapper.style) {
             setTranslation(this.wrapper, '500%, 0');
+            this.appUtils.setAppPrimaryFocus();
         }
     }
 
