@@ -29,7 +29,7 @@
 
     #flash-wrapper {
         @include card;
-        @include transform(translate(-500%, 0));
+        @include transform(translate(500%, 0));
         left: 0;
         margin: rem(8px);
         position: absolute;

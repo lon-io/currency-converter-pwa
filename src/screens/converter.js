@@ -146,12 +146,16 @@ export default class ConverterScreen {
 
         const parsedAmount = parseMoney(inputValue);
 
-        if (parsedAmount !== 0 && !parsedAmount) {
+        // Allow the user to clear the input or set it to zero, but disallow any other wrong input
+        if (inputValue !== '' && parsedAmount !== 0 && !parsedAmount) {
             // Todo: Flash error
             console.error('{{Converter.validateAmountAndUpdateState}} amount is invalid', inputValue, parsedAmount);
+            dispatchEvent(this.appRoot, events.FLASH_MESSAGE, {
+                message: 'Please enter a valid amount',
+            });
 
             // Reset the amount
-            amountSpan.innerHTML = formatMoney(this.state.amount) || 0;
+            if (parsedAmount !== '') amountSpan.innerHTML = formatMoney(this.state.amount) || 0;
             return false;
         }
 
@@ -189,6 +193,9 @@ export default class ConverterScreen {
             } else {
                 console.error('{{ConverterScreen.sendHandler}}: Elements missing', sendButton, resultSpan);
             }
+
+            // Reset the focus on the amount input
+            this.setFocus();
         };
 
         handleEvent('click', this.appRoot, handler, '#send');

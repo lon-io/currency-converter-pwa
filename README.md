@@ -5,7 +5,7 @@ Currency Converter App
 
 Features:
 ---
-- Works Offline
+- Offline First
 - IndexDB
 - Cache API
 - Service Worker

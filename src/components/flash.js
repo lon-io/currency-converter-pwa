@@ -61,7 +61,7 @@ export default class Flash {
 
     hide() {
         if (this.wrapper && this.wrapper.style) {
-            setTranslation(this.wrapper, '-500%, 0');
+            setTranslation(this.wrapper, '500%, 0');
         }
     }
 
