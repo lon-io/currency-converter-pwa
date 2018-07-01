@@ -1,4 +1,3 @@
-// 🇳🇬
 import CurrenciesScreen from './screens/currencies';
 import ConverterScreen from './screens/converter';
 import SidebarScreen from './screens/sidebar';
@@ -16,7 +15,7 @@ import {
 import template from './views/app.hbs';
 import constants from './config/constants';
 import { initializeHbs, } from './libs/hbs';
-import { handleEvent, dispatchEvent, getEventTarget, } from './libs/events';
+import { handleEvent, } from './libs/events';
 
 const {
     db: {
@@ -55,10 +54,13 @@ export default class App {
             // Initialize the Flash Component
             this.flashComponent.init();
 
-            // MEh!
-            this.idbHelper.get(keys.LAST_CURRENCY_FROM_ID).then((selectedFromID) => {
-                this.utils.showFlashMessage(selectedFromID ? 'Welcome back!' : 'Welcome!');
-            }),
+            if (!reload) {
+                // MEh!
+                this.idbHelper.get(keys.LAST_CURRENCY_FROM_ID).then((selectedFromID) => {
+                    this.utils.showFlashMessage(selectedFromID ? 'Welcome back!' : 'Welcome!');
+                });
+            }
+
             this.utils.listenerForNetworkChanges();
 
             // Fetch currencies
@@ -124,7 +126,7 @@ export default class App {
         handleEvent(events.RESET_APP_DATA, () => {
             return Promise.all([
                 this.idbHelper.clear(stores.CONVERSION_FACTORS),
-                this.idbHelper.clear(stores.GENERAL)
+                this.idbHelper.clear(stores.GENERAL),
             ]).then(() => {
                 this.utils.showFlashMessage('App Data Reset Successfully!');
             });
@@ -134,7 +136,7 @@ export default class App {
         handleEvent(events.RELOAD_APP, () => {
             setTimeout(() => {
                 this.start(true);
-            }, 1000)
+            }, 1000);
         }, this.appRoot);
     }
 
