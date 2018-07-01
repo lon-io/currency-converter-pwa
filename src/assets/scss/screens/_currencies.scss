@@ -16,15 +16,16 @@
 
     &-header {
         @include card;
+        background-color: $lavender-blush;
         color: $azalea;
+        padding: rem(16px 30px);
         transition: height 0.3s ease-in-out;
 
         &-container {
-            display: flex;
-            justify-content: space-between;
             align-items: center;
+            display: flex;
             font-size: rem(16px);
-            padding: rem(16px 30px);
+            justify-content: space-between;
             line-height: rem(24px);
         }
 
@@ -34,28 +35,13 @@
     }
 
     &-search {
-        &-wrapper {
-            @include card;
-            color: $azalea;
-            background-color: $lavender-blush;
-            font-size: rem(16px);
-            transition: height 0.3s ease-in-out;
-        }
-
-        &-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: rem(16px 30px);
-        }
-
         color: $radical-red;
         border: none;
         background: transparent;
         flex: 1;
-        line-height: rem(24px);
         font-size: rem(24px);
         font-weight: 300;
+        line-height: rem(24px);
 
         &:focus,
         &:active {
@@ -70,9 +56,9 @@
     .currency {
         @extend %clearfix;
         border-bottom: rem(1px) solid $we-peep;
+        cursor: pointer;
         padding: rem(16px) 0;
         text-indent: 0;
-        cursor: pointer;
 
         &-name {
             color: $radical-red;
@@ -85,8 +71,8 @@
             color: $azalea;
             font-size: rem(14px);
             font-weight: 600;
+            letter-spacing: rem(2px);
             text-transform: uppercase;
-            letter-spacing: rem(2px)
         }
 
         &-tick {

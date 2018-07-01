@@ -14,13 +14,17 @@ const {
     },
 } = constants;
 
-const searchWrapperID = 'currencies-search-wrapper';
-const headerWrapperID = 'currencies-header';
+const searchHeaderWrapperID = 'currencies-header-search';
+const defaultHeaderWrapperID = 'currencies-header-default';
+
+const rootID = 'currencies-root';
 const searchInputID = 'currencies-search';
 const listWrapperID = 'currencies-list-wrapper';
+const searchIconID = 'currency-search-icon';
 const backIconID = 'currency-back-icon';
 const searchCloseIconID = 'currency-search-close-icon';
 const currenciesContainerID = 'currencies';
+const currencyCodeSelector = '.currency-code';
 
 export default class CurrenciesScreen {
     constructor(appRoot, idbHelper) {
@@ -34,13 +38,12 @@ export default class CurrenciesScreen {
         this.idbHelper = idbHelper;
         this.root = null;
         this.renderTemplate = getTemplateRenderer(template);
-        // this.render
         this.searchWrapperInitialStyle = null;
         this.headerInitialStyle = null;
     }
 
     init() {
-        this.root = document.getElementById('currencies-root');
+        this.root = document.getElementById(rootID);
         this.render();
     }
 
@@ -58,53 +61,40 @@ export default class CurrenciesScreen {
     }
 
     setVisible(visible) {
-        const wrapper = document.getElementById('currencies-root');
-
-        if (wrapper) {
+        if (this.root) {
             if (visible) {
-                wrapper.style.width = '100%';
-            } else wrapper.style.width = '0';
-        } else console.log('{{ConverterScreen.registerShowEventHandler}}: Invalid wrapper', wrapper);
+                this.root.style.width = '100%';
+            } else this.root.style.width = '0';
+        } else console.log('{{ConverterScreen.registerShowEventHandler}}: Invalid root element', this.root);
     }
 
     setSearchVisibility(showSearch) {
-        const searchWrapper = document.getElementById(searchWrapperID);
-        const headerWrapper = document.getElementById(headerWrapperID);
+        const searchHeaderWrapper = document.getElementById(searchHeaderWrapperID);
+        const defaultHeaderWrapper = document.getElementById(defaultHeaderWrapperID);
         const searchInput = document.getElementById(searchInputID);
 
-        if (searchWrapper && headerWrapper) {
+        if (searchHeaderWrapper && defaultHeaderWrapper) {
             if (showSearch) {
-                hideElement(headerWrapper);
-                showElement(searchWrapper);
+                hideElement(defaultHeaderWrapper);
+                showElement(searchHeaderWrapper);
                 if (searchInput && typeof searchInput.focus === 'function') searchInput.focus();
             } else {
-                hideElement(searchWrapper);
-                showElement(headerWrapper);
+                hideElement(searchHeaderWrapper);
+                showElement(defaultHeaderWrapper);
                 this.updateCurrenciesList(this.state.currencies);
             }
-        } else console.log('{{CurrenciesScreen.setSearchVisibility}} Invalid wrappers', searchWrapper, headerWrapper);
+        } else console.log('{{CurrenciesScreen.setSearchVisibility}} Invalid wrappers',
+             searchHeaderWrapper, defaultHeaderWrapper);
     }
 
     registerSearchClickHandler() {
-        const searchIconID = 'currency-search-icon';
+        const searchHeaderWrapper = document.getElementById(searchHeaderWrapperID);
 
-        const searchWrapper = document.getElementById(searchWrapperID);
-        const headerWrapper = document.getElementById(headerWrapperID);
+        hideElement(searchHeaderWrapper);
 
-        hideElement(searchWrapper);
-
-        if (searchWrapper && headerWrapper) {
-            this.searchWrapperInitialStyle = searchWrapper.style;
-            this.headerInitialStyle = headerWrapper.style;
-        }
-
-        const handler = () => {
+        handleEvent('click', this.appRoot, () => {
             this.setSearchVisibility(true);
-
-            // Todo: Render partial update;
-        };
-
-        handleEvent('click', this.appRoot, handler, `#${searchIconID}`);
+        }, `#${searchIconID}`);
     }
 
     registerSearchCloseClickHandler() {
@@ -131,7 +121,6 @@ export default class CurrenciesScreen {
             const searchValue = this.getCurrentSearchValue();
 
             if (searchValue) {
-                console.log('{{CurrenciesScreen.SearchChangeHandler}} search value', searchValue);
                 const matchingCurrencies = this.getSearchMatches(searchValue);
                 this.updateCurrenciesList(matchingCurrencies);
             } else console.log('{{CurrenciesScreen.SearchChangeHandler}} empty search value', searchValue);
@@ -156,14 +145,12 @@ export default class CurrenciesScreen {
 
             if (target) {
                 const parentLi = target.nodeName === 'LI' ? target : target.parentNode;
-                const codeElement = parentLi.querySelector('.currency-code');
+                const codeElement = parentLi.querySelector(currencyCodeSelector);
 
                 if (codeElement) {
                     const currencyID = codeElement.innerHTML;
                     const currency = (Array.isArray(currencies) &&
                         currencies.find(({ id, }) => id === currencyID)) || null;
-
-                    console.log(currencies.length, currencyID, currency);
 
                     this.state.selectedCurrency = currency;
                 }
@@ -237,16 +224,14 @@ export default class CurrenciesScreen {
     };
 
     render() {
-        console.log('State is: =>>', this.state);
-
         try {
             if (this.root) {
                 this.root.innerHTML = this.renderTemplate({
                     currencies: this.state.currencies,
                 });
-            } else console.log('{{CurrenciesScreen.init}}: Root is invalid', this.root);
+            } else console.log('{{CurrenciesScreen.render}}: Root is invalid', this.root);
         } catch (error) {
-            console.log('{{ConverterScreen}}', error);
+            console.log('{{CurrenciesScreen}}', error);
 
             // Re-throw the error (to be handled in the main script)
             throw error;
