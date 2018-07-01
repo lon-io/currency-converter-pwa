@@ -10,7 +10,7 @@ $zIndex-two: 29;
 
     @include media-tablet-up {
         height: 90vh;
-        overflow-x: auto;
+        overflow-x: initial;
         width: rem(500px);
     }
 
