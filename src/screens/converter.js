@@ -277,6 +277,25 @@ export default class ConverterScreen {
         });
     }
 
+    registerSwapCurrencies() {
+        handleEvent(events.SWAP_CURRENCIES, () => {
+            // Clone Current state
+            const currencyFrom = deepClone(this.state.currencyTo);
+            const currencyTo = deepClone(this.state.currencyFrom);
+
+            // Update State
+            this.state.currencyFrom = currencyFrom;
+            this.state.currencyTo = currencyTo;
+
+            // Update IDB
+            this.idbHelper.set(keys.LAST_CURRENCY_FROM_ID, currencyFrom);
+            this.idbHelper.set(keys.LAST_CURRENCY_TO_ID, currencyTo);
+
+            // Re-render
+            this.render();
+        }, this.appRoot);
+    }
+
     listen() {
         this.registerInputValidationHandler();
         this.registerSendHandler();

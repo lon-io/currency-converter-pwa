@@ -5,6 +5,10 @@
     li {
         margin-top: rem(16px);
         cursor: pointer;
+
+        &:first-child {
+            margin-top: 0;
+        }
     }
 }
 
@@ -22,12 +26,13 @@ $content-padding: rem(16px 20px);
 
     &-main {
         @include card;
+        @include transform(translate(-100vw, 0));
         background-color: $white;
         position: relative;
         height: 100%;
         width: 85%;
         z-index: 1;
-        // transition: width 0.3s ease-in-out;
+        transition: transform 0.6s ease-in-out;
 
         img {
             width: rem(24px);
@@ -51,15 +56,21 @@ $content-padding: rem(16px 20px);
     }
 
     &-header {
-        background-color: $lavender-blush;
+        background-color: #FF5354;
         color: $white;
         padding: $content-padding;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 
         &-container {
             align-items: center;
             display: flex;
-            font-size: rem(16px);
             justify-content: space-between;
+        }
+
+        &-title {
+            font-size: rem(24px);
+            margin: 0;
+            padding: 0;
         }
 
         img {
@@ -69,9 +80,33 @@ $content-padding: rem(16px 20px);
 
     &-content {
         padding: $content-padding;
+        color: $radical-red;
 
         &-list {
             @extend %list;
+
+            li {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                border-bottom: rem(1px) solid $we-peep;
+                cursor: pointer;
+                padding: rem(16px) 0;
+                text-indent: 0;
+
+                img {
+                    height: rem(20px);
+                    width: rem(20px);
+                    vertical-align: middle;
+                    margin-right: rem(8px);
+                }
+
+                span {
+                    font-size: rem(20px);
+                    font-weight: 500;
+                    padding-right: rem(4px);
+                }
+            }
         }
     }
 
@@ -83,6 +118,7 @@ $content-padding: rem(16px 20px);
         bottom: 0;
         left: 0;
         right: 0;
+        border-top: rem(1px) solid $near-white;
 
         &-list {
             @extend %list;

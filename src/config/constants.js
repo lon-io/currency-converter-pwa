@@ -22,6 +22,7 @@ export default {
         FLASH_MESSAGE: 'FLASH_MESSAGE',
         SET_APP_PRIMARY_FOCUS: 'SET_APP_PRIMARY_FOCUS',
         SHOW_SIDEBAR: 'SHOW_SIDEBAR',
+        SWAP_CURRENCIES: 'SWAP_CURRENCIES',
     },
     db: {
         name: 'currency-converter-db',

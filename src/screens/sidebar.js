@@ -13,7 +13,9 @@ const {
 
 const rootID = 'sidebar-root';
 const overlayID = 'sidebar-overlay';
+const mainID = 'sidebar-main';
 const backIconID = 'sidebar-close-icon';
+const switchMenuItemID = 'sidebar-menu-switch';
 
 export default class SidebarScreen {
     constructor(appRoot) {
@@ -43,8 +45,18 @@ export default class SidebarScreen {
         handleEvent('click', handler, this.appRoot, `#${overlayID}`);
     }
 
+    registerSwitchMenuClickHandler() {
+        const handler = () => {
+            dispatchEvent(events.SWAP_CURRENCIES, this.appRoot);
+            this.setVisible(false);
+        };
+
+        handleEvent('click', handler, this.appRoot, `#${switchMenuItemID}`);
+    }
+
     listen() {
         this.registerBackAndOverlayClickHandlers();
+        this.registerSwitchMenuClickHandler();
         this.registerVisibilityHandler();
     }
 
@@ -52,13 +64,20 @@ export default class SidebarScreen {
         console.log('Here');
         if (this.root) {
             const overlayEl = document.getElementById(overlayID);
+            const mainEl = document.getElementById(mainID);
 
             if (visible) {
-                resetTranslation(this.root);
+                this.root.style.zIndex = 29;
+                if (mainEl) resetTranslation(mainEl);
                 if (overlayEl) overlayEl.style.opacity = 0.7;
             } else {
-                setTranslation(this.root, '-100vw, 0');
+                if (mainEl) setTranslation(mainEl, '-100vw, 0');
                 if (overlayEl) overlayEl.style.opacity = 0;
+
+                // SMH => Todo: Should I really be doing this?!
+                setTimeout(() => {
+                    this.root.style.zIndex = -9;
+                }, 500);
 
                 this.appUtils.setAppPrimaryFocus(true);
             }
