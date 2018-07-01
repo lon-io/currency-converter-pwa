@@ -10,8 +10,9 @@ import {
     getConversionFactor,
 } from '../libs/api-service';
 import {
-    parseMoney,
     formatMoney,
+    isMobile,
+    parseMoney,
     getElementTextContent,
 } from '../libs/utils';
 import constants from '../config/constants';
@@ -224,7 +225,7 @@ export default class ConverterScreen {
             }
 
             // Reset the focus on the amount input
-            this.setFocus();
+            this.setFocus(true);
         };
 
         handleEvent('click', this.appRoot, handler, `#${sendButtonID}`);
@@ -255,8 +256,10 @@ export default class ConverterScreen {
     }
 
     registerAppPrimaryFocusHandler() {
-        handleEvent(events.SET_APP_PRIMARY_FOCUS, this.appRoot, () => {
-            this.setFocus();
+        handleEvent(events.SET_APP_PRIMARY_FOCUS, this.appRoot, (event) => {
+            const data = event && event.detail;
+            const checkMobile = data && data.checkMobile;
+            this.setFocus(checkMobile);
         });
     }
 
@@ -291,7 +294,10 @@ export default class ConverterScreen {
         this.setFocus();
     }
 
-    setFocus() {
+    setFocus(checkMobile) {
+        // Don't reset on Mobile to avoid showing the text keyboard on mobile)
+        if (checkMobile && isMobile()) return;
+
         const amountElement = document.getElementById(amountSpanID);
 
         if (amountElement && typeof amountElement.focus === 'function') {

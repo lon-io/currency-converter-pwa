@@ -51,7 +51,7 @@ export default class SidebarScreen {
                 this.root.style.width = '85%';
             } else {
                 this.root.style.width = '0';
-                this.appUtils.setAppPrimaryFocus();
+                this.appUtils.setAppPrimaryFocus(true);
             }
         } else console.log('{{SidebarScreen.setVisible}}: Invalid root element', this.root);
     }

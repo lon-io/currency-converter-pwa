@@ -25,8 +25,10 @@ export default class AppUtils {
         });
     }
 
-    setAppPrimaryFocus() {
-        dispatchEvent(this.appRoot, events.SET_APP_PRIMARY_FOCUS);
+    setAppPrimaryFocus(checkMobile) {
+        dispatchEvent(this.appRoot, events.SET_APP_PRIMARY_FOCUS, {
+            checkMobile: !!checkMobile,
+        });
     };
 
     showSidebar() {
