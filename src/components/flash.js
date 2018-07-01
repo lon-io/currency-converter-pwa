@@ -65,7 +65,7 @@ export default class Flash {
     }
 
     render(type, message) {
-        console.log('State is: =>>', this.state);
+        console.log('{{FlashComponent.render}} Rendering new Message', type, message);
 
         try {
             if (this.wrapper) {

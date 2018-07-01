@@ -192,7 +192,7 @@ export default class CurrenciesScreen {
 
     getSearchMatches(inputValue = '') {
         const allCurrencies = this.state.currencies;
-        const query = inputValue.toLowerCase() || '';
+        const query = inputValue.toLowerCase().trim() || '';
 
         if (Array.isArray(allCurrencies)) {
             return query ? allCurrencies.filter((currency) => {
@@ -201,8 +201,8 @@ export default class CurrenciesScreen {
 
                 if (currency.currencyName
                     && currency.currencyName.toLowerCase().indexOf(query) > 1) matches = true;
-                else if (currency.currencySymbol
-                    && currency.currencySymbol.toLowerCase().indexOf(query) > 1) matches = true;
+                else if (currency.id
+                    && currency.id.toLowerCase().indexOf(query) > 1) matches = true;
 
                 return matches;
             }) : allCurrencies;
