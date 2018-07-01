@@ -21,7 +21,7 @@ module.exports = {
             to: 'images',
         }, ]),
         new HtmlWebpackPlugin({
-            title: 'Currency Converter Example',
+            title: 'Currency Converter PWA',
             template: path.resolve(__dirname, 'src/views/index.ejs'),
             excludeChunks: [ 'sw.js', ],
         }),
