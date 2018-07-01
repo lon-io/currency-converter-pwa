@@ -35,6 +35,7 @@ module.exports = {
     entry: {
         'js/main': [
             'babel-polyfill',
+            '../node_modules/indexeddbshim/dist/indexeddbshim.min.js', // IDB PolyFill
             './main.js',
         ],
         sw: './sw.js',
