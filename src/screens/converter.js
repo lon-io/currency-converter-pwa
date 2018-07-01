@@ -15,7 +15,7 @@ import {
     getElementTextContent,
 } from '../libs/utils';
 import constants from '../config/constants';
-import AppUtils from '.../libs/appUtils';
+import AppUtils from '../libs/appUtils';
 
 const rootID = 'converter-root';
 const sendButtonID = 'send';
