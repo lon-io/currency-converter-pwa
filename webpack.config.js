@@ -16,10 +16,10 @@ module.exports = {
             filename: 'css/main.css',
             chunkFilename: '[id].[hash]',
         }),
-        new CopyWebpackPlugin([{
-            from: './assets/fonts',
-            to: 'fonts',
-        }, ]),
+        // new CopyWebpackPlugin([{
+        //     from: './assets/fonts',
+        //     to: 'fonts',
+        // }, ]),
         new CopyWebpackPlugin([{
             from: './assets/images',
             to: 'images',
@@ -71,7 +71,8 @@ module.exports = {
             loader: 'url-loader',
             options: {
                 limit: 1000,
-                name: '../fonts/[name].[ext]',
+                name: 'fonts/[name].[ext]',
+                publicPath: '../', // 😄 https://github.com/webpack-contrib/file-loader/issues/32#issuecomment-250622904
             },
         },
         {
