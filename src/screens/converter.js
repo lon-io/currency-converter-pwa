@@ -88,9 +88,14 @@ export default class ConverterScreen {
             const factorKey = `${currencyFrom.id}_${currencyTo.id}`;
             const inverseFactorKey = `${currencyTo.id}_${currencyFrom.id}`;
 
+            let factor = currencyFrom.id === currencyTo.id ? 1 : null;
+            let factorObj;
+
             // Check cache
-            const factorObj = await this.idbHelper.get(factorKey, stores.CONVERSION_FACTORS);
-            let factor = factorObj && factorObj.factor;
+            if (!factor) {
+                factorObj = await this.idbHelper.get(factorKey, stores.CONVERSION_FACTORS);
+                factor = factorObj && factorObj.factor;
+            }
 
             // Try the inverse
             if (!factor) {
@@ -106,7 +111,7 @@ export default class ConverterScreen {
                 this.setFactorInDB(factorKey, factor);
             }
 
-            const result = factor * amount;
+            const result = parseFloat(factor) * parseFloat(amount);
 
             return result;
         } catch (error) {
