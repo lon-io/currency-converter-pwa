@@ -11,6 +11,8 @@ const {
 } = constants;
 
 const rootID = 'sidebar-root';
+const overlayID = 'sidebar-overlay';
+const mainID = 'sidebar-main';
 const backIconID = 'sidebar-close-icon';
 
 export default class SidebarScreen {
@@ -47,10 +49,18 @@ export default class SidebarScreen {
 
     setVisible(visible) {
         if (this.root) {
+            const overlayEl = document.getElementById(overlayID);
+            const mainEl = document.getElementById(mainID);
+
             if (visible) {
-                this.root.style.width = '85%';
+                this.root.style.width = '100%';
+                if (overlayEl) overlayEl.style.opacity = 0.7;
+                if (mainEl) mainEl.style.width = '85%';
             } else {
                 this.root.style.width = '0';
+                if (overlayEl) overlayEl.style.opacity = 0;
+                if (mainEl) mainEl.style.width = 0;
+
                 this.appUtils.setAppPrimaryFocus(true);
             }
         } else console.log('{{SidebarScreen.setVisible}}: Invalid root element', this.root);

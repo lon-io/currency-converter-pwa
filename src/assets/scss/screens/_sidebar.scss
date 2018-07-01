@@ -1,8 +1,33 @@
+%list {
+    display: flex;
+    flex-direction: column;
+
+    li {
+        margin-top: rem(16px);
+        cursor: pointer;
+    }
+}
+
+$content-padding: rem(16px 20px);
+
 .sidebar {
     padding: rem(0 20px);
 
     &-wrapper {
+        background-color: transparent;
+        height: 100%;
+        position: relative;
+        width: 100%;
+    }
+
+    &-main {
+        @include card;
         background-color: $white;
+        position: relative;
+        height: 100%;
+        width: 0;
+        z-index: 1;
+        transition: width 0.3s ease-in-out;
 
         img {
             width: rem(24px);
@@ -14,11 +39,54 @@
         }
     }
 
+    &-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.6);
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+    }
+
     &-header {
         background-color: $lavender-blush;
+        color: $white;
+        padding: $content-padding;
+
+        &-container {
+            align-items: center;
+            display: flex;
+            font-size: rem(16px);
+            justify-content: space-between;
+        }
+
+        img {
+            vertical-align: middle;
+        }
+    }
+
+    &-content {
+        padding: $content-padding;
+
+        &-list {
+            @extend %list;
+        }
+    }
+
+    &-footer {
+        background-color: $lavender-blush;
         color: $azalea;
-        padding: rem(16px 20px);
-        transition: height 0.3s ease-in-out;
+        padding: $content-padding;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+
+        &-list {
+            @extend %list;
+        }
 
         &-container {
             align-items: center;
