@@ -3,6 +3,7 @@ import AppUtils from '../libs/appUtils';
 import {
     getTemplateRenderer,
 } from '../libs/renderer';
+import { setTranslation, resetTranslation, } from '../libs/utils';
 import { handleEvent, } from '../libs/events';
 import constants from '../config/constants';
 
@@ -12,7 +13,6 @@ const {
 
 const rootID = 'sidebar-root';
 const overlayID = 'sidebar-overlay';
-const mainID = 'sidebar-main';
 const backIconID = 'sidebar-close-icon';
 
 export default class SidebarScreen {
@@ -34,32 +34,31 @@ export default class SidebarScreen {
         }, this.appRoot);
     }
 
-    registerBackClickHandler() {
+    registerBackAndOverlayClickHandlers() {
         const handler = () => {
             this.setVisible(false);
         };
 
         handleEvent('click', handler, this.appRoot, `#${backIconID}`);
+        handleEvent('click', handler, this.appRoot, `#${overlayID}`);
     }
 
     listen() {
-        this.registerBackClickHandler();
+        this.registerBackAndOverlayClickHandlers();
         this.registerVisibilityHandler();
     }
 
     setVisible(visible) {
+        console.log('Here');
         if (this.root) {
             const overlayEl = document.getElementById(overlayID);
-            const mainEl = document.getElementById(mainID);
 
             if (visible) {
-                this.root.style.width = '100%';
+                resetTranslation(this.root);
                 if (overlayEl) overlayEl.style.opacity = 0.7;
-                if (mainEl) mainEl.style.width = '85%';
             } else {
-                this.root.style.width = '0';
+                setTranslation(this.root, '-100vw, 0');
                 if (overlayEl) overlayEl.style.opacity = 0;
-                if (mainEl) mainEl.style.width = 0;
 
                 this.appUtils.setAppPrimaryFocus(true);
             }
