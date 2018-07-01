@@ -111,7 +111,6 @@ export default class IDBHelper {
             const store = tx.objectStore(storeKey);
 
             // limit store to 30 items
-            console.log('ƒ©', storeKey, index, forward);
             return store.index(index).openCursor(null, forward ? 'next': 'prev');
         });
     };

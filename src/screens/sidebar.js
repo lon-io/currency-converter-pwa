@@ -62,7 +62,7 @@ export default class SidebarScreen {
                 this.root.innerHTML = this.renderTemplate({});
             } else console.log('{{SidebarScreen.render}}: Root is invalid', this.root);
         } catch (error) {
-            console.log('{{SidebarScreen}}', error);
+            console.log('{{SidebarScreen.render}}', error);
 
             // Re-throw the error (to be handled in the main script)
             throw error;

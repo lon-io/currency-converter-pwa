@@ -17,7 +17,6 @@ export default class AppUtils {
 
     listenerForNetworkChanges() {
         window.addEventListener('online', () => {
-            console.log('offline');
             this.showFlashMessage('Yaay! You\'re back online!');
         });
 

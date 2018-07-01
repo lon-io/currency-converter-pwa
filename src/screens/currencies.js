@@ -69,7 +69,7 @@ export default class CurrenciesScreen {
                 this.root.style.width = '0';
                 this.appUtils.setAppPrimaryFocus();
             }
-        } else console.log('{{ConverterScreen.registerShowEventHandler}}: Invalid root element', this.root);
+        } else console.log('{{CurrenciesScreen.setVisible}}: Invalid root element', this.root);
     }
 
     setSearchVisibility(showSearch) {
@@ -225,15 +225,12 @@ export default class CurrenciesScreen {
             return [];
         };
 
-        console.log(queries);
         // We want to search on a maximum number of whitespace separated queries
         const filteredQueries = queries.filter((q) => !!q).slice(0, maxSearchQueries);
-        console.log(filteredQueries);
 
         // Use the result of the first search in the second
         // (so the whole list is not unnecessarily re-searched)
         return filteredQueries.reduce((prevMatchedCurrencies, query) => {
-            console.log(query, prevMatchedCurrencies.length);
             // Return early
             if (prevMatchedCurrencies.length === 0) return [];
             return (getMatchingCurrencies(prevMatchedCurrencies, query));
@@ -260,7 +257,7 @@ export default class CurrenciesScreen {
                 });
             } else console.log('{{CurrenciesScreen.render}}: Root is invalid', this.root);
         } catch (error) {
-            console.log('{{CurrenciesScreen}}', error);
+            console.log('{{CurrenciesScreen.render}}', error);
 
             // Re-throw the error (to be handled in the main script)
             throw error;

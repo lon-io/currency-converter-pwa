@@ -91,7 +91,6 @@ export default class ConverterScreen {
             // Check cache
             const factorObj = await this.idbHelper.get(factorKey, stores.CONVERSION_FACTORS);
             let factor = factorObj && factorObj.factor;
-            console.log(factorObj);
 
             // Try the inverse
             if (!factor) {
@@ -108,7 +107,6 @@ export default class ConverterScreen {
             }
 
             const result = factor * amount;
-            console.log('Conversion result: %s From %s to %s => %s', amount, currencyFrom.id, currencyTo.id, result);
 
             return result;
         } catch (error) {
@@ -119,7 +117,7 @@ export default class ConverterScreen {
             }
 
 
-            console.log('{{Converter.convertCurrencies}}', error);
+            console.log('{{ConverterScreen.convertCurrencies}}', error);
         }
 
     }
@@ -137,7 +135,6 @@ export default class ConverterScreen {
             storeConfig.indices.by_created_date && storeConfig.indices.by_created_date.name;
         const factorsCursor = await this.idbHelper.getStoreCursorByIndex(storeConfig, index, false);
 
-        console.log(storeConfig.indices, index);
         if (factorsCursor) {
             const deleteCursorItem = (cursor) => {
                 if (!cursor) return;
@@ -304,9 +301,9 @@ export default class ConverterScreen {
                     result: this.state.result,
                     loading: this.state.loading,
                 });
-            } else console.log('{{ConverterScreen.init}}: Root is invalid', this.root);
+            } else console.log('{{ConverterScreen.render}}: Root is invalid', this.root);
         } catch (error) {
-            console.log('{{ConverterScreen}}', error);
+            console.log('{{ConverterScreen.render}}', error);
 
             // Re-throw the error (to be handled in the main script)
             throw error;

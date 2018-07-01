@@ -11,7 +11,7 @@ const Loader = (className = '') => {
             class: className,
         });
     } catch (error) {
-        console.log('{{ConverterScreen}}', error);
+        console.log('{{Loader}}', error);
 
         // Re-throw the error (to be handled in the main script)
         throw error;

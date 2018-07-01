@@ -84,7 +84,7 @@ export default class Flash {
                 if (flashContent) this.wrapper.innerHTML = flashContent;
             } else console.log('{{FlashComponent.render}}: Wrapper is invalid', this.wrapper);
         } catch (error) {
-            console.log('{{FlashComponent}}', error);
+            console.log('{{FlashComponent.render}}', error);
 
             // Re-throw the error (to be handled in the main script)
             throw error;
