@@ -47,7 +47,7 @@ ul {
   @media screen and (min-width: 768px) {
     #app {
       height: 90vh;
-      overflow-x: auto;
+      overflow-x: initial;
       width: 31.25rem; } }
   #app #loader-wrapper {
     background-color: #fff;
