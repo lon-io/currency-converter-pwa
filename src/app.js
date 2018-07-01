@@ -1,6 +1,7 @@
 
 import CurrenciesScreen from './screens/currencies';
 import ConverterScreen from './screens/converter';
+import SidebarScreen from './screens/sidebar';
 import FlashComponent from './components/flash';
 
 import IDBHelper from './libs/idb-helper';
@@ -31,6 +32,7 @@ export default class App {
         this.idbHelper = new IDBHelper();
         this.currenciesScreen = new CurrenciesScreen(appRoot, idbHelper);
         this.converterScreen = new ConverterScreen(appRoot, idbHelper);
+        this.sidebarScreen = new SidebarScreen(appRoot, idbHelper);
         this.flashComponent = new FlashComponent(appRoot);
         this.renderTemplate = getTemplateRenderer(template);
         this.utils = new AppUtils(appRoot);
@@ -63,6 +65,7 @@ export default class App {
             // Initialize screens
             this.converterScreen.init();
             this.currenciesScreen.init();
+            this.sidebarScreen.init();
             this.hideLoader();
 
             // App Setup => Register App Listeners

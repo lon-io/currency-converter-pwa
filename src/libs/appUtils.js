@@ -30,10 +30,15 @@ export default class AppUtils {
         dispatchEvent(this.appRoot, events.SET_APP_PRIMARY_FOCUS);
     };
 
+    showSidebar() {
+        dispatchEvent(this.appRoot, events.SHOW_SIDEBAR);
+    }
+
     showFlashMessage(message, type = types.SUCCESS) {
         dispatchEvent(this.appRoot, events.FLASH_MESSAGE, {
             message,
             type,
         });
     };
+
 }

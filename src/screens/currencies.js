@@ -40,8 +40,6 @@ export default class CurrenciesScreen {
         this.idbHelper = idbHelper;
         this.root = null;
         this.renderTemplate = getTemplateRenderer(template);
-        this.searchWrapperInitialStyle = null;
-        this.headerInitialStyle = null;
         this.appUtils = new AppUtils(appRoot);
     }
 

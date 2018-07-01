@@ -20,6 +20,7 @@ export default {
         SELECT_CURRENCY: 'SELECT_CURRENCY',
         FLASH_MESSAGE: 'FLASH_MESSAGE',
         SET_APP_PRIMARY_FOCUS: 'SET_APP_PRIMARY_FOCUS',
+        SHOW_SIDEBAR: 'SHOW_SIDEBAR',
     },
     db: {
         name: 'currency-converter-db',

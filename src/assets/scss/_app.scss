@@ -57,4 +57,16 @@
         width: 0;
         z-index: 1;
     }
+
+    #sidebar-root {
+        background-color: $white;
+        height: 100%;
+        overflow-x: hidden;
+        position: absolute;
+        left: 0;
+        top: 0;
+        transition: width 0.3s ease-in-out;
+        width: 0;
+        z-index: 1;
+    }
 }
