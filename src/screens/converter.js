@@ -104,6 +104,7 @@ export default class ConverterScreen {
 
             return result;
         } catch (error) {
+            this.appUtils.showFlashMessage('Oops! We were unable to get a convert with your selected currencies. Please try again later!');
             console.log('{{Converter.convertCurrencies}}', error);
         }
 

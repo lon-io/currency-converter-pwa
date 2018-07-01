@@ -15,6 +15,17 @@ export default class AppUtils {
         this.appRoot = appRoot;
     }
 
+    listenerForNetworkChanges() {
+        window.addEventListener('offline', () => {
+            console.log('offline');
+            this.showFlashMessage('Yaay! You\'re back online!');
+        });
+
+        window.addEventListener('online', () => {
+            this.showFlashMessage('Meh! You\'ve gone offline!');
+        });
+    }
+
     setAppPrimaryFocus() {
         dispatchEvent(this.appRoot, events.SET_APP_PRIMARY_FOCUS);
     };

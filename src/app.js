@@ -49,6 +49,7 @@ export default class App {
             // Initialize the Flash Component
             this.flashComponent.init();
             this.utils.showFlashMessage('Welcome!');
+            this.utils.listenerForNetworkChanges();
 
             // Fetch currencies
             const currencies = await this.getAllCurrencies();
