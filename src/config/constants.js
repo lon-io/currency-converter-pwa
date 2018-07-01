@@ -23,6 +23,8 @@ export default {
         SET_APP_PRIMARY_FOCUS: 'SET_APP_PRIMARY_FOCUS',
         SHOW_SIDEBAR: 'SHOW_SIDEBAR',
         SWAP_CURRENCIES: 'SWAP_CURRENCIES',
+        RESET_APP_DATA: 'RESET_APP_DATA',
+        RELOAD_APP: 'RELOAD_APP',
     },
     db: {
         name: 'currency-converter-db',

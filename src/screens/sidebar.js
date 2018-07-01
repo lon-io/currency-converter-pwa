@@ -16,6 +16,8 @@ const overlayID = 'sidebar-overlay';
 const mainID = 'sidebar-main';
 const backIconID = 'sidebar-close-icon';
 const swapMenuItemID = 'sidebar-menu-swap';
+const resetAppDataMenuItemID = 'sidebar-menu-reset-app-data';
+const reloadAppMenuItemID = 'sidebar-menu-reload-app';
 
 export default class SidebarScreen {
     constructor(appRoot) {
@@ -45,18 +47,20 @@ export default class SidebarScreen {
         handleEvent('click', handler, this.appRoot, `#${overlayID}`);
     }
 
-    registerSwitchMenuClickHandler() {
-        const handler = () => {
-            dispatchEvent(this.appRoot, events.SWAP_CURRENCIES);
+    registerMenuClickHandlers() {
+        const handler = (eventName) => {
+            dispatchEvent(this.appRoot, eventName);
             this.setVisible(false);
         };
 
-        handleEvent('click', handler, this.appRoot, `#${swapMenuItemID}`);
+        handleEvent('click', () => handler(events.SWAP_CURRENCIES), this.appRoot, `#${swapMenuItemID}`);
+        handleEvent('click', () => handler(events.RESET_APP_DATA), this.appRoot, `#${resetAppDataMenuItemID}`);
+        handleEvent('click', () => handler(events.RELOAD_APP), this.appRoot, `#${reloadAppMenuItemID}`);
     }
 
     listen() {
         this.registerBackAndOverlayClickHandlers();
-        this.registerSwitchMenuClickHandler();
+        this.registerMenuClickHandlers();
         this.registerVisibilityHandler();
     }
 
