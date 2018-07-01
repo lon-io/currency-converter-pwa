@@ -225,8 +225,6 @@ export default class ConverterScreen {
         const currencyToEl = document.getElementById(currencyToElID);
 
         const handler = (type) => {
-            console.log('{{ConverterScreen.registerSelectCurrencyHandlers}}: Selected type is:', type);
-
             dispatchEvent(this.appRoot, events.SELECT_CURRENCY, {
                 type,
             });
