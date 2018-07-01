@@ -12,7 +12,7 @@ import {
 } from './libs/renderer';
 import template from './views/app.hbs';
 import constants from './config/constants';
-import { initializeHbs, } from './libs/hbs-helpers';
+import { initializeHbs, } from './libs/hbs';
 
 const {
     keys,
