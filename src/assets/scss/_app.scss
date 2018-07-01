@@ -1,3 +1,4 @@
+$zIndex-minus-one: -9;
 $zIndex-one: 19;
 $zIndex-two: 29;
 
@@ -64,15 +65,12 @@ $zIndex-two: 29;
     }
 
     #sidebar-root {
-        @include card;
-        background-color: $white;
         height: 100%;
+        left: 0;
         overflow-x: hidden;
         position: absolute;
-        left: 0;
         top: 0;
-        transition: width 0.3s ease-in-out;
-        width: 0;
-        z-index: $zIndex-two;
+        width: 100%;
+        z-index: $zIndex-minus-one;
     }
 }

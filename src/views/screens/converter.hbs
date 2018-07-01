@@ -13,12 +13,15 @@
     <a id="send" class="converter-send">
         <div>
             <div id="send-loader">
-                <svg width="200px" height="200px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid"
-                    class="lds-rolling" style="background: none;">
-                    <circle cx="50" cy="50" fill="none" stroke="#000" stroke-width="10" r="35" stroke-dasharray="164.93361431346415 56.97787143782138"
-                        transform="rotate(108 50 50)">
-                        <animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 50;360 50 50" keyTimes="0;1" dur="1s"
-                            begin="0s" repeatCount="indefinite"></animateTransform>
+                <svg width="200px" height="200px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"
+                     preserveAspectRatio="xMidYMid"
+                     class="lds-rolling" style="background: none;">
+                    <circle cx="50" cy="50" fill="none" stroke="#000" stroke-width="10" r="35"
+                            stroke-dasharray="164.93361431346415 56.97787143782138"
+                            transform="rotate(108 50 50)">
+                        <animateTransform attributeName="transform" type="rotate" calcMode="linear"
+                                          values="0 50 50;360 50 50" keyTimes="0;1" dur="1s"
+                                          begin="0s" repeatCount="indefinite"></animateTransform>
                     </circle>
                 </svg>
             </div>
@@ -28,7 +31,7 @@
     <div class="converter-box converter-to">
         <p class="converter-currency-id">{{currency_to.id}}</p>
         <div class="converter-currency-value">
-            <span id="result" >{{result}}</span>
+            <span id="result">{{result}}</span>
             <span>{{currency_to.currencySymbol}}</span>
         </div>
         <a id="currencyTo" class="converter-currency-name">{{currency_to.currencyName}}</a>

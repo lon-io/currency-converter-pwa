@@ -1,4 +1,4 @@
-
+// 🇳🇬
 import CurrenciesScreen from './screens/currencies';
 import ConverterScreen from './screens/converter';
 import SidebarScreen from './screens/sidebar';
@@ -16,11 +16,14 @@ import {
 import template from './views/app.hbs';
 import constants from './config/constants';
 import { initializeHbs, } from './libs/hbs';
+import { handleEvent, dispatchEvent, getEventTarget, } from './libs/events';
 
 const {
     db: {
+        stores,
         keys,
     },
+    events,
 } = constants;
 
 export default class App {
@@ -41,9 +44,10 @@ export default class App {
         initializeHbs();
     }
 
-    async start() {
+    async start(reload) {
         try {
-            this.registerServiceWorker();
+            // Don't call this if it's a reload actions
+            if (!reload) this.registerServiceWorker();
 
             const appContent = this.renderTemplate({});
             this.appRoot.innerHTML = appContent;
@@ -93,6 +97,7 @@ export default class App {
     }
 
     async listen() {
+        this.registerAppListeners();
         this.converterScreen.listen(this.appRoot);
         this.currenciesScreen.listen(this.appRoot);
         this.sidebarScreen.listen(this.appRoot);
@@ -112,6 +117,25 @@ export default class App {
         // Map to array
         const currencies = Object.values(currenciesObj);
         return currencies;
+    }
+
+    registerAppListeners() {
+        // Clear All Data
+        handleEvent(events.RESET_APP_DATA, () => {
+            return Promise.all([
+                this.idbHelper.clear(stores.CONVERSION_FACTORS),
+                this.idbHelper.clear(stores.GENERAL)
+            ]).then(() => {
+                this.utils.showFlashMessage('App Data Reset Successfully!');
+            });
+        }, this.appRoot);
+
+        // Reload the App
+        handleEvent(events.RELOAD_APP, () => {
+            setTimeout(() => {
+                this.start(true);
+            }, 1000)
+        }, this.appRoot);
     }
 
     getInitialSelectedCurrencies() {

@@ -1,8 +1,55 @@
+@mixin menu-item {
+    display: flex;
+    justify-content: flex-start;
+    cursor: pointer;
+    text-indent: 0;
+    padding: rem(24px) 0;
+    text-decoration: none;
+
+    img {
+        height: rem(20px);
+        width: rem(20px);
+        vertical-align: middle;
+        margin-right: rem(16px);
+    }
+
+    span {
+        font-size: rem(18px);
+        font-weight: 500;
+    }
+}
+
+%list {
+    display: flex;
+    flex-direction: column;
+
+    a {
+        @include menu-item;
+        width: 100%;
+    }
+}
+
+$content-padding: rem(16px 20px);
+
 .sidebar {
     padding: rem(0 20px);
 
     &-wrapper {
+        background-color: transparent;
+        height: 100%;
+        position: relative;
+        width: 100%;
+    }
+
+    &-main {
+        @include card;
+        @include transform(translate(-100vw, 0));
         background-color: $white;
+        position: relative;
+        height: 100%;
+        width: 85%;
+        z-index: 1;
+        transition: transform 0.6s ease-in-out;
 
         img {
             width: rem(24px);
@@ -14,11 +61,77 @@
         }
     }
 
+    &-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.6);
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+    }
+
     &-header {
+        background-color: #FF5354;
+        color: $white;
+        padding: $content-padding;
+        border-bottom: 0.0625rem solid $near-white;
+
+        &-container {
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        &-title {
+            font-size: rem(24px);
+            margin: 0;
+            padding: 0;
+        }
+
+        img {
+            vertical-align: middle;
+        }
+    }
+
+    &-content {
+        color: $radical-red;
+        padding: $content-padding;
+        padding-top: 0;
+
+        &-list {
+            @extend %list;
+        }
+    }
+
+    &-footer {
+        color: $wewak;
         background-color: $lavender-blush;
-        color: $azalea;
-        padding: rem(16px 20px);
-        transition: height 0.3s ease-in-out;
+        bottom: 0;
+        border-top: rem(1px) solid $near-white;
+        left: 0;
+        padding: $content-padding;
+        position: absolute;
+        right: 0;
+
+
+        &-list {
+            @extend %list;
+
+            a {
+                color: $wewak;
+            }
+        }
+
+        &-author {
+            #author-link {
+                color: $success-text;
+                cursor: pointer;
+                text-decoration: underline;
+                margin-right: rem(4px);
+            }
+        }
 
         &-container {
             align-items: center;
@@ -28,7 +141,9 @@
         }
 
         img {
+            height: rem(20px);
             vertical-align: middle;
+            width: rem(20px);
         }
     }
 }

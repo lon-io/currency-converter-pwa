@@ -14,6 +14,7 @@ export default {
     },
     converter: {
         maxStoredFactors: 100,
+        maxNameLengthOnMobile: 16,
     },
     events: {
         CURRENCY_SELECTED: 'CURRENCY_SELECTED',
@@ -21,6 +22,9 @@ export default {
         FLASH_MESSAGE: 'FLASH_MESSAGE',
         SET_APP_PRIMARY_FOCUS: 'SET_APP_PRIMARY_FOCUS',
         SHOW_SIDEBAR: 'SHOW_SIDEBAR',
+        SWAP_CURRENCIES: 'SWAP_CURRENCIES',
+        RESET_APP_DATA: 'RESET_APP_DATA',
+        RELOAD_APP: 'RELOAD_APP',
     },
     db: {
         name: 'currency-converter-db',

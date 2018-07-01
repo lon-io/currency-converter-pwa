@@ -1,3 +1,8 @@
+import constants from '../config/constants';
+
+const {
+    maxNameLengthOnMobile,
+} = constants.converter;
 
 /**
  *
@@ -78,3 +83,12 @@ export const isMobile = () => {
     checkMobile(navigator.userAgent||navigator.vendor||window.opera);
     return check;
 };
+
+// Todo: Reconsider tying default to currency
+export const truncateText = (text, maxLen = maxNameLengthOnMobile) => {
+    if (!text) return '';
+
+    return text && text.length <= maxLen ? text : `${text.slice(0, maxLen - 3)}...`;
+};
+
+export const deepClone = (obj) => obj ? JSON.parse(JSON.stringify(obj)) : {};

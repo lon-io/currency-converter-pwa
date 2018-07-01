@@ -33,11 +33,11 @@ export default class Flash {
             }
         };
 
-        handleEvent(events.FLASH_MESSAGE, this.appRoot, handler);
+        handleEvent(events.FLASH_MESSAGE, handler, this.appRoot);
     }
 
     registerDismissHandler() {
-        handleEvent('click', this.appRoot, () => this.hide(), `#${dismissID}`);
+        handleEvent('click', () => this.hide(), this.appRoot, `#${dismissID}`);
     }
 
     init() {
