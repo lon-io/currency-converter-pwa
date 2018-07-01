@@ -16,12 +16,12 @@ export default class AppUtils {
     }
 
     listenerForNetworkChanges() {
-        window.addEventListener('offline', () => {
+        window.addEventListener('online', () => {
             console.log('offline');
             this.showFlashMessage('Yaay! You\'re back online!');
         });
 
-        window.addEventListener('online', () => {
+        window.addEventListener('offline', () => {
             this.showFlashMessage('Meh! You\'ve gone offline!');
         });
     }

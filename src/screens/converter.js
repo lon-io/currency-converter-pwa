@@ -40,6 +40,13 @@ const {
     events,
 } = constants;
 
+const errorMessages = {
+    convertOnline: `Oops! We were unable to get a convert with your selected currencies.
+    \nPlease try again later :(`,
+    convertOffline: `Oops! It seems you\'re offline and we do not have the conversion for your selected currencies.
+    \nPlease try again later :(`,
+};
+
 export default class ConverterScreen {
     constructor(appRoot, idbHelper) {
         this.state = {
@@ -104,7 +111,13 @@ export default class ConverterScreen {
 
             return result;
         } catch (error) {
-            this.appUtils.showFlashMessage('Oops! We were unable to get a convert with your selected currencies. Please try again later!');
+            if (navigator.onLine) {
+                this.appUtils.showFlashMessage(errorMessages.convertOnline);
+            } else {
+                this.appUtils.showFlashMessage(errorMessages.convertOffline);
+            }
+
+
             console.log('{{Converter.convertCurrencies}}', error);
         }
 
@@ -119,8 +132,8 @@ export default class ConverterScreen {
 
         // Limit the number of stored values to the config value
         // maxStoredFactors
-        const index = storeConfig.indices
-            && storeConfig.indices.by_created_date && storeConfig.indices.by_created_date.name;
+        const index = storeConfig.indices &&
+            storeConfig.indices.by_created_date && storeConfig.indices.by_created_date.name;
         const factorsCursor = await this.idbHelper.getStoreCursorByIndex(storeConfig, index, false);
 
         console.log(storeConfig.indices, index);
