@@ -25,6 +25,11 @@
             align-items: center;
             font-size: rem(16px);
             padding: rem(16px 30px);
+            line-height: rem(24px);
+        }
+
+        a {
+            vertical-align: middle;
         }
     }
 
@@ -55,6 +60,10 @@
         &:focus,
         &:active {
             outline: none;
+        }
+
+        a {
+            vertical-align: middle;
         }
     }
 
