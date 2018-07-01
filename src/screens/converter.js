@@ -201,36 +201,7 @@ export default class ConverterScreen {
     }
 
     registerSendHandler() {
-        const handler = () => {
-            const sendButton = document.getElementById(sendButtonID);
-            const amountSpan = document.getElementById(amountSpanID);
-            const resultSpan = document.getElementById(resultSpanID);
-
-            if (sendButton && resultSpan && amountSpan) {
-                const isValid = this.validateAmountAndUpdateState();
-
-                if (isValid) {
-                    // Re-format the input
-                    amountSpan.innerHTML = formatMoney(this.state.amount);
-
-                    this.setLoading(true);
-                    this.convertCurrencies().then((result) => {
-                        this.setLoading(false);
-                        resultSpan.innerHTML = formatMoney(result);
-                    });
-                } else {
-                    console.error('{{ConverterScreen.sendHandler}}: Invalid amount');
-                }
-
-            } else {
-                console.error('{{ConverterScreen.sendHandler}}: Elements missing', sendButton, resultSpan);
-            }
-
-            // Reset the focus on the amount input
-            this.setFocus(true);
-        };
-
-        handleEvent('click', handler, this.appRoot, `#${sendButtonID}`);
+        handleEvent('click', () => this.handleConvertAction(), this.appRoot, `#${sendButtonID}`);
     }
 
     registerSelectCurrencyHandlers() {
@@ -277,7 +248,7 @@ export default class ConverterScreen {
         });
     }
 
-    registerSwapCurrencies() {
+    registerSwapCurrenciesHandler() {
         handleEvent(events.SWAP_CURRENCIES, () => {
             // Clone Current state
             const currencyFrom = deepClone(this.state.currencyTo);
@@ -293,6 +264,7 @@ export default class ConverterScreen {
 
             // Re-render
             this.render();
+            this.handleConvertAction();
         }, this.appRoot);
     }
 
@@ -304,6 +276,36 @@ export default class ConverterScreen {
         this.registerAppPrimaryFocusHandler();
         this.registerHamburgerClickHandler();
         this.registerWindowResizeListener();
+        this.registerSwapCurrenciesHandler();
+    }
+
+    handleConvertAction() {
+        const sendButton = document.getElementById(sendButtonID);
+        const amountSpan = document.getElementById(amountSpanID);
+        const resultSpan = document.getElementById(resultSpanID);
+
+        if (sendButton && resultSpan && amountSpan) {
+            const isValid = this.validateAmountAndUpdateState();
+
+            if (isValid) {
+                // Re-format the input
+                amountSpan.innerHTML = formatMoney(this.state.amount);
+
+                this.setLoading(true);
+                this.convertCurrencies().then((result) => {
+                    this.setLoading(false);
+                    resultSpan.innerHTML = formatMoney(result);
+                });
+            } else {
+                console.error('{{ConverterScreen.sendHandler}}: Invalid amount');
+            }
+
+        } else {
+            console.error('{{ConverterScreen.sendHandler}}: Elements missing', sendButton, resultSpan);
+        }
+
+        // Reset the focus on the amount input
+        this.setFocus(true);
     }
 
     updateCurrency(type, currency) {

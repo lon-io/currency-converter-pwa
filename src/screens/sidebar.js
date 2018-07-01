@@ -4,7 +4,7 @@ import {
     getTemplateRenderer,
 } from '../libs/renderer';
 import { setTranslation, resetTranslation, } from '../libs/utils';
-import { handleEvent, } from '../libs/events';
+import { dispatchEvent, handleEvent, } from '../libs/events';
 import constants from '../config/constants';
 
 const {
@@ -47,7 +47,7 @@ export default class SidebarScreen {
 
     registerSwitchMenuClickHandler() {
         const handler = () => {
-            dispatchEvent(events.SWAP_CURRENCIES, this.appRoot);
+            dispatchEvent(this.appRoot, events.SWAP_CURRENCIES);
             this.setVisible(false);
         };
 
@@ -61,7 +61,6 @@ export default class SidebarScreen {
     }
 
     setVisible(visible) {
-        console.log('Here');
         if (this.root) {
             const overlayEl = document.getElementById(overlayID);
             const mainEl = document.getElementById(mainID);
