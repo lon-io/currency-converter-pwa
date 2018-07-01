@@ -62,11 +62,11 @@ ul {
   #app #flash-wrapper {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     transition: 0.3s;
-    -webkit-transform: translate(-500%, 0);
-    -moz-transform: translate(-500%, 0);
-    -ms-transform: translate(-500%, 0);
-    -o-transform: translate(-500%, 0);
-    transform: translate(-500%, 0);
+    -webkit-transform: translate(500%, 0);
+    -moz-transform: translate(500%, 0);
+    -ms-transform: translate(500%, 0);
+    -o-transform: translate(500%, 0);
+    transform: translate(500%, 0);
     left: 0;
     margin: 0.5rem;
     position: absolute;
