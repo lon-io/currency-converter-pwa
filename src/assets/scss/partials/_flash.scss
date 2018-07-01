@@ -1,0 +1,53 @@
+$baseName: 'flash';
+
+.flash {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    &-title {
+        align-self: flex-start;
+        font-size: rem(16);
+        font-weight: 500;
+    }
+
+    &-content {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        margin: rem(8 0);
+
+        img {
+            height: rem(80px);
+            width: rem(80px);
+        }
+
+        p {
+            color: $grey-text;
+            display: inline-block;
+            font-size: rem(14px);
+        }
+    }
+
+    &-dismiss {
+        @include card;
+        align-self: flex-end;
+        cursor: pointer;
+        font-size: rem(16px);
+    }
+
+    &--success {
+        .#{$baseName}-title,
+        .#{$baseName}-dismiss {
+            color: $success-text;
+        }
+    }
+
+    &--error {
+        .#{$baseName}-title,
+        .#{$baseName}-dismiss {
+            color: $error-text;
+        }
+    }
+}

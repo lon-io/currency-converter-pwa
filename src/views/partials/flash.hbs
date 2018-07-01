@@ -1,6 +1,13 @@
-<div class="flash-wrapper">
-    <h4>{{title}}</h4>
-        <div>
-            <img >
-        </div>
+<div class="flash flash--{{type}}">
+    <h4 class="flash-title">{{title}}</h4>
+    <div class="flash-content">
+        {{#compare type 'success' }}
+            <img src="images/success.svg">
+        {{/compare}}
+        {{#compare type 'error' }}
+            <img src="images/error.svg">
+        {{/compare}}
+        <span>{{content}}</span>
+    </div>
+    <a class="flash-dismiss">¯\_(ツ)_/¯!</a>
 </div>

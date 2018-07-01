@@ -27,6 +27,18 @@
         }
     }
 
+    #flash-wrapper {
+        @include card;
+        position: absolute;
+        z-index: 19;
+        top: 0;
+        left: 0;
+        right: 0;
+        margin: rem(30px);
+        padding: rem(20px 15px);
+        transition: width 0.3s ease-in-out;
+    }
+
     #converter-root {
         display: block;
         width: 100%;
