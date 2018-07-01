@@ -40,6 +40,13 @@ export const hideElement = (element) => {
     }
 };
 
+export const showElement = (element) => {
+    if (element && element.style) {
+        element.style.height = 'initial';
+        element.style.overflow = 'initial';
+    }
+};
+
 export const getElementTextContent = (element) => {
     return element ? element.textContent || element.innerText : '';
 };

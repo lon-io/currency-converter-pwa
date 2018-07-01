@@ -1,11 +1,10 @@
 import template from '../views/screens/currencies.hbs';
-import currenciesListTemplate from '../views/partials/currencies.hbs';
 import {
     getTemplateRenderer,
     getRenderedPartial,
 } from '../libs/renderer';
 import { handleEvent, dispatchEvent, getEventTarget, } from '../libs/events';
-import { hideElement, } from '../libs/utils';
+import { hideElement, showElement, } from '../libs/utils';
 import constants from '../config/constants';
 
 const {
@@ -73,15 +72,14 @@ export default class CurrenciesScreen {
         const headerWrapper = document.getElementById(headerWrapperID);
         const searchInput = document.getElementById(searchInputID);
 
-        if (searchWrapper && headerWrapper
-            && this.searchWrapperInitialStyle && this.headerInitialStyle) {
+        if (searchWrapper && headerWrapper) {
             if (showSearch) {
                 hideElement(headerWrapper);
-                searchWrapper.style = this.searchWrapperInitialStyle;
+                showElement(searchWrapper);
                 if (searchInput && typeof searchInput.focus === 'function') searchInput.focus();
             } else {
                 hideElement(searchWrapper);
-                headerWrapper.style = this.headerInitialStyle;
+                showElement(headerWrapper);
                 this.updateCurrenciesList(this.state.currencies);
             }
         } else console.log('{{CurrenciesScreen.setSearchVisibility}} Invalid wrappers', searchWrapper, headerWrapper);

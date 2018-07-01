@@ -17,13 +17,15 @@
     &-header {
         @include card;
         color: $azalea;
-        padding: rem(10px) 0;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: rem(16px);
-        padding: rem(16px 30px);
         transition: height 0.3s ease-in-out;
+
+        &-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: rem(16px);
+            padding: rem(16px 30px);
+        }
     }
 
     &-search {
@@ -31,12 +33,15 @@
             @include card;
             color: $azalea;
             background-color: $lavender-blush;
+            font-size: rem(16px);
+            transition: height 0.3s ease-in-out;
+        }
+
+        &-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: rem(16px);
             padding: rem(16px 30px);
-            transition: height 0.3s ease-in-out;
         }
 
         color: $radical-red;
