@@ -50,3 +50,17 @@ export const showElement = (element) => {
 export const getElementTextContent = (element) => {
     return element ? element.textContent || element.innerText : '';
 };
+
+export const setTranslation = (element, value) => {
+    if (element && element.style && value) {
+        element.style['-webkit-transform'] = `translate(${value})`;
+        element.style['-moz-transform'] = `translate(${value})`;
+        element.style['-ms-transform'] = `translate(${value})`;
+        element.style['-o-transform'] = `translate(${value})`;
+        element.style.transform = `translate(${value})`;
+    }
+};
+
+export const resetTranslation = (element) => {
+    setTranslation(element, '0, 0');
+};

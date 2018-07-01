@@ -49,7 +49,7 @@ export default {
             SUCCESS: 'success',
             ERROR: 'error',
         },
-        autoDismiss: false,
+        autoDismiss: true,
         lifespan: 5000, // Time before self-dismissal (ms)
     },
 };

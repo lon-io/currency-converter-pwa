@@ -1,25 +1,25 @@
 #app {
     display: block;
-    width: 100vw;
     height: 100vh;
     position: relative;
+    width: 100vw;
 
     @include media-tablet-up {
-        width: rem(500px);
         height: 90vh;
+        width: rem(500px);
     }
 
     #loader-wrapper {
+        background-color: $white;
         position: absolute;
-        top: 50%;
         left: 50%;
+        top: 50%;
         margin-top: -50px;
         margin-left: -50px;
-        background-color: $white;
 
         > svg {
-            width: 100px;
             height: 100px;
+            width: 100px;
 
             circle {
                 stroke: $radical-red;
@@ -29,33 +29,33 @@
 
     #flash-wrapper {
         @include card;
-        position: absolute;
-        z-index: 19;
-        top: 0;
+        @include transform(translate(-500%, 0));
         left: 0;
-        right: 0;
         margin: rem(8px);
-        transition: width 0.3s ease-in-out;
-        width: 0;
+        opacity: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        transition: transform 0.6s ease-in-out;
+        z-index: 19;
     }
 
     #converter-root {
-        display: block;
-        width: 100%;
-        height: 100%;
         background-color: $white;
+        display: block;
+        height: 100%;
+        width: 100%;
     }
 
     #currencies-root {
-        height: 100%;
-        width: 0;
-        position: absolute;
-        z-index: 1;
-        top: 0;
-        right: 0;
         background-color: $white;
+        height: 100%;
         overflow-x: hidden;
-
+        position: absolute;
+        right: 0;
+        top: 0;
         transition: width 0.3s ease-in-out;
+        width: 0;
+        z-index: 1;
     }
 }

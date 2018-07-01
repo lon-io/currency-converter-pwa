@@ -67,7 +67,6 @@ export default class App {
 
             // App Setup => Register App Listeners
             this.listen();
-            this.flashComponent.show(flashTypes.SUCCESS, 'Welcome!');
         } catch(error) {
             console.log('{{App.start}}', error);
         }

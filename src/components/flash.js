@@ -1,5 +1,6 @@
 import { handleEvent, } from '../libs/events';
 import { getRenderedPartial, } from '../libs/renderer';
+import { setTranslation, resetTranslation, } from '../libs/utils';
 import constants from '../config/constants';
 
 const {
@@ -47,7 +48,7 @@ export default class Flash {
         this.render(type, message);
 
         if (this.wrapper && this.wrapper.style) {
-            this.wrapper.style.width = 'auto';
+            resetTranslation(this.wrapper);
 
             // Auto Dismiss
             if (autoDismiss) {
@@ -60,7 +61,7 @@ export default class Flash {
 
     hide() {
         if (this.wrapper && this.wrapper.style) {
-            this.wrapper.style.width = 'auto';
+            setTranslation(this.wrapper, '-500%, 0');
         }
     }
 

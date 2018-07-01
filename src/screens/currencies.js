@@ -217,9 +217,9 @@ export default class CurrenciesScreen {
         const listWrapper = document.getElementById(listWrapperID);
 
         if (listWrapper && Array.isArray(matchingCurrencies)) {
-            dispatchEvent(this.appRoot, events.FLASH_MESSAGE, {
-                message: 'Hello',
-            });
+            // dispatchEvent(this.appRoot, events.FLASH_MESSAGE, {
+            //     message: 'Hello',
+            // });
 
             const currenciesContent = getRenderedPartial('currencies', {
                 currencies: matchingCurrencies,
