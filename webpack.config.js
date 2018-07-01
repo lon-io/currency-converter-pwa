@@ -16,16 +16,12 @@ module.exports = {
             filename: 'css/main.css',
             chunkFilename: '[id].[hash]',
         }),
-        // new CopyWebpackPlugin([{
-        //     from: './assets/fonts',
-        //     to: 'fonts',
-        // }, ]),
         new CopyWebpackPlugin([{
             from: './assets/images',
             to: 'images',
         }, ]),
         new HtmlWebpackPlugin({
-            title: 'PWA Example',
+            title: 'Currency Converter Example',
             template: path.resolve(__dirname, 'src/views/index.ejs'),
             excludeChunks: [ 'sw.js', ],
         }),
