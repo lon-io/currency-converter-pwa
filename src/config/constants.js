@@ -14,6 +14,7 @@ export default {
     },
     converter: {
         maxStoredFactors: 100,
+        maxNameLengthOnMobile: 16,
     },
     events: {
         CURRENCY_SELECTED: 'CURRENCY_SELECTED',

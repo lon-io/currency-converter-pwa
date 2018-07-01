@@ -10,10 +10,12 @@ import {
     getConversionFactor,
 } from '../libs/api-service';
 import {
+    deepClone,
     formatMoney,
     isMobile,
     parseMoney,
     getElementTextContent,
+    truncateText,
 } from '../libs/utils';
 import constants from '../config/constants';
 import AppUtils from '../libs/appUtils';
@@ -194,8 +196,8 @@ export default class ConverterScreen {
     }
 
     registerInputValidationHandler() {
-        handleEvent('input', this.appRoot, () => this.validateAmountAndUpdateState(),
-            `#${amountSpanID}`);
+        handleEvent('input', () => this.validateAmountAndUpdateState(),
+            this.appRoot, `#${amountSpanID}`);
     }
 
     registerSendHandler() {
@@ -228,7 +230,7 @@ export default class ConverterScreen {
             this.setFocus(true);
         };
 
-        handleEvent('click', this.appRoot, handler, `#${sendButtonID}`);
+        handleEvent('click', handler, this.appRoot, `#${sendButtonID}`);
     }
 
     registerSelectCurrencyHandlers() {
@@ -241,32 +243,38 @@ export default class ConverterScreen {
             });
         };
 
-        if (currencyFromEl) handleEvent('click', this.appRoot, () => handler(types.FROM), '#currencyFrom');
-        if (currencyToEl) handleEvent('click', this.appRoot, () => handler(types.TO), '#currencyTo');
+        if (currencyFromEl) handleEvent('click', () => handler(types.FROM), this.appRoot, '#currencyFrom');
+        if (currencyToEl) handleEvent('click', () => handler(types.TO), this.appRoot, '#currencyTo');
     }
 
     registerCurrencySelectedHandler() {
-        handleEvent(events.CURRENCY_SELECTED, this.appRoot, (event) => {
+        handleEvent(events.CURRENCY_SELECTED, (event) => {
             const data = event && event.detail;
 
             if (data) {
                 this.updateCurrency(data.type, data.currency);
             } else console.error('{{ConverterScreen.currencySelectedHandler}}: Invalid event data', event);
-        });
+        }, this.appRoot);
     }
 
     registerAppPrimaryFocusHandler() {
-        handleEvent(events.SET_APP_PRIMARY_FOCUS, this.appRoot, (event) => {
+        handleEvent(events.SET_APP_PRIMARY_FOCUS, (event) => {
             const data = event && event.detail;
             const checkMobile = data && data.checkMobile;
             this.setFocus(checkMobile);
-        });
+        }, this.appRoot);
     }
 
     registerHamburgerClickHandler() {
-        handleEvent('click', this.appRoot, () => {
+        handleEvent('click', () => {
             this.appUtils.showSidebar();
-        }, `#${hamburgerID}`);
+        }, this.appRoot, `#${hamburgerID}`);
+    }
+
+    registerWindowResizeListener() {
+        handleEvent('resize', () => {
+            this.render();
+        });
     }
 
     listen() {
@@ -276,6 +284,7 @@ export default class ConverterScreen {
         this.registerCurrencySelectedHandler();
         this.registerAppPrimaryFocusHandler();
         this.registerHamburgerClickHandler();
+        this.registerWindowResizeListener();
     }
 
     updateCurrency(type, currency) {
@@ -308,8 +317,12 @@ export default class ConverterScreen {
     render() {
         try {
             if (this.root) {
+                // Clone to prevent mutation
+                const currencyFrom = deepClone(this.state.currencyFrom);
+                if (isMobile()) currencyFrom.currencyName = truncateText(currencyFrom.currencyName);
+
                 this.root.innerHTML = this.renderTemplate({
-                    currency_from: this.state.currencyFrom,
+                    currency_from: currencyFrom,
                     currency_to: this.state.currencyTo,
                     amount: this.state.amount,
                     result: this.state.result,

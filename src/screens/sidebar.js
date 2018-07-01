@@ -27,9 +27,9 @@ export default class SidebarScreen {
     }
 
     registerVisibilityHandler() {
-        handleEvent(events.SHOW_SIDEBAR, this.appRoot,  () => {
+        handleEvent(events.SHOW_SIDEBAR, () => {
             this.setVisible(true);
-        });
+        }, this.appRoot);
     }
 
     registerBackClickHandler() {
@@ -37,7 +37,7 @@ export default class SidebarScreen {
             this.setVisible(false);
         };
 
-        handleEvent('click', this.appRoot, handler, `#${backIconID}`);
+        handleEvent('click', handler, this.appRoot, `#${backIconID}`);
     }
 
     listen() {

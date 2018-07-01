@@ -95,9 +95,9 @@ export default class CurrenciesScreen {
 
         hideElement(searchHeaderWrapper);
 
-        handleEvent('click', this.appRoot, () => {
+        handleEvent('click', () => {
             this.setSearchVisibility(true);
-        }, `#${searchIconID}`);
+        }, this.appRoot, `#${searchIconID}`);
     }
 
     registerSearchCloseClickHandler() {
@@ -110,7 +110,7 @@ export default class CurrenciesScreen {
             this.updateCurrenciesList(this.state.currencies);
         };
 
-        handleEvent('click', this.appRoot, handler, `#${searchCloseIconID}`);
+        handleEvent('click', handler, this.appRoot, `#${searchCloseIconID}`);
     }
 
     registerBackClickHandler() {
@@ -118,7 +118,7 @@ export default class CurrenciesScreen {
             this.setVisible(false);
         };
 
-        handleEvent('click', this.appRoot, handler, `#${backIconID}`);
+        handleEvent('click', handler, this.appRoot, `#${backIconID}`);
     }
 
     registerSearchChangeHandler() {
@@ -131,20 +131,20 @@ export default class CurrenciesScreen {
             } else console.log('{{CurrenciesScreen.SearchChangeHandler}} empty search value', searchValue);
         };
 
-        handleEvent('input', this.appRoot, handler, `#${searchInputID}`);
+        handleEvent('input', handler, this.appRoot, `#${searchInputID}`);
     }
 
     registerShowEventHandler() {
-        handleEvent(events.SELECT_CURRENCY, this.appRoot,  (event = {}) => {
+        handleEvent(events.SELECT_CURRENCY, (event = {}) => {
             const data = event.detail;
 
             if (data && data.type) this.state.currencyType = data.type;
             this.setVisible(true);
-        });
+        }, this.appRoot);
     }
 
     registerCurrencyClickHandler() {
-        handleEvent('click', this.appRoot, (event) => {
+        handleEvent('click', (event) => {
             const target = getEventTarget(event);
             const { currencies, } = this.state;
 
@@ -162,7 +162,7 @@ export default class CurrenciesScreen {
 
                 this.handleCurrencySelect();
             }
-        }, `#${currenciesContainerID}`);
+        }, this.appRoot, `#${currenciesContainerID}`);
     }
 
     handleCurrencySelect() {

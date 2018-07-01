@@ -24,9 +24,12 @@ export const dispatchEvent = (appRoot, name, detail = {}) => {
  * @param {*} targetSelector
  * @param {*} skipPrevents
  */
-export const handleEvent = (eventName, appRoot, handler, targetSelector, skipPrevents) => {
-    if (appRoot && typeof appRoot.addEventListener === 'function') {
-        appRoot.addEventListener(eventName, (event) => {
+export const handleEvent = (eventName, handler, appRoot, targetSelector, skipPrevents) => {
+    const appRootIsValid = appRoot && typeof appRoot.addEventListener === 'function';
+    const target = appRootIsValid ? appRoot: window;
+
+    if (target) {
+        target.addEventListener(eventName, (event) => {
             if (!skipPrevents) {
                 event.preventDefault();
                 event.stopPropagation();
@@ -37,6 +40,10 @@ export const handleEvent = (eventName, appRoot, handler, targetSelector, skipPre
                 if (selectorMatches(target, targetSelector) || isDescendant(target, targetSelector)) handler(event);
             } else handler(event);
         });
-    } else console.log('{{Events.handleEvent}}: App root is invalid', appRoot);
+    }
+
+    if (!appRootIsValid) {
+        console.warn('{{Events.handleEvent}}: App root is invalid', appRoot);
+    }
 };
 
