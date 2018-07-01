@@ -1,3 +1,12 @@
+import {
+    dispatchEvent,
+} from '../libs/events';
+import constants from '../config/constants';
+
+const {
+    events,
+} = constants;
+
 /**
  *
  */
@@ -63,4 +72,8 @@ export const setTranslation = (element, value) => {
 
 export const resetTranslation = (element) => {
     setTranslation(element, '0, 0');
+};
+
+export const setAppPrimaryFocus = (appRoot) => {
+    dispatchEvent(appRoot, events.SET_APP_PRIMARY_FOCUS);
 };

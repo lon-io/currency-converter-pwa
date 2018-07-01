@@ -4,7 +4,7 @@ import {
     getRenderedPartial,
 } from '../libs/renderer';
 import { handleEvent, dispatchEvent, getEventTarget, } from '../libs/events';
-import { hideElement, showElement, } from '../libs/utils';
+import { hideElement, showElement, setAppPrimaryFocus, } from '../libs/utils';
 import constants from '../config/constants';
 
 const {
@@ -65,7 +65,10 @@ export default class CurrenciesScreen {
         if (this.root) {
             if (visible) {
                 this.root.style.width = '100%';
-            } else this.root.style.width = '0';
+            } else {
+                this.root.style.width = '0';
+                setAppPrimaryFocus(this.appRoot);
+            }
         } else console.log('{{ConverterScreen.registerShowEventHandler}}: Invalid root element', this.root);
     }
 
@@ -241,10 +244,6 @@ export default class CurrenciesScreen {
         const listWrapper = document.getElementById(listWrapperID);
 
         if (listWrapper && Array.isArray(matchingCurrencies)) {
-            // dispatchEvent(this.appRoot, events.FLASH_MESSAGE, {
-            //     message: 'Hello',
-            // });
-
             const currenciesContent = getRenderedPartial('currencies', {
                 currencies: matchingCurrencies,
             });

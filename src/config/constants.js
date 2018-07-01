@@ -41,6 +41,7 @@ export default {
             CURRENCIES: 'CURRENCIES',
             LAST_CURRENCY_FROM_ID: 'LAST_CURRENCY_FROM_ID',
             LAST_CURRENCY_TO_ID: 'LAST_CURRENCY_TO_ID',
+            SET_APP_PRIMARY_FOCUS: 'SET_APP_PRIMARY_FOCUS',
         },
         version: 1,
     },

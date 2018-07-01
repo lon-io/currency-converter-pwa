@@ -16,7 +16,14 @@ import {
 } from '../libs/utils';
 import constants from '../config/constants';
 
-const amountInputID = 'amount';
+const rootID = 'converter-root';
+const sendButtonID = 'send';
+const amountSpanID = 'amount';
+const resultSpanID = 'result';
+const currencyFromElID = 'currencyFrom';
+const currencyToElID = 'currencyTo';
+const sendArrowID = 'send-arrow';
+const sendLoaderID = 'send-loader';
 
 const {
     currency: {
@@ -48,7 +55,7 @@ export default class ConverterScreen {
     }
 
     init() {
-        this.root = document.getElementById('converter-root');
+        this.root = document.getElementById(rootID);
         this.render();
         this.setFocus();
     }
@@ -128,8 +135,8 @@ export default class ConverterScreen {
     }
 
     setLoading(loading) {
-        const sendArrow = document.getElementById('send-arrow');
-        const sendLoader = document.getElementById('send-loader');
+        const sendArrow = document.getElementById(sendArrowID);
+        const sendLoader = document.getElementById(sendLoaderID);
 
         if (loading) {
             sendArrow.style.opacity = 0;
@@ -165,14 +172,14 @@ export default class ConverterScreen {
 
     registerInputValidationHandler() {
         handleEvent('input', this.appRoot, () => this.validateAmountAndUpdateState(),
-            '#amount');
+            `#${amountSpanID}`);
     }
 
     registerSendHandler() {
         const handler = () => {
-            const sendButton = document.getElementById('send');
-            const amountSpan = document.getElementById('amount');
-            const resultSpan = document.getElementById('result');
+            const sendButton = document.getElementById(sendButtonID);
+            const amountSpan = document.getElementById(amountSpanID);
+            const resultSpan = document.getElementById(resultSpanID);
 
             if (sendButton && resultSpan && amountSpan) {
                 const isValid = this.validateAmountAndUpdateState();
@@ -202,8 +209,8 @@ export default class ConverterScreen {
     }
 
     registerSelectCurrencyHandlers() {
-        const currencyFromEl = document.getElementById('currencyFrom');
-        const currencyToEl = document.getElementById('currencyTo');
+        const currencyFromEl = document.getElementById(currencyFromElID);
+        const currencyToEl = document.getElementById(currencyToElID);
 
         const handler = (type) => {
             console.log('{{ConverterScreen.registerSelectCurrencyHandlers}}: Selected type is:', type);
@@ -227,11 +234,18 @@ export default class ConverterScreen {
         });
     }
 
+    registerAppPrimaryFocusHandler() {
+        handleEvent(events.SET_APP_PRIMARY_FOCUS, this.appRoot, () => {
+            this.setFocus();
+        });
+    }
+
     listen() {
         this.registerInputValidationHandler();
         this.registerSendHandler();
         this.registerSelectCurrencyHandlers();
         this.registerCurrencySelectedHandler();
+        this.registerAppPrimaryFocusHandler();
     }
 
     updateCurrency(type, currency) {
@@ -251,7 +265,7 @@ export default class ConverterScreen {
     }
 
     setFocus() {
-        const amountElement = document.getElementById(amountInputID);
+        const amountElement = document.getElementById(amountSpanID);
 
         if (amountElement && typeof amountElement.focus === 'function') {
             amountElement.focus();
