@@ -71,13 +71,12 @@ export default class CurrenciesScreen {
     setSearchVisibility(showSearch) {
         const searchHeaderWrapper = document.getElementById(searchHeaderWrapperID);
         const defaultHeaderWrapper = document.getElementById(defaultHeaderWrapperID);
-        const searchInput = document.getElementById(searchInputID);
 
         if (searchHeaderWrapper && defaultHeaderWrapper) {
             if (showSearch) {
                 hideElement(defaultHeaderWrapper);
                 showElement(searchHeaderWrapper);
-                if (searchInput && typeof searchInput.focus === 'function') searchInput.focus();
+                this.focusSearchInput();
             } else {
                 hideElement(searchHeaderWrapper);
                 showElement(defaultHeaderWrapper);
@@ -190,27 +189,51 @@ export default class CurrenciesScreen {
         if (searchInputEl) {
             searchInputEl.value = '';
         }
+
+        this.focusSearchInput();
+    }
+
+    focusSearchInput() {
+        const searchInput = document.getElementById(searchInputID);
+
+        if (searchInput && typeof searchInput.focus === 'function') searchInput.focus();
     }
 
     getSearchMatches(inputValue = '') {
         const allCurrencies = this.state.currencies;
-        const query = inputValue.toLowerCase().trim() || '';
+        const queries = inputValue.toLowerCase().trim().split(' ') || ''; // Split by white space for multiplt values
 
-        if (Array.isArray(allCurrencies)) {
-            return query ? allCurrencies.filter((currency) => {
-                if (!currency) return false;
-                let matches = false;
+        const getMatchingCurrencies = (haystack, needle) => {
+            if (Array.isArray(haystack)) {
+                return needle ? haystack.filter((currency) => {
+                    if (!currency) return false;
+                    let matches = false;
 
-                if (currency.currencyName
-                    && currency.currencyName.toLowerCase().indexOf(query) > 1) matches = true;
-                else if (currency.id
-                    && currency.id.toLowerCase().indexOf(query) > 1) matches = true;
+                    if (currency.currencyName
+                        && currency.currencyName.toLocaleLowerCase().indexOf(needle) > -1) matches = true;
+                    else if (currency.id
+                        && currency.id.toLocaleLowerCase().indexOf(needle) > -1) matches = true;
 
-                return matches;
-            }) : allCurrencies;
-        }
+                    return matches;
+                }) : haystack;
+            }
 
-        return [];
+            return [];
+        };
+
+        console.log(queries);
+        // We want to search on a maximum of 2 whitespace separated queries
+        const filteredQueries = queries.filter((q) => !!q).slice(2);
+        console.log(filteredQueries);
+
+        // Use the result of the first search in the second
+        // (so the whole list is not unnecessarily re-searched)
+        return filteredQueries.reduce((prevMatchedCurrencies, query) => {
+            console.log(query, prevMatchedCurrencies.length);
+            // Return early
+            if (prevMatchedCurrencies.length === 0) return [];
+            return (getMatchingCurrencies(prevMatchedCurrencies, query));
+        }, allCurrencies);
     }
 
     updateCurrenciesList(matchingCurrencies) {
