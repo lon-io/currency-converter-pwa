@@ -66,8 +66,6 @@ export default class Flash {
     }
 
     render(type, message) {
-        console.log('{{FlashComponent.render}} Rendering new Message', type, message);
-
         const title = type === types.SUCCESS ? 'Hooray!' : 'Oops!';
         const icon = type = types.SUCCESS ? 'success' : 'error';
 
@@ -80,7 +78,6 @@ export default class Flash {
                     title,
                 });
 
-                console.log('{{FlashComponent.render}} Rendered Content', flashContent);
                 if (flashContent) this.wrapper.innerHTML = flashContent;
             } else console.log('{{FlashComponent.render}}: Wrapper is invalid', this.wrapper);
         } catch (error) {

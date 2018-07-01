@@ -252,8 +252,6 @@ export default class ConverterScreen {
     }
 
     render() {
-        console.log('State is: =>>', this.state);
-
         try {
             if (this.root) {
                 this.root.innerHTML = this.renderTemplate({

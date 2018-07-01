@@ -46,8 +46,6 @@ export const initializeHbs = () => {
                 key,
                 template,
             );
-
-            console.log(Handlebars.partials[key]);
         }
     });
 };
