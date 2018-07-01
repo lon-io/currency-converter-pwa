@@ -107,7 +107,7 @@ export default class ConverterScreen {
 
             // Try the inverse
             if (!factor) {
-                await this.idbHelper.get(inverseFactorKey, stores.CONVERSION_FACTORS);
+                factorObj = await this.idbHelper.get(inverseFactorKey, stores.CONVERSION_FACTORS);
                 factor = factorObj && factorObj.factor ? 1 / parseFloat(factorObj.factor) : null;
             }
 
