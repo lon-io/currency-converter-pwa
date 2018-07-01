@@ -11,7 +11,7 @@ const {
 } = constants;
 
 const rootID = 'sidebar-root';
-const backIconID = 'currency-back-icon';
+const backIconID = 'sidebar-close-icon';
 
 export default class SidebarScreen {
     constructor(appRoot) {
@@ -26,22 +26,6 @@ export default class SidebarScreen {
         this.render();
     }
 
-    listen() {
-        this.registerBackClickHandler();
-        this.registerVisibilityHandler();
-    }
-
-    setVisible(visible) {
-        if (this.root) {
-            if (visible) {
-                this.root.style.width = '100%';
-            } else {
-                this.root.style.width = '0';
-                this.appUtils.setAppPrimaryFocus();
-            }
-        } else console.log('{{SidebarScreen.setVisible}}: Invalid root element', this.root);
-    }
-
     registerVisibilityHandler() {
         handleEvent(events.SHOW_SIDEBAR, this.appRoot,  () => {
             this.setVisible(true);
@@ -54,6 +38,22 @@ export default class SidebarScreen {
         };
 
         handleEvent('click', this.appRoot, handler, `#${backIconID}`);
+    }
+
+    listen() {
+        this.registerBackClickHandler();
+        this.registerVisibilityHandler();
+    }
+
+    setVisible(visible) {
+        if (this.root) {
+            if (visible) {
+                this.root.style.width = '85%';
+            } else {
+                this.root.style.width = '0';
+                this.appUtils.setAppPrimaryFocus();
+            }
+        } else console.log('{{SidebarScreen.setVisible}}: Invalid root element', this.root);
     }
 
     render() {

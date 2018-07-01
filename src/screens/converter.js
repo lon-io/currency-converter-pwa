@@ -25,6 +25,7 @@ const currencyFromElID = 'currencyFrom';
 const currencyToElID = 'currencyTo';
 const sendArrowID = 'send-arrow';
 const sendLoaderID = 'send-loader';
+const hamburgerID = 'hamburger';
 
 const {
     currency: {
@@ -164,7 +165,7 @@ export default class ConverterScreen {
     }
 
     validateAmountAndUpdateState() {
-        const amountSpan = document.getElementById('amount');
+        const amountSpan = document.getElementById(amountSpanID);
         const inputValue = getElementTextContent(amountSpan);
 
         const parsedAmount = parseMoney(inputValue);
@@ -219,7 +220,7 @@ export default class ConverterScreen {
             this.setFocus();
         };
 
-        handleEvent('click', this.appRoot, handler, '#send');
+        handleEvent('click', this.appRoot, handler, `#${sendButtonID}`);
     }
 
     registerSelectCurrencyHandlers() {
@@ -254,12 +255,19 @@ export default class ConverterScreen {
         });
     }
 
+    registerHamburgerClickHandler() {
+        handleEvent('click', this.appRoot, () => {
+            this.appUtils.showSidebar();
+        }, `#${hamburgerID}`);
+    }
+
     listen() {
         this.registerInputValidationHandler();
         this.registerSendHandler();
         this.registerSelectCurrencyHandlers();
         this.registerCurrencySelectedHandler();
         this.registerAppPrimaryFocusHandler();
+        this.registerHamburgerClickHandler();
     }
 
     updateCurrency(type, currency) {

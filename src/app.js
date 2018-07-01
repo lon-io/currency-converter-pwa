@@ -50,7 +50,11 @@ export default class App {
 
             // Initialize the Flash Component
             this.flashComponent.init();
-            this.utils.showFlashMessage('Welcome!');
+
+            // MEh!
+            this.idbHelper.get(keys.LAST_CURRENCY_FROM_ID).then((selectedFromID) => {
+                this.utils.showFlashMessage(selectedFromID ? 'Welcome back!' : 'Welcome!');
+            }),
             this.utils.listenerForNetworkChanges();
 
             // Fetch currencies
@@ -90,6 +94,7 @@ export default class App {
     async listen() {
         this.converterScreen.listen(this.appRoot);
         this.currenciesScreen.listen(this.appRoot);
+        this.sidebarScreen.listen(this.appRoot);
     }
 
     async getAllCurrencies() {
