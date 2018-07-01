@@ -1,13 +1,17 @@
 import Handlebars from 'handlebars';
+import helpers from './hbs-helpers';
+
 import loaderTemplate from '../views/partials/loader.hbs';
 import currenciesTemplate from '../views/partials/currencies.hbs';
-import helpers from './hbs-helpers';
+import flashTemplate from '../views/partials/flash.hbs';
+
 
 const partialsPath = '../views/partials';
 
 const partialsMap = {
     loader: loaderTemplate,
     currencies: currenciesTemplate,
+    flash: flashTemplate,
 };
 
 // Todo: Figure out why tpl paths are not resolving

@@ -18,6 +18,7 @@ export default {
     events: {
         CURRENCY_SELECTED: 'CURRENCY_SELECTED',
         SELECT_CURRENCY: 'SELECT_CURRENCY',
+        FLASH_MESSAGE: 'FLASH_MESSAGE',
     },
     db: {
         name: 'currency-converter-db',
@@ -42,5 +43,13 @@ export default {
             LAST_CURRENCY_TO_ID: 'LAST_CURRENCY_TO_ID',
         },
         version: 1,
+    },
+    flash: {
+        types: {
+            SUCCESS: 'success',
+            ERROR: 'error',
+        },
+        autoDismiss: true,
+        lifespan: 5000, // Time before self-dismissal (ms)
     },
 };

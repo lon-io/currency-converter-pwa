@@ -35,8 +35,8 @@
         left: 0;
         right: 0;
         margin: rem(30px);
-        padding: rem(20px 15px);
         transition: width 0.3s ease-in-out;
+        width: 0;
     }
 
     #converter-root {

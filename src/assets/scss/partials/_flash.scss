@@ -5,6 +5,7 @@ $baseName: 'flash';
     display: flex;
     flex-direction: column;
     justify-content: center;
+    padding: rem(20px 15px);
 
     &-title {
         align-self: flex-start;
@@ -47,7 +48,7 @@ $baseName: 'flash';
     &--error {
         .#{$baseName}-title,
         .#{$baseName}-dismiss {
-            color: $error-text;
+            color: $wewak;
         }
     }
 }
