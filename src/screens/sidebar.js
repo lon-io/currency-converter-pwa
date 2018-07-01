@@ -15,7 +15,7 @@ const rootID = 'sidebar-root';
 const overlayID = 'sidebar-overlay';
 const mainID = 'sidebar-main';
 const backIconID = 'sidebar-close-icon';
-const switchMenuItemID = 'sidebar-menu-switch';
+const swapMenuItemID = 'sidebar-menu-swap';
 
 export default class SidebarScreen {
     constructor(appRoot) {
@@ -51,7 +51,7 @@ export default class SidebarScreen {
             this.setVisible(false);
         };
 
-        handleEvent('click', handler, this.appRoot, `#${switchMenuItemID}`);
+        handleEvent('click', handler, this.appRoot, `#${swapMenuItemID}`);
     }
 
     listen() {

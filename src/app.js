@@ -1,4 +1,4 @@
-
+// 🇳🇬
 import CurrenciesScreen from './screens/currencies';
 import ConverterScreen from './screens/converter';
 import SidebarScreen from './screens/sidebar';

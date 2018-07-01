@@ -30,20 +30,22 @@ export const handleEvent = (eventName, handler, appRoot, targetSelector, skipPre
 
     if (target) {
         target.addEventListener(eventName, (event) => {
-            if (!skipPrevents) {
-                event.preventDefault();
-                event.stopPropagation();
-            }
-
             if (targetSelector) {
                 const target = getEventTarget(event);
-                if (selectorMatches(target, targetSelector) || isDescendant(target, targetSelector)) handler(event);
+                if (selectorMatches(target, targetSelector) || isDescendant(target, targetSelector)) {
+                    if (!skipPrevents) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+
+                    handler(event);
+                }
             } else handler(event);
         });
     }
 
     if (!appRootIsValid) {
-        console.warn('{{Events.handleEvent}}: App root is invalid', appRoot);
+        console.warn('{{Events.handleEvent}}: App root is invalid', appRoot, eventName);
     }
 };
 

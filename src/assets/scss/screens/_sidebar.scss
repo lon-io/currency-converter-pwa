@@ -1,14 +1,31 @@
+@mixin menu-item {
+    display: flex;
+    justify-content: flex-start;
+    cursor: pointer;
+    text-indent: 0;
+    padding: rem(24px) 0;
+    text-decoration: none;
+
+    img {
+        height: rem(20px);
+        width: rem(20px);
+        vertical-align: middle;
+        margin-right: rem(16px);
+    }
+
+    span {
+        font-size: rem(18px);
+        font-weight: 500;
+    }
+}
+
 %list {
     display: flex;
     flex-direction: column;
 
-    li {
-        margin-top: rem(16px);
-        cursor: pointer;
-
-        &:first-child {
-            margin-top: 0;
-        }
+    a {
+        @include menu-item;
+        width: 100%;
     }
 }
 
@@ -59,7 +76,7 @@ $content-padding: rem(16px 20px);
         background-color: #FF5354;
         color: $white;
         padding: $content-padding;
-        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        border-bottom: 0.0625rem solid $near-white;
 
         &-container {
             align-items: center;
@@ -79,49 +96,41 @@ $content-padding: rem(16px 20px);
     }
 
     &-content {
-        padding: $content-padding;
         color: $radical-red;
+        padding: $content-padding;
+        padding-top: 0;
 
         &-list {
             @extend %list;
-
-            li {
-                display: flex;
-                justify-content: flex-start;
-                align-items: center;
-                border-bottom: rem(1px) solid $we-peep;
-                cursor: pointer;
-                padding: rem(16px) 0;
-                text-indent: 0;
-
-                img {
-                    height: rem(20px);
-                    width: rem(20px);
-                    vertical-align: middle;
-                    margin-right: rem(8px);
-                }
-
-                span {
-                    font-size: rem(20px);
-                    font-weight: 500;
-                    padding-right: rem(4px);
-                }
-            }
         }
     }
 
     &-footer {
+        color: $wewak;
         background-color: $lavender-blush;
-        color: $azalea;
+        bottom: 0;
+        border-top: rem(1px) solid $near-white;
+        left: 0;
         padding: $content-padding;
         position: absolute;
-        bottom: 0;
-        left: 0;
         right: 0;
-        border-top: rem(1px) solid $near-white;
+
 
         &-list {
             @extend %list;
+
+            a {
+                color: $wewak;
+            }
+        }
+
+        &-author {
+            #author-link {
+                color: $success-text;
+                cursor: pointer;
+                text-decoration: underline;
+                margin-right: rem(4px);
+            }
         }
 
         &-container {
@@ -132,7 +141,9 @@ $content-padding: rem(16px 20px);
         }
 
         img {
+            height: rem(20px);
             vertical-align: middle;
+            width: rem(20px);
         }
     }
 }
