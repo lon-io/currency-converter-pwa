@@ -26,7 +26,6 @@
             display: flex;
             font-size: rem(16px);
             justify-content: space-between;
-            line-height: rem(24px);
         }
 
         img {
@@ -39,17 +38,13 @@
         border: none;
         background: transparent;
         flex: 1;
-        font-size: rem(24px);
+        font-size: rem(18px);
         font-weight: 300;
-        line-height: rem(24px);
+        line-height: rem(18px);
 
         &:focus,
         &:active {
             outline: none;
-        }
-
-        a {
-            vertical-align: middle;
         }
     }
 

@@ -1,13 +1,8 @@
 <div class="flash flash--{{type}}">
-    <h4 class="flash-title">{{title}}</h4>
-    <div class="flash-content">
-        {{#compare type 'success' }}
-            <img src="images/success.svg">
-        {{/compare}}
-        {{#compare type 'error' }}
-            <img src="images/error.svg">
-        {{/compare}}
-        <span>{{content}}</span>
-    </div>
-    <a class="flash-dismiss" id="flash-dismiss">¯\_(ツ)_/¯!</a>
+    <span class="flash-message">
+        {{message}}
+    </span>
+    <a class="flash-dismiss" id="flash-dismiss">
+        <img src="images/close.svg">
+    </a>
 </div>

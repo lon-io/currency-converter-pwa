@@ -103,6 +103,8 @@ export default class CurrenciesScreen {
 
             if (searchValue) this.clearSearchInput();
             else this.setSearchVisibility(false);
+
+            this.updateCurrenciesList(this.state.currencies);
         };
 
         handleEvent('click', this.appRoot, handler, `#${searchCloseIconID}`);
@@ -215,6 +217,10 @@ export default class CurrenciesScreen {
         const listWrapper = document.getElementById(listWrapperID);
 
         if (listWrapper && Array.isArray(matchingCurrencies)) {
+            dispatchEvent(this.appRoot, events.FLASH_MESSAGE, {
+                message: 'Hello',
+            });
+
             const currenciesContent = getRenderedPartial('currencies', {
                 currencies: matchingCurrencies,
             });

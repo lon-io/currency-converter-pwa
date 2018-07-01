@@ -1,41 +1,35 @@
 $baseName: 'flash';
 
 .flash {
+    background-color: $lavender-blush;
     align-items: center;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: rem(20px 15px);
+    justify-content: space-between;
+    padding: rem(16px);
+    position: relative;
 
-    &-title {
-        align-self: flex-start;
-        font-size: rem(16);
-        font-weight: 500;
+    &-message {
+        color: $radical-red;
+        border: none;
+        background: transparent;
+        flex: 1;
+        font-size: rem(18px);
+        font-weight: 300;
+        // line-height: rem(18px);
+        margin-right: rem(8px);
     }
 
-    &-content {
-        align-items: center;
-        display: flex;
-        justify-content: space-between;
-        margin: rem(8 0);
+    a {
+        align-self: flex-start;
+        cursor: pointer;
+
+        height: rem(18px);
+        width: rem(18px);
 
         img {
-            height: rem(80px);
-            width: rem(80px);
+            height: rem(18px);
+            width: rem(18px);
         }
-
-        p {
-            color: $grey-text;
-            display: inline-block;
-            font-size: rem(14px);
-        }
-    }
-
-    &-dismiss {
-        @include card;
-        align-self: flex-end;
-        cursor: pointer;
-        font-size: rem(16px);
     }
 
     &--success {

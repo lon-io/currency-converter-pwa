@@ -46,21 +46,28 @@ export default class App {
 
             const appContent = this.renderTemplate({});
             this.appRoot.innerHTML = appContent;
+
+            // Initialize the Flash Component
+            this.flashComponent.init();
             this.flashComponent.show(flashTypes.SUCCESS, 'Welcome!');
 
+            // Fetch currencies
             const currencies = await this.getAllCurrencies();
-
             this.currencies = currencies;
             this.currenciesScreen.setCurrencies(currencies);
 
+            // Set initial currencies
             const selectedCurrencies = await this.getInitialSelectedCurrencies();
             this.converterScreen.setCurrencies(selectedCurrencies);
 
+            // Initialize screens
             this.converterScreen.init();
             this.currenciesScreen.init();
             this.hideLoader();
 
+            // App Setup => Register App Listeners
             this.listen();
+            this.flashComponent.show(flashTypes.SUCCESS, 'Welcome!');
         } catch(error) {
             console.log('{{App.start}}', error);
         }

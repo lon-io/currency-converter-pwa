@@ -30,11 +30,11 @@ export default class Flash {
             }
         };
 
-        handleEvent(this.appRoot, events.FLASH_MESSAGE, handler);
+        handleEvent(events.FLASH_MESSAGE, this.appRoot, handler);
     }
 
     registerDismissHandler() {
-        handleEvent('click', events.FLASH_MESSAGE, () => this.hide(), `#${dismissID}`);
+        handleEvent('click', this.appRoot, () => this.hide(), `#${dismissID}`);
     }
 
     init() {
@@ -47,7 +47,7 @@ export default class Flash {
         this.render(type, message);
 
         if (this.wrapper && this.wrapper.style) {
-            this.wrapper.style.width = '100%';
+            this.wrapper.style.width = 'auto';
 
             // Auto Dismiss
             if (autoDismiss) {
@@ -60,20 +60,26 @@ export default class Flash {
 
     hide() {
         if (this.wrapper && this.wrapper.style) {
-            this.wrapper.style.width = 0;
+            this.wrapper.style.width = 'auto';
         }
     }
 
     render(type, message) {
         console.log('{{FlashComponent.render}} Rendering new Message', type, message);
 
+        const title = type === types.SUCCESS ? 'Hooray!' : 'Oops!';
+        const icon = type = types.SUCCESS ? 'success' : 'error';
+
         try {
             if (this.wrapper) {
                 const flashContent = getRenderedPartial('flash', {
-                    type,
+                    icon,
                     message,
+                    type,
+                    title,
                 });
 
+                console.log('{{FlashComponent.render}} Rendered Content', flashContent);
                 if (flashContent) this.wrapper.innerHTML = flashContent;
             } else console.log('{{FlashComponent.render}}: Wrapper is invalid', this.wrapper);
         } catch (error) {

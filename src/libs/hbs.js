@@ -5,7 +5,6 @@ import loaderTemplate from '../views/partials/loader.hbs';
 import currenciesTemplate from '../views/partials/currencies.hbs';
 import flashTemplate from '../views/partials/flash.hbs';
 
-
 const partialsPath = '../views/partials';
 
 const partialsMap = {
@@ -47,6 +46,8 @@ export const initializeHbs = () => {
                 key,
                 template,
             );
+
+            console.log(Handlebars.partials[key]);
         }
     });
 };
