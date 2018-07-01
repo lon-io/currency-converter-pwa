@@ -50,6 +50,6 @@ export default {
             ERROR: 'error',
         },
         autoDismiss: true,
-        lifespan: 5000, // Time before self-dismissal (ms)
+        lifespan: 3000, // Time before self-dismissal (ms)
     },
 };
