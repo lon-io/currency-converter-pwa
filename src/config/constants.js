@@ -19,6 +19,7 @@ export default {
         CURRENCY_SELECTED: 'CURRENCY_SELECTED',
         SELECT_CURRENCY: 'SELECT_CURRENCY',
         FLASH_MESSAGE: 'FLASH_MESSAGE',
+        SET_APP_PRIMARY_FOCUS: 'SET_APP_PRIMARY_FOCUS',
     },
     db: {
         name: 'currency-converter-db',
@@ -41,7 +42,6 @@ export default {
             CURRENCIES: 'CURRENCIES',
             LAST_CURRENCY_FROM_ID: 'LAST_CURRENCY_FROM_ID',
             LAST_CURRENCY_TO_ID: 'LAST_CURRENCY_TO_ID',
-            SET_APP_PRIMARY_FOCUS: 'SET_APP_PRIMARY_FOCUS',
         },
         version: 1,
     },

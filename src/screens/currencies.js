@@ -1,10 +1,11 @@
 import template from '../views/screens/currencies.hbs';
+import AppUtils from '../libs/appUtils';
 import {
     getTemplateRenderer,
     getRenderedPartial,
 } from '../libs/renderer';
 import { handleEvent, dispatchEvent, getEventTarget, } from '../libs/events';
-import { hideElement, showElement, setAppPrimaryFocus, } from '../libs/utils';
+import { hideElement, showElement, } from '../libs/utils';
 import constants from '../config/constants';
 
 const {
@@ -41,6 +42,7 @@ export default class CurrenciesScreen {
         this.renderTemplate = getTemplateRenderer(template);
         this.searchWrapperInitialStyle = null;
         this.headerInitialStyle = null;
+        this.appUtils = new AppUtils(appRoot);
     }
 
     init() {
@@ -67,7 +69,7 @@ export default class CurrenciesScreen {
                 this.root.style.width = '100%';
             } else {
                 this.root.style.width = '0';
-                setAppPrimaryFocus(this.appRoot);
+                this.appUtils.setAppPrimaryFocus();
             }
         } else console.log('{{ConverterScreen.registerShowEventHandler}}: Invalid root element', this.root);
     }

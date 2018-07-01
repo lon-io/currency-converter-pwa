@@ -4,6 +4,7 @@ import ConverterScreen from './screens/converter';
 import FlashComponent from './components/flash';
 
 import IDBHelper from './libs/idb-helper';
+import AppUtils from './libs/appUtils';
 
 import {
     getCurrencies,
@@ -19,9 +20,6 @@ const {
     db: {
         keys,
     },
-    flash: {
-        types: flashTypes,
-    },
 } = constants;
 
 export default class App {
@@ -35,6 +33,7 @@ export default class App {
         this.converterScreen = new ConverterScreen(appRoot, idbHelper);
         this.flashComponent = new FlashComponent(appRoot);
         this.renderTemplate = getTemplateRenderer(template);
+        this.utils = new AppUtils(appRoot);
         this.currencies = [];
 
         initializeHbs();
@@ -49,7 +48,7 @@ export default class App {
 
             // Initialize the Flash Component
             this.flashComponent.init();
-            this.flashComponent.show(flashTypes.SUCCESS, 'Welcome!');
+            this.utils.showFlashMessage('Welcome!');
 
             // Fetch currencies
             const currencies = await this.getAllCurrencies();

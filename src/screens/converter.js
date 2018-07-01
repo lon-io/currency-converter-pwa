@@ -15,6 +15,7 @@ import {
     getElementTextContent,
 } from '../libs/utils';
 import constants from '../config/constants';
+import AppUtils from '.../libs/appUtils';
 
 const rootID = 'converter-root';
 const sendButtonID = 'send';
@@ -52,6 +53,7 @@ export default class ConverterScreen {
         this.idbHelper = idbHelper;
         this.root = null;
         this.renderTemplate = getTemplateRenderer(template);
+        this.appUtils = new AppUtils(appRoot);
     }
 
     init() {
@@ -157,9 +159,7 @@ export default class ConverterScreen {
         if (inputValue !== '' && parsedAmount !== 0 && !parsedAmount) {
             // Todo: Flash error
             console.error('{{Converter.validateAmountAndUpdateState}} amount is invalid', inputValue, parsedAmount);
-            dispatchEvent(this.appRoot, events.FLASH_MESSAGE, {
-                message: 'Please enter a valid amount',
-            });
+            this.appUtils.showFlashMessage('Please enter a valid amount');
 
             // Reset the amount
             if (parsedAmount !== '') amountSpan.innerHTML = formatMoney(this.state.amount) || 0;
