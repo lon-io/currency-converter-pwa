@@ -247,6 +247,9 @@ ul {
       max-width: 75vw;
       overflow-x: scroll;
       overflow-y: hidden; }
+      @media screen and (min-width: 768px) {
+        .converter-currency-value span:first-child {
+          max-width: 23.4375rem; } }
     .converter-currency-value span:last-child {
       position: absolute;
       right: -1.25rem;
